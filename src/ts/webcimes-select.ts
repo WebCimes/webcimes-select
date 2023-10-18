@@ -37,7 +37,7 @@ interface Options {
 	maxHeightOptions: string;
 	/** add extra css style to select, default null */
 	style: string | null;
-	/** set placeholder, default null */
+	/** set placeholder text, default null */
 	placeholder: string | null;
 	/** allow clear selected options, default true */
 	allowClear: boolean;
@@ -45,7 +45,7 @@ interface Options {
 	allowSearch: boolean;
 	/** autofocus on search field when open select, default true */
 	searchAutoFocus: boolean;
-	/** set placeholder on search field, default "Search" */
+	/** set placeholder text on search field, default "Search" */
 	searchPlaceholder: string | null;
 	/** set text for no results found on search, default "No results found" */
 	searchTextNoResults: string | null;
@@ -150,7 +150,7 @@ export class WebcimesSelect
 					
 		// Append webcimesSelectDropDown after select
 		document.body.insertAdjacentHTML("beforeend", 
-			`<div class="webcimesSelectDropDown">
+			`<div class="webcimesSelectDropDown" ${(this.select!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)}>
 				${(this.options.allowSearch?`<div class="search"><input type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholder?`placeholder="${this.options.searchPlaceholder}"`:``)}></div>`:``)}
 				<div class="options" style="max-height:${this.options.maxHeightOptions};"></div>
 			</div>`
@@ -441,7 +441,7 @@ export class WebcimesSelect
 
 			// Append webcimesSelect after select
 			this.select.insertAdjacentHTML("afterend", 
-				`<div class="webcimesSelect ${(this.options.setClass?this.options.setClass:'')}" ${(this.options.setId?`id="${this.options.setId}"`:``)} tabindex="0">
+				`<div class="webcimesSelect ${(this.options.setClass?this.options.setClass:'')}" ${(this.options.setId?`id="${this.options.setId}"`:``)} ${(this.select.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="0">
 					<div class="text"></div>
 					${(this.options.allowClear?`<div class="clear"><div class="cross"></div></div>`:'')}
 				</div>`

@@ -33,7 +33,7 @@ interface Options {
     maxHeightOptions: string;
     /** add extra css style to select, default null */
     style: string | null;
-    /** set placeholder, default null */
+    /** set placeholder text, default null */
     placeholder: string | null;
     /** allow clear selected options, default true */
     allowClear: boolean;
@@ -41,7 +41,7 @@ interface Options {
     allowSearch: boolean;
     /** autofocus on search field when open select, default true */
     searchAutoFocus: boolean;
-    /** set placeholder on search field, default "Search" */
+    /** set placeholder text on search field, default "Search" */
     searchPlaceholder: string | null;
     /** set text for no results found on search, default "No results found" */
     searchTextNoResults: string | null;

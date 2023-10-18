@@ -29,6 +29,7 @@
 	--select-color: inherit;
 	--select-background: #fff;
 	--select-padding: 10px 45px 10px 10px;
+	--select-padding-rtl: 10px 10px 10px 45px;
 	--select-border-width: 1px;
 	--select-border-style: solid;
 	--select-border-color: #ddd;
@@ -42,6 +43,7 @@
 	--select-option-background-hover: #eee;
 	--select-option-padding: 10px;
 	--select-optgroup-option-padding: 10px 10px 10px 20px;
+	--select-optgroup-option-padding-rtl: 10px 20px 10px 10px;
 
 	user-select: none;
 }
@@ -75,6 +77,10 @@
 	padding: var(--select-padding);
 	cursor: pointer;
 }
+.webcimesSelect[dir="rtl"]
+{
+	padding: var(--select-padding-rtl);
+}
 .webcimesSelect:focus
 {
 	outline: none;
@@ -92,6 +98,11 @@
 	margin-top: -2.5px;
 	transition: transform 0.5s;
 	transform-origin: center 2.5px;
+}
+.webcimesSelect[dir="rtl"]:not(.multiple)::after
+{
+	left: 10px;
+	right: auto;
 }
 .webcimesSelect.open
 {
@@ -129,6 +140,11 @@
 	top: 50%;
 	margin-top: -5px;
 	display: none;
+}
+.webcimesSelect[dir="rtl"] .clear
+{
+	left: 30px;
+	right: auto;
 }
 .webcimesSelect .clear.active
 {
@@ -217,4 +233,8 @@
 .webcimesSelectDropDown .options .optGroup .option
 {
 	padding: var(--select-optgroup-option-padding);
+}
+.webcimesSelectDropDown[dir="rtl"] .options .optGroup .option
+{
+	padding: var(--select-optgroup-option-padding-rtl);
 }
