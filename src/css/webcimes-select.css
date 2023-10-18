@@ -168,7 +168,7 @@
 	background: var(--select-background);
 	border-width: var(--select-border-width);
 	border-style: var(--select-border-style);
-	border-color: var(--select-open-border-color);
+	border-color: var(--select-focus-border-color);
 	border-radius: var(--select-border-radius);
 	overflow: hidden;
 }

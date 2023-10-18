@@ -79,6 +79,10 @@ export declare class WebcimesSelect {
      */
     private setSelectedValue;
     /**
+     * Create dropdown
+     */
+    private createDropDown;
+    /**
      * Set dropdown options
      */
     private setDropDownOptions;

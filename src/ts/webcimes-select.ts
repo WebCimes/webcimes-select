@@ -142,6 +142,61 @@ export class WebcimesSelect
 	}
 
 	/**
+	 * Create dropdown
+	 */
+	private createDropDown()
+	{
+		this.webcimesSelect.classList.add("open");
+					
+		// Append webcimesSelectDropDown after select
+		document.body.insertAdjacentHTML("beforeend", 
+			`<div class="webcimesSelectDropDown">
+				${(this.options.allowSearch?`<div class="search"><input type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholder?`placeholder="${this.options.searchPlaceholder}"`:``)}></div>`:``)}
+				<div class="options" style="max-height:${this.options.maxHeightOptions};"></div>
+			</div>`
+		);
+
+		// Define webcimesSelectDropDown
+		this.webcimesSelectDropDown = document.body.lastElementChild as HTMLElement;
+
+		// Set options on webcimesSelectDropDown
+		let options = Array.from(this.select!.options).filter((el) => {
+			if(el.value !== "")
+			{
+				return el;
+			}
+		});
+		this.setDropDownOptions(Array.from(options));
+		
+		// Set position and width of dropdown
+		this.setDropDownPositionAndWidth();
+
+		// If allowSearch active
+		if(this.options.allowSearch)
+		{
+			let searchEl = (this.webcimesSelectDropDown.querySelector("input[name='search']") as HTMLInputElement);
+
+			// Set focus on search field
+			if(this.options.searchAutoFocus)
+			{
+				searchEl.focus();
+			}
+
+			// Event - on search, refresh dropdown options
+			searchEl.addEventListener("input", this.eventSearchDropDown);
+		}
+
+		// Keyboard controls
+		document.addEventListener("keydown", this.eventKeyboardControlsDropDown);
+		
+		// Event - on resize refresh position and width of dropdown
+		window.addEventListener("resize", this.eventResizeDropDown);
+
+		// Event - destroy webcimesSelectDropDown on click outside
+		document.addEventListener("click", this.eventDestroyDropDown);
+	}
+
+	/**
 	 * Set dropdown options
 	 */
 	private setDropDownOptions(options: HTMLOptionElement[])
@@ -416,10 +471,11 @@ export class WebcimesSelect
 
 			// Event - keyboard controls
 			this.webcimesSelect?.addEventListener("keydown", (e) => {
+				// Create dropdown
 				if(e.key == " " || e.key == "Enter" || e.key == "ArrowUp" || e.key == "ArrowDown")
 				{
 					e.preventDefault();
-					this.webcimesSelect.dispatchEvent(new Event("click"));
+					this.createDropDown();
 				}
 			});
 
@@ -428,54 +484,7 @@ export class WebcimesSelect
 				// If webcimesSelectDropDown is null, create dropdown
 				if(!this.webcimesSelectDropDown && !(e.target as HTMLElement).closest(".clear"))
 				{
-					this.webcimesSelect.classList.add("open");
-					
-					// Append webcimesSelectDropDown after select
-					document.body.insertAdjacentHTML("beforeend", 
-						`<div class="webcimesSelectDropDown">
-							${(this.options.allowSearch?`<div class="search"><input type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholder?`placeholder="${this.options.searchPlaceholder}"`:``)}></div>`:``)}
-							<div class="options" style="max-height:${this.options.maxHeightOptions};"></div>
-						</div>`
-					);
-	
-					// Define webcimesSelectDropDown
-					this.webcimesSelectDropDown = document.body.lastElementChild as HTMLElement;
-
-					// Set options on webcimesSelectDropDown
-					let options = Array.from(this.select!.options).filter((el) => {
-						if(el.value !== "")
-						{
-							return el;
-						}
-					});
-					this.setDropDownOptions(Array.from(options));
-					
-					// Set position and width of dropdown
-					this.setDropDownPositionAndWidth();
-
-					// If allowSearch active
-					if(this.options.allowSearch)
-					{
-						let searchEl = (this.webcimesSelectDropDown.querySelector("input[name='search']") as HTMLInputElement);
-
-						// Set focus on search field
-						if(this.options.searchAutoFocus)
-						{
-							searchEl.focus();
-						}
-
-						// Event - on search, refresh dropdown options
-						searchEl.addEventListener("input", this.eventSearchDropDown);
-					}
-
-					// Keyboard controls
-					document.addEventListener("keydown", this.eventKeyboardControlsDropDown);
-					
-					// Event - on resize refresh position and width of dropdown
-					window.addEventListener("resize", this.eventResizeDropDown);
-	
-					// Event - destroy webcimesSelectDropDown on click outside
-					document.addEventListener("click", this.eventDestroyDropDown);
+					this.createDropDown();
 				}
 				// Close dropdown
 				else
