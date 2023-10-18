@@ -40,8 +40,9 @@
 	--select-cross-background-hover: #000;
 	--select-arrow-background: #666;
 	--select-input-padding: 10px;
-	--select-option-background-hover: #eee;
 	--select-option-padding: 10px;
+	--select-option-background-hover: #eee;
+	--select-option-disabled-opacity: 0.5;
 	--select-optgroup-option-padding: 10px 10px 10px 20px;
 	--select-optgroup-option-padding-rtl: 10px 20px 10px 10px;
 
@@ -224,6 +225,12 @@
 .webcimesSelectDropDown .options .option.highlighted
 {
 	background: var(--select-option-background-hover);
+}
+.webcimesSelectDropDown .options .option.disabled
+{
+	cursor: default;
+	background: none;
+	opacity: var(--select-option-disabled-opacity);
 }
 .webcimesSelectDropDown .options .option.noResults
 {

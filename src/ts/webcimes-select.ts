@@ -202,7 +202,7 @@ export class WebcimesSelect
 	private setDropDownOptions(options: HTMLOptionElement[])
 	{
 		// Remove old event on select option
-		this.webcimesSelectDropDown!.querySelectorAll(".option").forEach((el: HTMLElement) => {
+		this.webcimesSelectDropDown!.querySelectorAll(".option:not(.disabled)").forEach((el: HTMLElement) => {
 			el.removeEventListener("click", this.eventSelectOptionDropDown);
 		});
 
@@ -210,7 +210,7 @@ export class WebcimesSelect
 		let optionsEl = document.createElement("template");
 		options.forEach((el, index) => {
 			let optionEl = document.createElement("template");
-			optionEl.innerHTML = `<div class="option ${index==0?"highlighted":""} ${el.classList.toString()}" data-value="${el.value}">${el.innerHTML}</div>\n`;
+			optionEl.innerHTML = `<div class="option ${index==0?"highlighted":""} ${(el.disabled?`disabled`:``)} ${el.classList.toString()}" data-value="${el.value}">${el.innerHTML}</div>\n`;
 
 			// If option has optgroup parent
 			if(el.closest("optgroup"))
@@ -240,7 +240,7 @@ export class WebcimesSelect
 		this.webcimesSelectDropDown!.querySelector(".options")!.replaceChildren(optionsEl.content);
 
 		// Event - on select option
-		this.webcimesSelectDropDown!.querySelectorAll(".option").forEach((el: HTMLElement) => {
+		this.webcimesSelectDropDown!.querySelectorAll(".option:not(.disabled)").forEach((el: HTMLElement) => {
 			el.addEventListener("click", this.eventSelectOptionDropDown);
 		});
 	}
@@ -297,7 +297,7 @@ export class WebcimesSelect
 			document.removeEventListener("keydown", this.eventKeyboardControlsDropDown);
 			window.removeEventListener("resize", this.eventResizeDropDown);
 			document.addEventListener("click", this.eventDestroyDropDown);
-			this.webcimesSelectDropDown.querySelectorAll(".option").forEach((el: HTMLElement) => {
+			this.webcimesSelectDropDown.querySelectorAll(".option:not(.disabled)").forEach((el: HTMLElement) => {
 				el.removeEventListener("click", this.eventSelectOptionDropDown);
 			});
 			this.webcimesSelectDropDown.remove();
@@ -347,7 +347,7 @@ export class WebcimesSelect
 			let highlightedOption = this.webcimesSelectDropDown!.querySelector(".option.highlighted");
 			if(highlightedOption)
 			{
-				let optionsEl = this.webcimesSelectDropDown!.querySelectorAll(`.option`);
+				let optionsEl = this.webcimesSelectDropDown!.querySelectorAll(`.option:not(.disabled)`);
 				let highlightedIndex = Array.from(optionsEl).indexOf(highlightedOption);
 				if(e.key == "ArrowUp" || e.key == "ArrowDown")
 				{
@@ -384,13 +384,14 @@ export class WebcimesSelect
 	private eventSelectOptionDropDown: (e: Event) => void = (e) => {
 		this.select!.value = (e.target as HTMLElement).getAttribute("data-value") as string;
 		this.setSelectedValue();
+		this.destroyDropDown();
 	};
 
 	/**
 	 * Event destroy dropdown on click outside
 	 */
 	private eventDestroyDropDown: (e: Event) => void = (e) => {
-		if((e.target as HTMLElement).closest(".webcimesSelect") != this.webcimesSelect && !(e.target as HTMLElement).closest(".webcimesSelectDropDown input[name='search']"))
+		if((e.target as HTMLElement).closest(".webcimesSelect") != this.webcimesSelect && (e.target as HTMLElement).closest(".webcimesSelectDropDown") != this.webcimesSelectDropDown)
 		{
 			this.destroyDropDown();
 		}
