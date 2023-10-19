@@ -351,6 +351,7 @@ export class WebcimesSelect
 				let highlightedIndex = Array.from(optionsEl).indexOf(highlightedOption);
 				if(e.key == "ArrowUp" || e.key == "ArrowDown")
 				{
+					e.preventDefault();
 					highlightedOption.classList.remove("highlighted");
 					highlightedOption = optionsEl[(e.key == "ArrowUp" ? (highlightedIndex-1 >= 0 ? highlightedIndex-1 : 0) : (highlightedIndex+1 <= optionsEl.length-1 ? highlightedIndex+1 : optionsEl.length-1))];
 					highlightedOption.classList.add("highlighted");
@@ -358,6 +359,7 @@ export class WebcimesSelect
 				}
 				if(e.key == "Enter")
 				{
+					e.preventDefault();
 					highlightedOption.classList.remove("highlighted");
 					this.select!.value = highlightedOption.getAttribute("data-value") as string;
 					this.setSelectedValue();
@@ -365,6 +367,7 @@ export class WebcimesSelect
 				}
 				if(e.key == "Escape")
 				{
+					e.preventDefault();
 					this.destroyDropDown();
 				}
 			}
@@ -472,11 +475,14 @@ export class WebcimesSelect
 
 			// Event - keyboard controls
 			this.webcimesSelect?.addEventListener("keydown", (e) => {
-				// Create dropdown
-				if(e.key == " " || e.key == "Enter" || e.key == "ArrowUp" || e.key == "ArrowDown")
+				if(!this.webcimesSelectDropDown)
 				{
-					e.preventDefault();
-					this.createDropDown();
+					// Create dropdown
+					if(e.key == " " || e.key == "Enter" || e.key == "ArrowUp" || e.key == "ArrowDown")
+					{
+						e.preventDefault();
+						this.createDropDown();
+					}
 				}
 			});
 
