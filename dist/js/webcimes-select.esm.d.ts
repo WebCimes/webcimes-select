@@ -46,13 +46,13 @@ interface Options {
     /** set text for no results found on search, default "No results found" */
     searchTextNoResults: string | null;
     /** callback before show select */
-    beforeShow: () => void;
+    beforeShow(): void;
     /** callback after show select */
-    afterShow: () => void;
+    afterShow(): void;
     /** callback before destroy select */
-    beforeDestroy: () => void;
+    beforeDestroy(): void;
     /** callback after destroy select */
-    afterDestroy: () => void;
+    afterDestroy(): void;
 }
 /**
  * Class WebcimesSelect
@@ -62,8 +62,8 @@ export declare class WebcimesSelect {
     select: HTMLSelectElement | null;
     /** Get the dom element of the current webcimesSelect */
     webcimesSelect: HTMLElement;
-    /** Get the dom element of the current dropDown */
-    webcimesSelectDropDown: HTMLElement | null;
+    /** Get the dom element of the current webcimesDropDown */
+    webcimesDropDown: HTMLElement | null;
     /** Options of the current select */
     private options;
     /**
@@ -77,43 +77,55 @@ export declare class WebcimesSelect {
     /**
      * Set value (or placeholder) on webcimesSelect
      */
-    private setSelectedValue;
+    private setWebcimesSelectValue;
+    /**
+     * Event clear selected options
+     */
+    private eventClearSelectedOptionsWebcimesSelect;
+    /**
+     * Event clear selected options
+     */
+    private eventKeyboardWebCimesSelect;
+    /**
+     * Event clear selected options
+     */
+    private eventOpenCloseWebcimesDropDown;
     /**
      * Create dropdown
      */
-    private createDropDown;
+    private createWebcimesDropDown;
     /**
      * Set dropdown options
      */
-    private setDropDownOptions;
+    private setWebcimesDropDownOptions;
     /**
      * Set dropdown position and width, relative to webcimesSelect
      */
-    private setDropDownPositionAndWidth;
+    private setWebcimesDropDownPositionAndWidth;
     /**
      * Destroy dropdown
      */
-    private destroyDropDown;
+    private destroyWebcimesDropDown;
     /**
      * Event search dropdown options
      */
-    private eventSearchDropDown;
+    private eventSearchWebcimesDropDown;
     /**
      * Event keyboard dropdown
      */
-    private eventKeyboardControlsDropDown;
+    private eventKeyboardWebcimesDropDown;
     /**
      * Event resize
      */
-    private eventResizeDropDown;
+    private eventResizeWebcimesDropDown;
     /**
      * Event on select option
      */
-    private eventSelectOptionDropDown;
+    private eventSelectOptionWebcimesDropDown;
     /**
      * Event destroy dropdown on click outside
      */
-    private eventDestroyDropDown;
+    private eventDestroyWebcimesDropDown;
     /**
      * Create select
      */
