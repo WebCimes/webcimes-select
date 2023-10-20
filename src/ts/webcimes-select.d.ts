@@ -83,35 +83,35 @@ export declare class WebcimesSelect {
      */
     private eventClearSelectedOptionsWebcimesSelect;
     /**
-     * Event clear selected options
+     * Event keyboard controls
      */
     private eventKeyboardWebCimesSelect;
     /**
-     * Event clear selected options
+     * Event create webcimesDropDown on click
      */
     private eventOpenCloseWebcimesDropDown;
     /**
-     * Create dropdown
+     * Create webcimesDropDown
      */
     private createWebcimesDropDown;
     /**
-     * Set dropdown options
+     * Set webcimesDropDown options
      */
     private setWebcimesDropDownOptions;
     /**
-     * Set dropdown position and width, relative to webcimesSelect
+     * Set webcimesDropDown position and width, relative to webcimesSelect
      */
     private setWebcimesDropDownPositionAndWidth;
     /**
-     * Destroy dropdown
+     * Destroy webcimesDropDown
      */
     private destroyWebcimesDropDown;
     /**
-     * Event search dropdown options
+     * Event search webcimesDropDown options
      */
     private eventSearchWebcimesDropDown;
     /**
-     * Event keyboard dropdown
+     * Event keyboard webcimesDropDown
      */
     private eventKeyboardWebcimesDropDown;
     /**
@@ -123,7 +123,7 @@ export declare class WebcimesSelect {
      */
     private eventSelectOptionWebcimesDropDown;
     /**
-     * Event destroy dropdown on click outside
+     * Event destroy webcimesDropDown on click or keypress outside
      */
     private eventDestroyWebcimesDropDown;
     /**

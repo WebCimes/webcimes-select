@@ -154,13 +154,13 @@ export class WebcimesSelect
 	}
 	
 	/**
-	 * Event clear selected options
+	 * Event keyboard controls
 	 */
 	private eventKeyboardWebCimesSelect(e: KeyboardEvent)
 	{
 		if(!this.webcimesDropDown)
 		{
-			// Create dropdown
+			// Create webcimesDropDown
 			if(e.key == " " || e.key == "Enter" || e.key == "ArrowUp" || e.key == "ArrowDown")
 			{
 				e.preventDefault();
@@ -170,16 +170,16 @@ export class WebcimesSelect
 	}
 	
 	/**
-	 * Event clear selected options
+	 * Event create webcimesDropDown on click
 	 */
-	private eventOpenCloseWebcimesDropDown(e: KeyboardEvent)
+	private eventOpenCloseWebcimesDropDown(e: Event)
 	{
-		// If webcimesSelectDropDown is null, create dropdown
+		// If webcimesDropDown is null, create webcimesDropDown
 		if(!this.webcimesDropDown && !(e.target as HTMLElement).closest(".clear"))
 		{
 			this.createWebcimesDropDown();
 		}
-		// Close dropdown
+		// Close webcimesDropDown
 		else
 		{
 			this.destroyWebcimesDropDown();
@@ -187,24 +187,24 @@ export class WebcimesSelect
 	}
 
 	/**
-	 * Create dropdown
+	 * Create webcimesDropDown
 	 */
 	private createWebcimesDropDown()
 	{
 		this.webcimesSelect.classList.add("open");
 					
-		// Append webcimesSelectDropDown after select
+		// Append webcimesDropDown after select
 		document.body.insertAdjacentHTML("beforeend", 
-			`<div class="webcimesSelectDropDown" ${(this.select!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)}>
+			`<div class="webcimesDropDown" ${(this.select!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="0">
 				${(this.options.allowSearch?`<div class="search"><input type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholder?`placeholder="${this.options.searchPlaceholder}"`:``)}></div>`:``)}
 				<div class="options" style="max-height:${this.options.maxHeightOptions};"></div>
 			</div>`
 		);
 
-		// Define webcimesSelectDropDown
+		// Define webcimesDropDown
 		this.webcimesDropDown = document.body.lastElementChild as HTMLElement;
 
-		// Set options on webcimesSelectDropDown
+		// Set options on webcimesDropDown
 		let options = Array.from(this.select!.options).filter((el) => {
 			if(el.value !== "")
 			{
@@ -213,7 +213,7 @@ export class WebcimesSelect
 		});
 		this.setWebcimesDropDownOptions(Array.from(options));
 		
-		// Set position and width of dropdown
+		// Set position and width of webcimesDropDown
 		this.setWebcimesDropDownPositionAndWidth();
 
 		// If allowSearch active
@@ -227,22 +227,24 @@ export class WebcimesSelect
 				searchEl.focus();
 			}
 
-			// Event - on search, refresh dropdown options
+			// Event - on search, refresh webcimesDropDown options
 			searchEl.addEventListener("input", this.eventSearchWebcimesDropDown);
 		}
 
 		// Keyboard controls
-		document.addEventListener("keydown", this.eventKeyboardWebcimesDropDown);
+		this.webcimesDropDown.addEventListener("keydown", this.eventKeyboardWebcimesDropDown);
 		
-		// Event - on resize refresh position and width of dropdown
+		// Event - on resize refresh position and width of webcimesDropDown
 		window.addEventListener("resize", this.eventResizeWebcimesDropDown);
 
-		// Event - destroy webcimesSelectDropDown on click outside
-		document.addEventListener("click", this.eventDestroyWebcimesDropDown);
+		// Event - destroy webcimesDropDown on click or keypress outside
+		['click', 'keydown'].forEach((typeEvent) => {
+			document.addEventListener(typeEvent, this.eventDestroyWebcimesDropDown);
+		});
 	}
 
 	/**
-	 * Set dropdown options
+	 * Set webcimesDropDown options
 	 */
 	private setWebcimesDropDownOptions(options: HTMLOptionElement[])
 	{
@@ -291,7 +293,7 @@ export class WebcimesSelect
 	}
 
 	/**
-	 * Set dropdown position and width, relative to webcimesSelect
+	 * Set webcimesDropDown position and width, relative to webcimesSelect
 	 */
 	private setWebcimesDropDownPositionAndWidth(keepDirection: boolean = false)
 	{
@@ -299,7 +301,7 @@ export class WebcimesSelect
 		{
 			let webcimesSelectRect = this.webcimesSelect.getBoundingClientRect();
 
-			// If the dropdown is too high for the bottom of the window, then we direct it to the top (or if keepDirection set to true and directionTop already exist)
+			// If the webcimesDropDown is too high for the bottom of the window, then we direct it to the top (or if keepDirection set to true and directionTop already exist)
 			if(
 				(keepDirection && this.webcimesSelect.classList.contains("directionTop")) || 
 				(!keepDirection && webcimesSelectRect.bottom + this.webcimesDropDown.getBoundingClientRect().height > window.innerHeight)
@@ -321,37 +323,45 @@ export class WebcimesSelect
 				this.webcimesDropDown.style.top = (webcimesSelectRect.bottom + window.scrollY)+"px";
 			}
 
-			// Set dropdown left position
+			// Set webcimesDropDown left position
 			this.webcimesDropDown.style.left = (webcimesSelectRect.left + window.scrollX)+"px";
 
-			// Set dropdown width
+			// Set webcimesDropDown width
 			this.webcimesDropDown.style.width = webcimesSelectRect.width+"px";
 		}
 	}
 
 	/**
-	 * Destroy dropdown
+	 * Destroy webcimesDropDown
 	 */
 	private destroyWebcimesDropDown()
 	{
 		if(this.webcimesDropDown)
 		{
+			// Destroy webcimesDropDown
 			this.webcimesSelect.classList.remove("open");
-			this.webcimesSelect.focus();
 			(this.webcimesDropDown.querySelector("input[name='search']") as HTMLElement).removeEventListener("input", this.eventSearchWebcimesDropDown);
-			document.removeEventListener("keydown", this.eventKeyboardWebcimesDropDown);
+			this.webcimesDropDown.removeEventListener("keydown", this.eventKeyboardWebcimesDropDown);
 			window.removeEventListener("resize", this.eventResizeWebcimesDropDown);
-			document.removeEventListener("click", this.eventDestroyWebcimesDropDown);
+			['click', 'keydown'].forEach((typeEvent) => {
+				document.removeEventListener(typeEvent, this.eventDestroyWebcimesDropDown);
+			});
 			this.webcimesDropDown.querySelectorAll(".option:not(.disabled)").forEach((el: HTMLElement) => {
 				el.removeEventListener("click", this.eventSelectOptionWebcimesDropDown);
 			});
 			this.webcimesDropDown.remove();
 			this.webcimesDropDown = null;
+
+			// Set focus to webcimesSelect after destroy webcimesDropDown (only if no other webcimesDropDown is open)
+			if(!document.querySelector(".webcimesDropDown"))
+			{
+				this.webcimesSelect.focus();
+			}
 		}
 	}
 
 	/**
-	 * Event search dropdown options
+	 * Event search webcimesDropDown options
 	 */
 	private eventSearchWebcimesDropDown(e: Event)
 	{
@@ -376,15 +386,15 @@ export class WebcimesSelect
 			options.push(optionEl);
 		}
 
-		// Set options on webcimesSelectDropDown
+		// Set options on webcimesDropDown
 		this.setWebcimesDropDownOptions(options);
 		
-		// Set position and width of dropdown
+		// Set position and width of webcimesDropDown
 		this.setWebcimesDropDownPositionAndWidth(true);
 	}
 
 	/**
-	 * Event keyboard dropdown 
+	 * Event keyboard webcimesDropDown 
 	 */
 	private eventKeyboardWebcimesDropDown(e: KeyboardEvent)
 	{
@@ -440,11 +450,11 @@ export class WebcimesSelect
 	}
 
 	/**
-	 * Event destroy dropdown on click outside
+	 * Event destroy webcimesDropDown on click or keypress outside
 	 */
 	private eventDestroyWebcimesDropDown(e: Event)
 	{
-		if((e.target as HTMLElement).closest(".webcimesSelect") != this.webcimesSelect && (e.target as HTMLElement).closest(".webcimesSelectDropDown") != this.webcimesDropDown)
+		if((e.target as HTMLElement).closest(".webcimesSelect") != this.webcimesSelect && (e.target as HTMLElement).closest(".webcimesDropDown") != this.webcimesDropDown)
 		{
 			this.destroyWebcimesDropDown();
 		}
@@ -532,7 +542,7 @@ export class WebcimesSelect
 			// Event - keyboard controls
 			this.webcimesSelect.addEventListener("keydown", this.eventKeyboardWebCimesSelect);
 
-			// Event - create webcimesSelectDropDown on click
+			// Event - create webcimesDropDown on click
 			this.webcimesSelect.addEventListener("click", this.eventOpenCloseWebcimesDropDown);
 		}
 
