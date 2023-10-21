@@ -68,15 +68,17 @@
 .webcimesSelect
 {
 	position: relative;
+	overflow: hidden;
 	color: var(--select-color);
 	background: var(--select-background);
 	border-width: var(--select-border-width);
 	border-style: var(--select-border-style);
 	border-color: var(--select-border-color);
 	border-radius: var(--select-border-radius);
-
 	padding: var(--select-padding);
 	cursor: pointer;
+	display: flex;
+	align-items: center;
 }
 .webcimesSelect[dir="rtl"]
 {
@@ -188,6 +190,7 @@
 	border-color: var(--select-focus-border-color);
 	border-radius: var(--select-border-radius);
 	overflow: hidden;
+	outline: none;
 }
 .webcimesDropDown.directionTop
 {

@@ -195,9 +195,9 @@ export class WebcimesSelect
 					
 		// Append webcimesDropDown after select
 		document.body.insertAdjacentHTML("beforeend", 
-			`<div class="webcimesDropDown" ${(this.select!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="0">
+			`<div class="webcimesDropDown" ${(this.select!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="-1">
 				${(this.options.allowSearch?`<div class="search"><input type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholder?`placeholder="${this.options.searchPlaceholder}"`:``)}></div>`:``)}
-				<div class="options" style="max-height:${this.options.maxHeightOptions};"></div>
+				<div class="options" style="max-height:${this.options.maxHeightOptions};" tabindex="-1"></div>
 			</div>`
 		);
 
@@ -215,6 +215,9 @@ export class WebcimesSelect
 		
 		// Set position and width of webcimesDropDown
 		this.setWebcimesDropDownPositionAndWidth();
+
+		// By default set focus on webcimesDropDown
+		this.webcimesDropDown.focus();
 
 		// If allowSearch active
 		if(this.options.allowSearch)
@@ -536,6 +539,18 @@ export class WebcimesSelect
 			// Set webcimesSelect value (or placeholder)
 			this.setWebcimesSelectValue();
 
+			// Width of webcimesSelect
+			if(this.options.width != "auto" && this.options.width)
+			{
+				this.webcimesSelect.style.setProperty("width", this.options.width);
+			}
+
+			// Height of select
+			if(this.options.height != "auto" && this.options.height)
+			{
+				this.webcimesSelect.style.setProperty("height", this.options.height);
+			}
+
 			// Event - clear selected options
 			this.webcimesSelect.querySelector(".clear")?.addEventListener("click", this.eventClearSelectedOptionsWebcimesSelect);
 
@@ -554,18 +569,6 @@ export class WebcimesSelect
 		// 		this.options.beforeShow();
 		// 	}
 		// }, 0);
-	
-		// // Width of select
-		// if(this.options.width != "auto" && this.options.width)
-		// {
-		// 	this.select.style.setProperty("width", this.options.width);
-		// }
-	
-		// // Height of select
-		// if(this.options.height != "auto" && this.options.height)
-		// {
-		// 	this.select.style.setProperty("height", this.options.height);
-		// }
 	
 		// // Style
 		// if(this.options.style)

@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", function()
 {
     let selectCity = new WebcimesSelect({
         element: document.querySelector("select[name='city']"),
-        searchAutoFocus: true,
+        width: "200px",
+        height: "100px",
+        searchAutoFocus: false,
         // beforeDestroy: () => {
         //     console.log("destroy modal 1");
         // },
