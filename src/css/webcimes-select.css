@@ -28,8 +28,7 @@
 {
 	--select-color: inherit;
 	--select-background: #fff;
-	--select-padding: 10px 10px 10px 10px;
-	--select-padding-rtl: 10px 10px 10px 10px;
+	--select-padding: 10px;
 	--select-border-width: 1px;
 	--select-border-style: solid;
 	--select-border-color: #ddd;
@@ -79,10 +78,6 @@
 	cursor: pointer;
 	display: flex;
 	align-items: center;
-}
-.webcimesSelect[dir="rtl"]
-{
-	padding: var(--select-padding-rtl);
 }
 .webcimesSelect:focus
 {
