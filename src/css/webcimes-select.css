@@ -28,8 +28,8 @@
 {
 	--select-color: inherit;
 	--select-background: #fff;
-	--select-padding: 10px 45px 10px 10px;
-	--select-padding-rtl: 10px 10px 10px 45px;
+	--select-padding: 10px 10px 10px 10px;
+	--select-padding-rtl: 10px 10px 10px 10px;
 	--select-border-width: 1px;
 	--select-border-style: solid;
 	--select-border-color: #ddd;
@@ -89,24 +89,6 @@
 	outline: none;
 	border-color: var(--select-focus-border-color);
 }
-.webcimesSelect:not(.multiple)::after
-{
-	content: "";
-	border-style: solid;
-	border-color: var(--select-arrow-background) transparent transparent transparent;
-	border-width: 5px;
-	position: absolute;
-	right: 10px;
-	top: 50%;
-	margin-top: -2.5px;
-	transition: transform 0.5s;
-	transform-origin: center 2.5px;
-}
-.webcimesSelect[dir="rtl"]:not(.multiple)::after
-{
-	left: 10px;
-	right: auto;
-}
 .webcimesSelect.open
 {
 	border-color: var(--select-focus-border-color);
@@ -121,10 +103,6 @@
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 }
-.webcimesSelect.open:not(.multiple)::after
-{
-	transform: rotate(180deg);
-}
 .webcimesSelect.placeholder .text
 {
 	opacity: var(--select-placeholder-opacity);
@@ -133,21 +111,21 @@
 {
 	text-overflow: ellipsis;
 	overflow: hidden;
+	flex: 1;
+	max-height: 100%;
 }
 .webcimesSelect .clear
 {
-	position: absolute;
+	position: relative;
 	width: 10px;
 	height: 10px;
-	right: 30px;
-	top: 50%;
-	margin-top: -5px;
 	display: none;
+	margin-left: 10px;
 }
 .webcimesSelect[dir="rtl"] .clear
 {
-	left: 30px;
-	right: auto;
+	margin-left: 0;
+	margin-right: 10px;
 }
 .webcimesSelect .clear.active
 {
@@ -179,6 +157,26 @@
 .webcimesSelect .clear:hover .cross:after
 {
 	background: var(--select-cross-background-hover);
+}
+.webcimesSelect .arrow
+{
+	position: relative;
+	border-style: solid;
+	border-color: var(--select-arrow-background) transparent transparent transparent;
+	border-width: 5px;
+	transition: transform 0.5s;
+	transform-origin: center 2.5px;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+.webcimesSelect[dir="rtl"] .arrow
+{
+	margin-left: 0;
+	margin-right: 10px;
+}
+.webcimesSelect.open .arrow
+{
+	transform: rotate(180deg);
 }
 .webcimesDropDown
 {

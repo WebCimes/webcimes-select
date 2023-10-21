@@ -128,6 +128,7 @@ export class WebcimesSelect
 			{
 				this.webcimesSelect.classList.remove("placeholder");
 				this.webcimesSelect.querySelector(".text")!.innerHTML = this.select.value;
+				this.webcimesSelect.title = this.select.value;
 				this.webcimesSelect.querySelector(".clear")?.classList.add("active");
 			}
 			else
@@ -137,6 +138,7 @@ export class WebcimesSelect
 				{
 					this.webcimesSelect.classList.add("placeholder");
 					this.webcimesSelect.querySelector(".text")!.innerHTML = this.options.placeholder;
+					this.webcimesSelect.title = this.options.placeholder;
 					this.webcimesSelect.querySelector(".clear")?.classList.remove("active");
 				}
 			}
@@ -518,9 +520,10 @@ export class WebcimesSelect
 
 			// Append webcimesSelect after select
 			this.select.insertAdjacentHTML("afterend", 
-				`<div class="webcimesSelect ${(this.options.setClass?this.options.setClass:'')}" ${(this.options.setId?`id="${this.options.setId}"`:``)} ${(this.select.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="0">
+				`<div class="webcimesSelect ${(this.options.setClass?this.options.setClass:``)}" ${(this.options.setId?`id="${this.options.setId}"`:``)} ${(this.select.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="0">
 					<div class="text"></div>
 					${(this.options.allowClear?`<div class="clear"><div class="cross"></div></div>`:'')}
+					<div class="arrow"></div>
 				</div>`
 			);
 
