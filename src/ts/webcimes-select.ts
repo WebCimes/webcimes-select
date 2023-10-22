@@ -472,6 +472,11 @@ export class WebcimesSelect
 					e.preventDefault();
 					this.destroyWebcimesDropDown();
 				}
+				if(e.key == "Tab")
+				{
+					e.preventDefault();
+					this.destroyWebcimesDropDown();
+				}
 			}
 		}
 	}
