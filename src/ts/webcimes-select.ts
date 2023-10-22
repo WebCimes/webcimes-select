@@ -451,11 +451,11 @@ export class WebcimesSelect
 			let highlightedOption = this.webcimesDropDown!.querySelector(".option.highlighted");
 			if(highlightedOption)
 			{
-				let optionsEl = this.webcimesDropDown!.querySelectorAll(`.option:not(.disabled)`);
-				let highlightedIndex = Array.from(optionsEl).indexOf(highlightedOption);
 				if(e.key == "ArrowUp" || e.key == "ArrowDown")
 				{
 					e.preventDefault();
+					let optionsEl = this.webcimesDropDown!.querySelectorAll(`.option:not(.disabled)`);
+					let highlightedIndex = Array.from(optionsEl).indexOf(highlightedOption);
 					highlightedOption.classList.remove("highlighted");
 					highlightedOption = optionsEl[(e.key == "ArrowUp" ? (highlightedIndex-1 >= 0 ? highlightedIndex-1 : 0) : (highlightedIndex+1 <= optionsEl.length-1 ? highlightedIndex+1 : optionsEl.length-1))];
 					highlightedOption.classList.add("highlighted");
@@ -467,16 +467,16 @@ export class WebcimesSelect
 					highlightedOption.classList.remove("highlighted");
 					this.setWebcimesSelectValue(highlightedOption.getAttribute("data-value") as string);
 				}
-				if(e.key == "Escape")
-				{
-					e.preventDefault();
-					this.destroyWebcimesDropDown();
-				}
-				if(e.key == "Tab")
-				{
-					e.preventDefault();
-					this.destroyWebcimesDropDown();
-				}
+			}
+			if(e.key == "Escape")
+			{
+				e.preventDefault();
+				this.destroyWebcimesDropDown();
+			}
+			if(e.key == "Tab")
+			{
+				e.preventDefault();
+				this.destroyWebcimesDropDown();
 			}
 		}
 	}
