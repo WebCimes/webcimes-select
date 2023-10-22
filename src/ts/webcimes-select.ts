@@ -257,8 +257,13 @@ export class WebcimesSelect
 			searchEl.addEventListener("input", this.eventSearchWebcimesDropDown);
 		}
 
-		// Keyboard controls
+		// Event - keyboard controls on dropdown
 		this.webcimesDropDown.addEventListener("keydown", this.eventKeyboardWebcimesDropDown);
+
+		// Event - Mouseover options (highlight)
+		this.webcimesDropDown.querySelectorAll(".option:not(.disabled)").forEach((el) => {
+			el.addEventListener("mouseover", this.eventMouseoverOptionWebcimesDropDown)
+		});
 		
 		// Event - on resize refresh position and width of webcimesDropDown
 		window.addEventListener("resize", this.eventResizeWebcimesDropDown);
@@ -365,6 +370,19 @@ export class WebcimesSelect
 	}
 
 	/**
+	 * Set highlight option
+	 */
+	private setWebcimesDropDownHighlightOption(index: number)
+	{
+		let highlightedOption = this.webcimesDropDown!.querySelector(".option.highlighted");
+		let optionsEl = this.webcimesDropDown!.querySelectorAll(`.option:not(.disabled)`);
+		highlightedOption?.classList.remove("highlighted");
+		highlightedOption = optionsEl[index];
+		highlightedOption.classList.add("highlighted");
+		highlightedOption.scrollIntoView({behavior: "smooth", block: "nearest"});
+	}
+
+	/**
 	 * Destroy webcimesDropDown
 	 */
 	private destroyWebcimesDropDown()
@@ -456,10 +474,7 @@ export class WebcimesSelect
 					e.preventDefault();
 					let optionsEl = this.webcimesDropDown!.querySelectorAll(`.option:not(.disabled)`);
 					let highlightedIndex = Array.from(optionsEl).indexOf(highlightedOption);
-					highlightedOption.classList.remove("highlighted");
-					highlightedOption = optionsEl[(e.key == "ArrowUp" ? (highlightedIndex-1 >= 0 ? highlightedIndex-1 : 0) : (highlightedIndex+1 <= optionsEl.length-1 ? highlightedIndex+1 : optionsEl.length-1))];
-					highlightedOption.classList.add("highlighted");
-					highlightedOption.scrollIntoView({behavior: "smooth", block: "nearest"});
+					this.setWebcimesDropDownHighlightOption((e.key == "ArrowUp" ? (highlightedIndex-1 >= 0 ? highlightedIndex-1 : 0) : (highlightedIndex+1 <= optionsEl.length-1 ? highlightedIndex+1 : optionsEl.length-1)));
 				}
 				if(e.key == "Enter")
 				{
@@ -479,6 +494,15 @@ export class WebcimesSelect
 				this.destroyWebcimesDropDown();
 			}
 		}
+	}
+
+	/**
+	 * Event mouseover option webcimesDropDown 
+	 */
+	private eventMouseoverOptionWebcimesDropDown(e: MouseEvent)
+	{
+		let optionsEl = this.webcimesDropDown!.querySelectorAll(`.option:not(.disabled)`);
+		this.setWebcimesDropDownHighlightOption(Array.from(optionsEl).indexOf(e.target as HTMLElement));
 	}
 
 	/**
@@ -543,6 +567,7 @@ export class WebcimesSelect
 		this.eventOpenCloseWebcimesDropDown = this.eventOpenCloseWebcimesDropDown.bind(this);
 		this.eventSearchWebcimesDropDown = this.eventSearchWebcimesDropDown.bind(this);
 		this.eventKeyboardWebcimesDropDown = this.eventKeyboardWebcimesDropDown.bind(this);
+		this.eventMouseoverOptionWebcimesDropDown = this.eventMouseoverOptionWebcimesDropDown.bind(this);
 		this.eventResizeWebcimesDropDown = this.eventResizeWebcimesDropDown.bind(this);
 		this.eventSelectOptionWebcimesDropDown = this.eventSelectOptionWebcimesDropDown.bind(this);
 		this.eventDestroyWebcimesDropDown = this.eventDestroyWebcimesDropDown.bind(this);

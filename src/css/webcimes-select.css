@@ -40,7 +40,7 @@
 	--select-arrow-background: #666;
 	--select-input-padding: 10px;
 	--select-option-padding: 10px;
-	--select-option-background-hover: #eee;
+	--select-option-background-hightlight: #eee;
 	--select-option-disabled-opacity: 0.5;
 	--select-optgroup-option-padding: 10px 10px 10px 20px;
 	--select-optgroup-option-padding-rtl: 10px 20px 10px 10px;
@@ -217,10 +217,9 @@
 	padding: var(--select-option-padding);
 	cursor: pointer;
 }
-.webcimesDropDown .options .option:hover,
 .webcimesDropDown .options .option.highlighted
 {
-	background: var(--select-option-background-hover);
+	background: var(--select-option-background-hightlight);
 }
 .webcimesDropDown .options .option.disabled
 {

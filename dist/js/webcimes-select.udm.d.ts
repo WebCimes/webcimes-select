@@ -113,6 +113,10 @@ export declare class WebcimesSelect {
      */
     private setWebcimesDropDownPositionAndWidth;
     /**
+     * Set highlight option
+     */
+    private setWebcimesDropDownHighlightOption;
+    /**
      * Destroy webcimesDropDown
      */
     private destroyWebcimesDropDown;
@@ -124,6 +128,10 @@ export declare class WebcimesSelect {
      * Event keyboard webcimesDropDown
      */
     private eventKeyboardWebcimesDropDown;
+    /**
+     * Event mouseover option webcimesDropDown
+     */
+    private eventMouseoverOptionWebcimesDropDown;
     /**
      * Event resize
      */
