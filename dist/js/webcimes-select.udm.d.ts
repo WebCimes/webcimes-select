@@ -9,10 +9,11 @@
 declare global {
     /** Events */
     interface GlobalEventHandlersEventMap {
-        beforeShow: CustomEvent;
-        afterShow: CustomEvent;
-        beforeDestroy: CustomEvent;
-        afterDestroy: CustomEvent;
+        onInit: CustomEvent;
+        onDestroy: CustomEvent;
+        onInitDropDown: CustomEvent;
+        onDestroyDropDown: CustomEvent;
+        onSearchDropDown: CustomEvent;
     }
 }
 /**
@@ -45,14 +46,16 @@ interface Options {
     searchPlaceholder: string | null;
     /** set text for no results found on search, default "No results found" */
     searchTextNoResults: string | null;
-    /** callback before show select */
-    beforeShow(): void;
-    /** callback after show select */
-    afterShow(): void;
-    /** callback before destroy select */
-    beforeDestroy(): void;
-    /** callback after destroy select */
-    afterDestroy(): void;
+    /** callback on init select */
+    onInit(): void;
+    /** callback on destroy select */
+    onDestroy(): void;
+    /** callback on init dropdown */
+    onInitDropDown(): void;
+    /** callback on hide dropdown */
+    onDestroyDropDown(): void;
+    /** callback on search dropdown */
+    onSearchDropDown(value: string, options: HTMLOptionElement[]): void;
 }
 /**
  * Class WebcimesSelect
@@ -91,9 +94,9 @@ export declare class WebcimesSelect {
      */
     private eventOpenCloseWebcimesDropDown;
     /**
-     * Create webcimesDropDown
+     * Init webcimesDropDown
      */
-    private createWebcimesDropDown;
+    private initWebcimesDropDown;
     /**
      * Set webcimesDropDown options
      */

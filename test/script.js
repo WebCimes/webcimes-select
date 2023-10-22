@@ -8,12 +8,24 @@ document.addEventListener("DOMContentLoaded", function()
         element: document.querySelector("select[name='city']"),
         width: "200px",
         height: "100px",
+        style: "background:red;",
         searchAutoFocus: false,
-        // beforeDestroy: () => {
-        //     console.log("destroy modal 1");
-        // },
-        beforeDestroy(){
-            console.log("destroy modal 1");
+        onInit(){
+            console.log("init");
+        },
+        onDestroy(){
+            console.log("destroy");
+        },
+        onInitDropDown(){
+            console.log("onInitDropDown");
+        },
+        onDestroyDropDown(){
+            console.log("onDestroyDropDown");
+        },
+        onSearchDropDown(value, options){
+            console.log(value);
+            console.log(options);
+            console.log("onSearchDropDown");
         },
     });
     let selectTown = new WebcimesSelect({
