@@ -17,6 +17,7 @@ declare global {
 		onInitDropDown: CustomEvent;
 		onDestroyDropDown: CustomEvent;
 		onSearchDropDown: CustomEvent;
+		onSetValue: CustomEvent;
 	}
 }
 
@@ -60,6 +61,8 @@ interface Options {
 	onDestroyDropDown(): void;
 	/** callback on search dropdown */
 	onSearchDropDown(value: string, options: HTMLOptionElement[]): void;
+	/** callback on add option */
+	onSetValue(value: string): void;
 }
 
 /**
@@ -120,9 +123,9 @@ export class WebcimesSelect
 	}
 
 	/**
-	 * Set value (or placeholder) on webcimesSelect
+	 * Init value (or placeholder) on webcimesSelect, according selected option on select field
 	 */
-	private setWebcimesSelectValue()
+	private initWebcimesSelectValue()
 	{
 		if(this.select)
 		{
@@ -147,15 +150,30 @@ export class WebcimesSelect
 			}
 		}
 	}
+
+	/**
+	 * Set value on webcimesSelect
+	 */
+	private setWebcimesSelectValue(value: string)
+	{
+		this.select!.value = value;
+		this.initWebcimesSelectValue();
+		this.destroyWebcimesDropDown();
+
+		// Callback on set option
+		this.webcimesSelect.dispatchEvent(new CustomEvent("onSetValue"));
+		if(typeof this.options.onSetValue === 'function')
+		{
+			this.options.onSetValue(value);
+		}
+	}
 	
 	/**
 	 * Event clear selected options
 	 */
 	private eventClearSelectedOptionsWebcimesSelect(e: Event)
 	{
-		this.select!.value = "";
-		this.setWebcimesSelectValue();
-		this.destroyWebcimesDropDown();
+		this.setWebcimesSelectValue("");
 	}
 	
 	/**
@@ -447,9 +465,7 @@ export class WebcimesSelect
 				{
 					e.preventDefault();
 					highlightedOption.classList.remove("highlighted");
-					this.select!.value = highlightedOption.getAttribute("data-value") as string;
-					this.setWebcimesSelectValue();
-					this.destroyWebcimesDropDown();
+					this.setWebcimesSelectValue(highlightedOption.getAttribute("data-value") as string);
 				}
 				if(e.key == "Escape")
 				{
@@ -473,9 +489,7 @@ export class WebcimesSelect
 	 */
 	private eventSelectOptionWebcimesDropDown(e: Event)
 	{
-		this.select!.value = (e.target as HTMLElement).getAttribute("data-value") as string;
-		this.setWebcimesSelectValue();
-		this.destroyWebcimesDropDown();
+		this.setWebcimesSelectValue((e.target as HTMLElement).getAttribute("data-value") as string);
 	}
 
 	/**
@@ -514,6 +528,7 @@ export class WebcimesSelect
 			onInitDropDown: () => {},
 			onDestroyDropDown: () => {},
 			onSearchDropDown: () => {},
+			onSetValue: () => {},
 		}
 		this.options = {...defaults, ...options};
 
@@ -584,7 +599,7 @@ export class WebcimesSelect
 			}
 
 			// Set webcimesSelect value (or placeholder)
-			this.setWebcimesSelectValue();
+			this.initWebcimesSelectValue();
 
 			// Event - clear selected options
 			this.webcimesSelect.querySelector(".clear")?.addEventListener("click", this.eventClearSelectedOptionsWebcimesSelect);

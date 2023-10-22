@@ -27,6 +27,10 @@ document.addEventListener("DOMContentLoaded", function()
             console.log(options);
             console.log("onSearchDropDown");
         },
+        onSetValue(value){
+            console.log(value);
+            console.log("onSetValue");
+        },
     });
     let selectTown = new WebcimesSelect({
         element: document.querySelector("select[name='town']"),
