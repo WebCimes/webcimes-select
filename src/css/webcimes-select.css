@@ -98,16 +98,16 @@
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 }
-.webcimesSelect.placeholder .text
-{
-	opacity: var(--select-placeholder-opacity);
-}
-.webcimesSelect .text
+.webcimesSelect .items
 {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	flex: 1;
 	max-height: 100%;
+}
+.webcimesSelect .items .item.placeholder
+{
+	opacity: var(--select-placeholder-opacity);
 }
 .webcimesSelect .clear
 {

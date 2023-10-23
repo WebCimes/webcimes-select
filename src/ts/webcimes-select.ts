@@ -129,24 +129,40 @@ export class WebcimesSelect
 	{
 		if(this.select)
 		{
-			// If an option is selected, show the value
-			if(this.select.value !== "")
-			{
-				this.webcimesSelect.classList.remove("placeholder");
-				this.webcimesSelect.querySelector(".text")!.innerHTML = this.select.value;
-				this.webcimesSelect.title = this.select.value;
-				this.webcimesSelect.querySelector(".clear")?.classList.add("active");
-			}
-			else
-			{
-				// If a placeholder string exist, show the value
-				if(this.options.placeholder)
+			// Get selected options with no empty value
+			let selectedOptions = Array.from(this.select.selectedOptions).filter((el) => {
+				if(el.value !== "")
 				{
-					this.webcimesSelect.classList.add("placeholder");
-					this.webcimesSelect.querySelector(".text")!.innerHTML = this.options.placeholder;
-					this.webcimesSelect.title = this.options.placeholder;
-					this.webcimesSelect.querySelector(".clear")?.classList.remove("active");
+					return true;
 				}
+			});
+
+			// Remove old item(s)
+			this.webcimesSelect.querySelector(".items")!.innerHTML = "";
+			
+			// If an option is selected, show the value
+			if(selectedOptions.length)
+			{
+				this.webcimesSelect.querySelector(".clear")?.classList.add("active");
+				selectedOptions.forEach((el) => {
+					let item = document.createElement("template");
+					item.innerHTML = 
+					`<div class="item" data-value="${el.value}" title="${el.innerHTML}">
+						${el.innerHTML}
+					</div>\n`;
+					this.webcimesSelect.querySelector(".items")!.appendChild(item.content);
+				});
+			}
+			// Else if a placeholder string exist, show the value
+			else if(this.options.placeholder)
+			{
+				this.webcimesSelect.querySelector(".clear")?.classList.remove("active");
+				let item = document.createElement("template");
+				item.innerHTML = 
+				`<div class="item placeholder" data-value="" title="${this.options.placeholder}">
+					${this.options.placeholder}
+				</div>\n`;
+				this.webcimesSelect.querySelector(".items")!.appendChild(item.content);
 			}
 		}
 	}
@@ -430,7 +446,7 @@ export class WebcimesSelect
 			{
 				if(regexSearch.test(el.innerHTML) || regexSearch.test(el.value))
 				{
-					return el;
+					return true;
 				}
 			}
 		});
@@ -590,8 +606,8 @@ export class WebcimesSelect
 
 			// Append webcimesSelect after select
 			this.select.insertAdjacentHTML("afterend", 
-				`<div class="webcimesSelect ${(this.options.setClass?this.options.setClass:``)}" ${(this.options.setId?`id="${this.options.setId}"`:``)} ${(this.select.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="0">
-					<div class="text"></div>
+				`<div class="webcimesSelect ${(this.select.multiple?`multiple`:``)} ${(this.options.setClass?this.options.setClass:``)}" ${(this.options.setId?`id="${this.options.setId}"`:``)} ${(this.select.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="0">
+					<div class="items"></div>
 					${(this.options.allowClear?`<div class="clear"><div class="cross"></div></div>`:'')}
 					<div class="arrow"></div>
 				</div>`
