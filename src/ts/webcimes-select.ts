@@ -147,8 +147,9 @@ export class WebcimesSelect
 				selectedOptions.forEach((el) => {
 					let item = document.createElement("template");
 					item.innerHTML = 
-					`<div class="item" data-value="${el.value}" title="${el.innerHTML}">
-						${el.innerHTML}
+					`<div class="item" data-value="${el.value}">
+						<div class="label" title="${el.innerHTML}">${el.innerHTML}</div>
+						${this.select!.multiple?`<div class="clear"><div class="cross"></div></div>`:``}
 					</div>\n`;
 					this.webcimesSelect.querySelector(".items")!.appendChild(item.content);
 				});
@@ -159,8 +160,8 @@ export class WebcimesSelect
 				this.webcimesSelect.querySelector(".clear")?.classList.remove("active");
 				let item = document.createElement("template");
 				item.innerHTML = 
-				`<div class="item placeholder" data-value="" title="${this.options.placeholder}">
-					${this.options.placeholder}
+				`<div class="item placeholder" data-value="">
+					<div class="label" title="${this.options.placeholder}">${this.options.placeholder}</div>
 				</div>\n`;
 				this.webcimesSelect.querySelector(".items")!.appendChild(item.content);
 			}
@@ -185,9 +186,9 @@ export class WebcimesSelect
 	}
 	
 	/**
-	 * Event clear selected options
+	 * Event clear all selected options
 	 */
-	private eventClearSelectedOptionsWebcimesSelect(e: Event)
+	private eventClearAllSelectedOptionsWebcimesSelect(e: Event)
 	{
 		this.setWebcimesSelectValue("");
 	}
@@ -578,7 +579,7 @@ export class WebcimesSelect
 		this.options = {...defaults, ...options};
 
 		// Bind "this" to all events
-		this.eventClearSelectedOptionsWebcimesSelect = this.eventClearSelectedOptionsWebcimesSelect.bind(this);
+		this.eventClearAllSelectedOptionsWebcimesSelect = this.eventClearAllSelectedOptionsWebcimesSelect.bind(this);
 		this.eventKeyboardWebCimesSelect = this.eventKeyboardWebCimesSelect.bind(this);
 		this.eventOpenCloseWebcimesDropDown = this.eventOpenCloseWebcimesDropDown.bind(this);
 		this.eventSearchWebcimesDropDown = this.eventSearchWebcimesDropDown.bind(this);
@@ -647,8 +648,8 @@ export class WebcimesSelect
 			// Set webcimesSelect value (or placeholder)
 			this.initWebcimesSelectValue();
 
-			// Event - clear selected options
-			this.webcimesSelect.querySelector(".clear")?.addEventListener("click", this.eventClearSelectedOptionsWebcimesSelect);
+			// Event - clear all selected options
+			this.webcimesSelect.querySelector(".webcimesSelect > .clear")?.addEventListener("click", this.eventClearAllSelectedOptionsWebcimesSelect);
 
 			// Event - keyboard controls
 			this.webcimesSelect.addEventListener("keydown", this.eventKeyboardWebCimesSelect);
@@ -672,7 +673,7 @@ export class WebcimesSelect
 	 */
 	public destroy()
 	{
-		this.webcimesSelect.querySelector(".clear")?.removeEventListener("click", this.eventClearSelectedOptionsWebcimesSelect);
+		this.webcimesSelect.querySelector(".webcimesSelect > .clear")?.removeEventListener("click", this.eventClearAllSelectedOptionsWebcimesSelect);
 		this.webcimesSelect.removeEventListener("keydown", this.eventKeyboardWebCimesSelect);
 		this.webcimesSelect.removeEventListener("click", this.eventOpenCloseWebcimesDropDown);
 

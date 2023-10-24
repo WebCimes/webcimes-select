@@ -89,9 +89,9 @@ export declare class WebcimesSelect {
      */
     private setWebcimesSelectValue;
     /**
-     * Event clear selected options
+     * Event clear all selected options
      */
-    private eventClearSelectedOptionsWebcimesSelect;
+    private eventClearAllSelectedOptionsWebcimesSelect;
     /**
      * Event keyboard controls
      */

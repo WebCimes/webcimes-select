@@ -28,12 +28,18 @@
 {
 	--select-color: inherit;
 	--select-background: #fff;
-	--select-padding: 10px;
-	--select-border-width: 1px;
-	--select-border-style: solid;
-	--select-border-color: #ddd;
+	--select-padding: 7.5px 10px;
+	--select-border: 1px solid #ddd;
 	--select-border-radius: 4px;
 	--select-focus-border-color: #aaa;
+	--select-item-margin: 2.5px 5px 2.5px 0;
+	--select-item-padding: 5px;
+	--select-item-multiple-color: inherit;
+	--select-item-multiple-background: #ddd;
+	--select-item-multiple-border: 1px solid #bbb;
+	--select-item-multiple-border-radius: 4px;
+	--select-item-multiple-clear-background: #ddd;
+	--select-item-multiple-clear-background-hover: #eee;
 	--select-placeholder-opacity: 0.7;
 	--select-cross-background: #666;
 	--select-cross-background-hover: #000;
@@ -51,7 +57,7 @@
 .webcimesDropDown input
 {
 	width: 100%;
-	border: 1px solid var(--select-border-color);
+	border: var(--select-border);
 	padding: var(--select-input-padding);
 	outline: none;
 	font-family:inherit;
@@ -59,20 +65,13 @@
 	font-weight:inherit;
 	-webkit-appearance:none;
 }
-/* .webcimesSelect input:focus,
-.webcimesDropDown input:focus
-{
-	border: 1px solid var(--select-border-color);
-} */
 .webcimesSelect
 {
 	position: relative;
 	overflow: hidden;
 	color: var(--select-color);
 	background: var(--select-background);
-	border-width: var(--select-border-width);
-	border-style: var(--select-border-style);
-	border-color: var(--select-border-color);
+	border: var(--select-border);
 	border-radius: var(--select-border-radius);
 	padding: var(--select-padding);
 	cursor: pointer;
@@ -98,17 +97,6 @@
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 }
-.webcimesSelect .items
-{
-	text-overflow: ellipsis;
-	overflow: hidden;
-	flex: 1;
-	max-height: 100%;
-}
-.webcimesSelect .items .item.placeholder
-{
-	opacity: var(--select-placeholder-opacity);
-}
 .webcimesSelect .clear
 {
 	position: relative;
@@ -131,6 +119,8 @@
 	position: absolute;
 	left: 50%;
 	margin-left: -1px;
+	top: 50%;
+	margin-top: -5px;
 	background: var(--select-cross-background);
 	height: 10px;
 	width: 2px;
@@ -152,6 +142,57 @@
 .webcimesSelect .clear:hover .cross:after
 {
 	background: var(--select-cross-background-hover);
+}
+.webcimesSelect .items
+{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	flex: 1;
+	max-height: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+.webcimesSelect .items .item
+{
+	flex: 0 0 auto;
+	margin: var(--select-item-margin);
+	border: var(--select-item-multiple-border);
+	border-color: transparent;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+}
+.webcimesSelect.multiple .items .item:not(.placeholder)
+{
+	color: var(--select-item-multiple-color);
+	background: var(--select-item-multiple-background);
+	border: var(--select-item-multiple-border);
+	border-radius: var(--select-item-multiple-border-radius);
+}
+.webcimesSelect .items .item .label
+{
+	padding: var(--select-item-padding);
+}
+.webcimesSelect.multiple .items .item:not(.placeholder) .clear
+{
+	display: block;
+	height: 100%;
+	border: var(--select-item-multiple-border);
+	border-top: none;
+	border-bottom: none;
+	border-right: none;
+	background: var(--select-item-multiple-clear-background);
+	margin: 0;
+	padding: 0 10px;
+	transition: background 0.3s;
+}
+.webcimesSelect.multiple .items .item:not(.placeholder) .clear:hover
+{
+	background: var(--select-item-multiple-clear-background-hover);
+}
+.webcimesSelect .items .item.placeholder
+{
+	opacity: var(--select-placeholder-opacity);
 }
 .webcimesSelect .arrow
 {
@@ -178,8 +219,7 @@
 	position: absolute;
 	color: var(--select-color);
 	background: var(--select-background);
-	border-width: var(--select-border-width);
-	border-style: var(--select-border-style);
+	border: var(--select-border);
 	border-color: var(--select-focus-border-color);
 	border-radius: var(--select-border-radius);
 	overflow: hidden;

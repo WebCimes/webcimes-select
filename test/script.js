@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function()
 {
     let selectCity = new WebcimesSelect({
         element: document.querySelector("select[name='city']"),
-        width: "200px",
-        height: "100px",
+        // width: "200px",
+        // height: "100px",
         searchAutoFocus: false,
         onInit(){
             console.log("init");
