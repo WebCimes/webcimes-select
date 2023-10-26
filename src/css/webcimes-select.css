@@ -10,21 +10,21 @@
 -----------------------
 */
 
-.webcimesSelect,
-.webcimesSelect *,
-.webcimesSelect *::before,
-.webcimesSelect *::after,
-.webcimesDropDown,
-.webcimesDropDown *,
-.webcimesDropDown *::before,
-.webcimesDropDown *::after
+.wSelect,
+.wSelect *,
+.wSelect *::before,
+.wSelect *::after,
+.wDropDown,
+.wDropDown *,
+.wDropDown *::before,
+.wDropDown *::after
 { 
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-.webcimesSelect,
-.webcimesDropDown
+.wSelect,
+.wDropDown
 {
 	--select-color: inherit;
 	--select-background: #fff;
@@ -32,29 +32,29 @@
 	--select-border: 1px solid #ddd;
 	--select-border-radius: 4px;
 	--select-focus-border-color: #aaa;
-	--select-item-margin: 2.5px 5px 2.5px 0;
-	--select-item-padding: 5px;
-	--select-item-multiple-color: inherit;
-	--select-item-multiple-background: #ddd;
-	--select-item-multiple-border: 1px solid #bbb;
-	--select-item-multiple-border-radius: 4px;
-	--select-item-multiple-clear-background: #ddd;
-	--select-item-multiple-clear-background-hover: #eee;
+	--select-option-margin: 2.5px 5px 2.5px 0;
+	--select-option-padding: 5px;
+	--select-option-multiple-color: inherit;
+	--select-option-multiple-background: #ddd;
+	--select-option-multiple-border: 1px solid #bbb;
+	--select-option-multiple-border-radius: 4px;
+	--select-option-multiple-clear-background: #ddd;
+	--select-option-multiple-clear-background-hover: #eee;
 	--select-placeholder-opacity: 0.7;
 	--select-cross-background: #666;
 	--select-cross-background-hover: #000;
 	--select-arrow-background: #666;
 	--select-input-padding: 10px;
-	--select-option-padding: 10px;
-	--select-option-background-hightlight: #eee;
-	--select-option-disabled-opacity: 0.5;
-	--select-optgroup-option-padding: 10px 10px 10px 20px;
-	--select-optgroup-option-padding-rtl: 10px 20px 10px 10px;
+	--select-dropdown-option-padding: 10px;
+	--select-dropdown-option-background-hightlight: #eee;
+	--select-dropdown-option-disabled-opacity: 0.5;
+	--select-dropdown-optgroup-option-padding: 10px 10px 10px 20px;
+	--select-dropdown-optgroup-option-padding-rtl: 10px 20px 10px 10px;
 
 	user-select: none;
 }
-.webcimesSelect input,
-.webcimesDropDown input
+.wSelect input,
+.wDropDown input
 {
 	width: 100%;
 	border: var(--select-border);
@@ -65,7 +65,7 @@
 	font-weight:inherit;
 	-webkit-appearance:none;
 }
-.webcimesSelect
+.wSelect
 {
 	position: relative;
 	overflow: hidden;
@@ -78,26 +78,26 @@
 	display: flex;
 	align-items: center;
 }
-.webcimesSelect:focus
+.wSelect:focus
 {
 	outline: none;
 	border-color: var(--select-focus-border-color);
 }
-.webcimesSelect.open
+.wSelect.open
 {
 	border-color: var(--select-focus-border-color);
 }
-.webcimesSelect.open.directionTop
+.wSelect.open.directionTop
 {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
-.webcimesSelect.open.directionBottom
+.wSelect.open.directionBottom
 {
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 }
-.webcimesSelect .clear
+.wSelect .clear
 {
 	position: relative;
 	width: 10px;
@@ -105,16 +105,16 @@
 	display: none;
 	margin-left: 10px;
 }
-.webcimesSelect[dir="rtl"] .clear
+.wSelect[dir="rtl"] .clear
 {
 	margin-left: 0;
 	margin-right: 10px;
 }
-.webcimesSelect .clear.active
+.wSelect .clear.active
 {
 	display: block;
 }
-.webcimesSelect .clear .cross
+.wSelect .clear .cross
 {
 	position: absolute;
 	left: 50%;
@@ -127,7 +127,7 @@
 	transform: rotate(45deg);
 	transition: background 0.3s;
 }
-.webcimesSelect .clear .cross:after
+.wSelect .clear .cross:after
 {
 	position: absolute;
 	content: "";
@@ -138,12 +138,12 @@
 	width: 10px;
 	transition: background 0.3s;
 }
-.webcimesSelect .clear:hover .cross,
-.webcimesSelect .clear:hover .cross:after
+.wSelect .clear:hover .cross,
+.wSelect .clear:hover .cross:after
 {
 	background: var(--select-cross-background-hover);
 }
-.webcimesSelect .items
+.wSelect .options
 {
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -152,49 +152,49 @@
 	display: flex;
 	flex-wrap: wrap;
 }
-.webcimesSelect .items .item
+.wSelect .options .option
 {
 	flex: 0 0 auto;
-	margin: var(--select-item-margin);
-	border: var(--select-item-multiple-border);
+	margin: var(--select-option-margin);
+	border: var(--select-option-multiple-border);
 	border-color: transparent;
 	overflow: hidden;
 	display: flex;
 	align-items: center;
 }
-.webcimesSelect.multiple .items .item:not(.placeholder)
+.wSelect.multiple .options .option:not(.placeholder)
 {
-	color: var(--select-item-multiple-color);
-	background: var(--select-item-multiple-background);
-	border: var(--select-item-multiple-border);
-	border-radius: var(--select-item-multiple-border-radius);
+	color: var(--select-option-multiple-color);
+	background: var(--select-option-multiple-background);
+	border: var(--select-option-multiple-border);
+	border-radius: var(--select-option-multiple-border-radius);
 }
-.webcimesSelect .items .item .label
+.wSelect .options .option .label
 {
-	padding: var(--select-item-padding);
+	padding: var(--select-option-padding);
 }
-.webcimesSelect.multiple .items .item:not(.placeholder) .clear
+.wSelect.multiple .options .option:not(.placeholder) .clear
 {
 	display: block;
 	height: 100%;
-	border: var(--select-item-multiple-border);
+	border: var(--select-option-multiple-border);
 	border-top: none;
 	border-bottom: none;
 	border-right: none;
-	background: var(--select-item-multiple-clear-background);
+	background: var(--select-option-multiple-clear-background);
 	margin: 0;
 	padding: 0 10px;
 	transition: background 0.3s;
 }
-.webcimesSelect.multiple .items .item:not(.placeholder) .clear:hover
+.wSelect.multiple .options .option:not(.placeholder) .clear:hover
 {
-	background: var(--select-item-multiple-clear-background-hover);
+	background: var(--select-option-multiple-clear-background-hover);
 }
-.webcimesSelect .items .item.placeholder
+.wSelect .options .option.placeholder
 {
 	opacity: var(--select-placeholder-opacity);
 }
-.webcimesSelect .arrow
+.wSelect .arrow
 {
 	position: relative;
 	border-style: solid;
@@ -205,16 +205,16 @@
 	margin-top: 5px;
 	margin-left: 10px;
 }
-.webcimesSelect[dir="rtl"] .arrow
+.wSelect[dir="rtl"] .arrow
 {
 	margin-left: 0;
 	margin-right: 10px;
 }
-.webcimesSelect.open .arrow
+.wSelect.open .arrow
 {
 	transform: rotate(180deg);
 }
-.webcimesDropDown
+.wDropDown
 {
 	position: absolute;
 	color: var(--select-color);
@@ -225,58 +225,58 @@
 	overflow: hidden;
 	outline: none;
 }
-.webcimesDropDown.directionTop
+.wDropDown.directionTop
 {
 	border-bottom-width: 0;
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 }
-.webcimesDropDown.directionBottom
+.wDropDown.directionBottom
 {
 	border-top-width: 0;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
-.webcimesDropDown input[name="search"]
+.wDropDown input[name="search"]
 {
 	border-top: none;
 	border-left: none;
 	border-right: none;
 }
-.webcimesDropDown .optGroup .label
+.wDropDown .optGroup .label
 {
-	padding: var(--select-option-padding);
+	padding: var(--select-dropdown-option-padding);
 	font-weight: 600;
 }
-.webcimesDropDown .options
+.wDropDown .options
 {
 	overflow: auto;
 }
-.webcimesDropDown .options .option
+.wDropDown .options .option
 {
-	padding: var(--select-option-padding);
+	padding: var(--select-dropdown-option-padding);
 	cursor: pointer;
 }
-.webcimesDropDown .options .option.highlighted
+.wDropDown .options .option.highlighted
 {
-	background: var(--select-option-background-hightlight);
+	background: var(--select-dropdown-option-background-hightlight);
 }
-.webcimesDropDown .options .option.disabled
+.wDropDown .options .option.disabled
 {
 	cursor: default;
 	background: none;
-	opacity: var(--select-option-disabled-opacity);
+	opacity: var(--select-dropdown-option-disabled-opacity);
 }
-.webcimesDropDown .options .option.noResults
+.wDropDown .options .option.noResults
 {
 	cursor: default;
 	background: none;
 }
-.webcimesDropDown .options .optGroup .option
+.wDropDown .options .optGroup .option
 {
-	padding: var(--select-optgroup-option-padding);
+	padding: var(--select-dropdown-optgroup-option-padding);
 }
-.webcimesDropDown[dir="rtl"] .options .optGroup .option
+.wDropDown[dir="rtl"] .options .optGroup .option
 {
-	padding: var(--select-optgroup-option-padding-rtl);
+	padding: var(--select-dropdown-optgroup-option-padding-rtl);
 }

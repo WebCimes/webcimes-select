@@ -66,10 +66,10 @@ interface Options {
 export declare class WebcimesSelect {
     /** Get the dom element of the current select */
     select: HTMLSelectElement | null;
-    /** Get the dom element of the current webcimesSelect */
-    webcimesSelect: HTMLElement;
-    /** Get the dom element of the current webcimesDropDown */
-    webcimesDropDown: HTMLElement | null;
+    /** Get the dom element of the current wSelect */
+    wSelect: HTMLElement;
+    /** Get the dom element of the current wDropDown */
+    wDropDown: HTMLElement | null;
     /** Options of the current select */
     private options;
     /**
@@ -81,69 +81,69 @@ export declare class WebcimesSelect {
      */
     private getHtmlElement;
     /**
-     * Init value (or placeholder) on webcimesSelect, according selected option on select field
+     * Init value or placeholder on wSelect, according selected option on select field
      */
-    private initWebcimesSelectValue;
+    private initWSelectValue;
     /**
-     * Set value on webcimesSelect
+     * Set value on wSelect
      */
-    private setWebcimesSelectValue;
+    private setWSelectValue;
     /**
-     * Event clear all selected options
+     * Event clear all selected options on wSelect
      */
-    private eventClearAllSelectedOptionsWebcimesSelect;
+    private onWSelectClearAllOptions;
     /**
-     * Event keyboard controls
+     * Event on keydown on wSelect
      */
-    private eventKeyboardWebCimesSelect;
+    private onWSelectKeyDown;
     /**
-     * Event create webcimesDropDown on click
+     * Event init wDropDown on click on wSelect
      */
-    private eventOpenCloseWebcimesDropDown;
+    private onWSelectClickInitWDropDown;
     /**
-     * Init webcimesDropDown
+     * Init wDropDown
      */
-    private initWebcimesDropDown;
+    private initWDropDown;
     /**
-     * Set webcimesDropDown options
+     * Set wDropDown options
      */
-    private setWebcimesDropDownOptions;
+    private setWDropDownOptions;
     /**
-     * Set webcimesDropDown position and width, relative to webcimesSelect
+     * Set wDropDown position and width, relative to wSelect
      */
-    private setWebcimesDropDownPositionAndWidth;
+    private setWDropDownPosition;
     /**
      * Set highlight option
      */
-    private setWebcimesDropDownHighlightOption;
+    private setWDropDownHighlightOption;
     /**
-     * Destroy webcimesDropDown
+     * Destroy wDropDown
      */
-    private destroyWebcimesDropDown;
+    private destroyWDropDown;
     /**
-     * Event search webcimesDropDown options
+     * Event search options on wDropDown
      */
-    private eventSearchWebcimesDropDown;
+    private onWDropDownSearch;
     /**
-     * Event keyboard webcimesDropDown
+     * Event on keydown on wDropDown
      */
-    private eventKeyboardWebcimesDropDown;
+    private onWDropDownKeyPress;
     /**
-     * Event mouseover option webcimesDropDown
+     * Event on mouseover option on wDropDown
      */
-    private eventMouseoverOptionWebcimesDropDown;
+    private onWDropDownMouseOverOption;
     /**
-     * Event resize
+     * Event on resize on WDropDown
      */
-    private eventResizeWebcimesDropDown;
+    private onWDropDownResize;
     /**
-     * Event on select option
+     * Event on select option on WDropDown
      */
-    private eventSelectOptionWebcimesDropDown;
+    private onWDropDownSelectOption;
     /**
-     * Event destroy webcimesDropDown on click or keypress outside
+     * Event destroy on click or keydown outside wDropDown
      */
-    private eventDestroyWebcimesDropDown;
+    private onWDropDownDestroy;
     /**
      * Create select
      */
