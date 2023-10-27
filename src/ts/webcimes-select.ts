@@ -17,7 +17,7 @@ declare global {
 		onInitDropDown: CustomEvent;
 		onDestroyDropDown: CustomEvent;
 		onSearchDropDown: CustomEvent;
-		onSetValue: CustomEvent;
+		onAddOption: CustomEvent;
 	}
 }
 
@@ -62,7 +62,7 @@ interface Options {
 	/** callback on search dropdown */
 	onSearchDropDown(value: string, options: HTMLOptionElement[]): void;
 	/** callback on add option */
-	onSetValue(value: string): void;
+	onAddOption(value: string): void;
 }
 
 /**
@@ -179,29 +179,36 @@ export class WebcimesSelect
 	}
 
 	/**
-	 * Set value on wSelect
+	 * Add option on wSelect
 	 */
-	private setWSelectValue(value: string)
+	private addWSelectOption(value: string | null)
 	{
-		// this.select!.value = value;
-		this.select!.querySelector(`option[value="${value}"`)?.setAttribute("selected", "");
-		this.initWSelectValue();
-		this.destroyWDropDown();
-
-		// Callback on set option
-		this.wSelect.dispatchEvent(new CustomEvent("onSetValue"));
-		if(typeof this.options.onSetValue === 'function')
+		if(value)
 		{
-			this.options.onSetValue(value);
+			this.select!.querySelector(`option[value="${value}"`)?.setAttribute("selected", "");
+			this.initWSelectValue();
+			this.destroyWDropDown();
+	
+			// Callback on set option
+			this.wSelect.dispatchEvent(new CustomEvent("onAddOption"));
+			if(typeof this.options.onAddOption === 'function')
+			{
+				this.options.onAddOption(value);
+			}
 		}
 	}
-	
+
 	/**
-	 * Event clear all selected options on wSelect
+	 * Remove option on wSelect
 	 */
-	private onWSelectClearAllOptions(e: Event)
+	private removeWSelectOption(value: string | null)
 	{
-		this.setWSelectValue("");
+		if(value)
+		{
+			this.select!.querySelector(`option[value="${value}"]:not([disabled])`)?.removeAttribute("selected");
+			this.initWSelectValue();
+			this.destroyWDropDown();
+		}
 	}
 	
 	/**
@@ -209,13 +216,17 @@ export class WebcimesSelect
 	 */
 	private onWSelectClearOption(e: Event)
 	{
-		console.log("hola");
-		console.log((e.target as HTMLElement).closest(".option")?.getAttribute("data-value"));
-		console.log(this.select!.querySelector(`option[value="${(e.target as HTMLElement).closest(".option")?.getAttribute("data-value")}"`));
-		
-		this.select!.querySelector(`option[value="${(e.target as HTMLElement).closest(".option")?.getAttribute("data-value")}"`)?.removeAttribute("selected");
-		
-		this.initWSelectValue();
+		this.removeWSelectOption((e.target as HTMLElement).closest(".option")!.getAttribute("data-value"));
+	}
+	
+	/**
+	 * Event clear all selected options on wSelect
+	 */
+	private onWSelectClearAllOptions(e: Event)
+	{
+		this.select!.querySelectorAll(`option:not([disabled])`).forEach((el: HTMLOptionElement) => {
+			this.removeWSelectOption(el.value);
+		});
 	}
 	
 	/**
@@ -522,7 +533,7 @@ export class WebcimesSelect
 				{
 					e.preventDefault();
 					highlightedOption.classList.remove("highlighted");
-					this.setWSelectValue(highlightedOption.getAttribute("data-value") as string);
+					this.addWSelectOption(highlightedOption.getAttribute("data-value"));
 				}
 			}
 			if(e.key == "Escape")
@@ -560,7 +571,7 @@ export class WebcimesSelect
 	 */
 	private onWDropDownSelectOption(e: Event)
 	{
-		this.setWSelectValue((e.target as HTMLElement).getAttribute("data-value") as string);
+		this.addWSelectOption((e.target as HTMLElement).getAttribute("data-value"));
 	}
 
 	/**
@@ -599,13 +610,13 @@ export class WebcimesSelect
 			onInitDropDown: () => {},
 			onDestroyDropDown: () => {},
 			onSearchDropDown: () => {},
-			onSetValue: () => {},
+			onAddOption: () => {},
 		}
 		this.options = {...defaults, ...options};
 
 		// Bind "this" to all events
-		this.onWSelectClearAllOptions = this.onWSelectClearAllOptions.bind(this);
 		this.onWSelectClearOption = this.onWSelectClearOption.bind(this);
+		this.onWSelectClearAllOptions = this.onWSelectClearAllOptions.bind(this);
 		this.onWSelectKeyDown = this.onWSelectKeyDown.bind(this);
 		this.onWSelectClickInitWDropDown = this.onWSelectClickInitWDropDown.bind(this);
 		this.onWDropDownSearch = this.onWDropDownSearch.bind(this);
@@ -699,10 +710,10 @@ export class WebcimesSelect
 	 */
 	public destroy()
 	{
-		this.wSelect.querySelector(".wSelect > .clear")?.removeEventListener("click", this.onWSelectClearAllOptions);
 		this.wSelect.querySelectorAll(".wSelect .option .clear").forEach((el) => {
 			el.removeEventListener("click", this.onWSelectClearOption);
 		});
+		this.wSelect.querySelector(".wSelect > .clear")?.removeEventListener("click", this.onWSelectClearAllOptions);
 		this.wSelect.removeEventListener("keydown", this.onWSelectKeyDown);
 		this.wSelect.removeEventListener("click", this.onWSelectClickInitWDropDown);
 
