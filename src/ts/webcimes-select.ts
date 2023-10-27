@@ -137,6 +137,11 @@ export class WebcimesSelect
 				}
 			});
 
+			// Remove old event clear selected option on wSelect
+			this.wSelect.querySelectorAll(".wSelect .option .clear").forEach((el) => {
+				el.removeEventListener("click", this.onWSelectClearOption);
+			});
+
 			// Remove old option(s)
 			this.wSelect.querySelector(".options")!.innerHTML = "";
 			
@@ -165,6 +170,11 @@ export class WebcimesSelect
 				</div>\n`;
 				this.wSelect.querySelector(".options")!.appendChild(option.content);
 			}
+
+			// Event clear selected option on wSelect
+			this.wSelect.querySelectorAll(".wSelect .option .clear").forEach((el) => {
+				el.addEventListener("click", this.onWSelectClearOption);
+			});
 		}
 	}
 
@@ -173,7 +183,8 @@ export class WebcimesSelect
 	 */
 	private setWSelectValue(value: string)
 	{
-		this.select!.value = value;
+		// this.select!.value = value;
+		this.select!.querySelector(`option[value="${value}"`)?.setAttribute("selected", "");
 		this.initWSelectValue();
 		this.destroyWDropDown();
 
@@ -191,6 +202,20 @@ export class WebcimesSelect
 	private onWSelectClearAllOptions(e: Event)
 	{
 		this.setWSelectValue("");
+	}
+	
+	/**
+	 * Event clear selected option on wSelect
+	 */
+	private onWSelectClearOption(e: Event)
+	{
+		console.log("hola");
+		console.log((e.target as HTMLElement).closest(".option")?.getAttribute("data-value"));
+		console.log(this.select!.querySelector(`option[value="${(e.target as HTMLElement).closest(".option")?.getAttribute("data-value")}"`));
+		
+		this.select!.querySelector(`option[value="${(e.target as HTMLElement).closest(".option")?.getAttribute("data-value")}"`)?.removeAttribute("selected");
+		
+		this.initWSelectValue();
 	}
 	
 	/**
@@ -281,7 +306,7 @@ export class WebcimesSelect
 		this.wDropDown.querySelectorAll(".option:not(.disabled)").forEach((el) => {
 			el.addEventListener("mouseover", this.onWDropDownMouseOverOption)
 		});
-		
+
 		// Event on resize on WDropDown
 		window.addEventListener("resize", this.onWDropDownResize);
 
@@ -290,7 +315,7 @@ export class WebcimesSelect
 			document.addEventListener(typeEvent, this.onWDropDownDestroy);
 		});
 		
-		// Callback on show dropdown
+		// Callback on init dropdown
 		this.wSelect.dispatchEvent(new CustomEvent("onInitDropDown"));
 		if(typeof this.options.onInitDropDown === 'function')
 		{
@@ -580,6 +605,7 @@ export class WebcimesSelect
 
 		// Bind "this" to all events
 		this.onWSelectClearAllOptions = this.onWSelectClearAllOptions.bind(this);
+		this.onWSelectClearOption = this.onWSelectClearOption.bind(this);
 		this.onWSelectKeyDown = this.onWSelectKeyDown.bind(this);
 		this.onWSelectClickInitWDropDown = this.onWSelectClickInitWDropDown.bind(this);
 		this.onWDropDownSearch = this.onWDropDownSearch.bind(this);
@@ -674,6 +700,9 @@ export class WebcimesSelect
 	public destroy()
 	{
 		this.wSelect.querySelector(".wSelect > .clear")?.removeEventListener("click", this.onWSelectClearAllOptions);
+		this.wSelect.querySelectorAll(".wSelect .option .clear").forEach((el) => {
+			el.removeEventListener("click", this.onWSelectClearOption);
+		});
 		this.wSelect.removeEventListener("keydown", this.onWSelectKeyDown);
 		this.wSelect.removeEventListener("click", this.onWSelectClickInitWDropDown);
 

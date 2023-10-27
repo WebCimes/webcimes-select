@@ -93,6 +93,10 @@ export declare class WebcimesSelect {
      */
     private onWSelectClearAllOptions;
     /**
+     * Event clear selected option on wSelect
+     */
+    private onWSelectClearOption;
+    /**
      * Event on keydown on wSelect
      */
     private onWSelectKeyDown;
