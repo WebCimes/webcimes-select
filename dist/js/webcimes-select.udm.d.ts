@@ -15,6 +15,7 @@ declare global {
         onDestroyDropDown: CustomEvent;
         onSearchDropDown: CustomEvent;
         onAddOption: CustomEvent;
+        onRemoveOption: CustomEvent;
     }
 }
 /**
@@ -59,6 +60,8 @@ interface Options {
     onSearchDropDown(value: string, options: HTMLOptionElement[]): void;
     /** callback on add option */
     onAddOption(value: string): void;
+    /** callback on remove option */
+    onRemoveOption(value: string): void;
 }
 /**
  * Class WebcimesSelect

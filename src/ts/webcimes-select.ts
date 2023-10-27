@@ -18,6 +18,7 @@ declare global {
 		onDestroyDropDown: CustomEvent;
 		onSearchDropDown: CustomEvent;
 		onAddOption: CustomEvent;
+		onRemoveOption: CustomEvent;
 	}
 }
 
@@ -63,6 +64,8 @@ interface Options {
 	onSearchDropDown(value: string, options: HTMLOptionElement[]): void;
 	/** callback on add option */
 	onAddOption(value: string): void;
+	/** callback on remove option */
+	onRemoveOption(value: string): void;
 }
 
 /**
@@ -208,6 +211,13 @@ export class WebcimesSelect
 			this.select!.querySelector(`option[value="${value}"]:not([disabled])`)?.removeAttribute("selected");
 			this.initWSelectValue();
 			this.destroyWDropDown();
+	
+			// Callback on set option
+			this.wSelect.dispatchEvent(new CustomEvent("onRemoveOption"));
+			if(typeof this.options.onRemoveOption === 'function')
+			{
+				this.options.onRemoveOption(value);
+			}
 		}
 	}
 	
@@ -611,6 +621,7 @@ export class WebcimesSelect
 			onDestroyDropDown: () => {},
 			onSearchDropDown: () => {},
 			onAddOption: () => {},
+			onRemoveOption: () => {},
 		}
 		this.options = {...defaults, ...options};
 
