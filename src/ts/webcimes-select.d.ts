@@ -16,6 +16,7 @@ declare global {
         onSearchDropDown: CustomEvent;
         onAddOption: CustomEvent;
         onRemoveOption: CustomEvent;
+        onRemoveAllOptions: CustomEvent;
     }
 }
 /**
@@ -62,6 +63,8 @@ interface Options {
     onAddOption(value: string): void;
     /** callback on remove option */
     onRemoveOption(value: string): void;
+    /** callback on  all options */
+    onRemoveAllOptions(): void;
 }
 /**
  * Class WebcimesSelect
@@ -84,9 +87,9 @@ export declare class WebcimesSelect {
      */
     private getHtmlElement;
     /**
-     * Init value or placeholder on wSelect, according selected option on select field
+     * Init options or placeholder on wSelect, according selected option on select field
      */
-    private initWSelectValue;
+    private initWSelectOptions;
     /**
      * Add option on wSelect
      */
@@ -95,6 +98,10 @@ export declare class WebcimesSelect {
      * Remove option on wSelect
      */
     private removeWSelectOption;
+    /**
+     * Remove all options on wSelect
+     */
+    private removeWSelectAllOptions;
     /**
      * Event clear selected option on wSelect
      */
@@ -150,7 +157,7 @@ export declare class WebcimesSelect {
     /**
      * Event on select option on WDropDown
      */
-    private onWDropDownSelectOption;
+    private onWDropDownClickOption;
     /**
      * Event destroy on click or keydown outside wDropDown
      */
