@@ -500,14 +500,17 @@ export class WebcimesSelect
 	/**
 	 * Set highlight option
 	 */
-	private setWDropDownHighlightOption(index: number)
+	private setWDropDownHighlightOption(index: number, autoScroll: boolean)
 	{
 		let highlightedOption = this.wDropDown!.querySelector(".option.highlighted");
 		let optionsEl = this.wDropDown!.querySelectorAll(`.option:not(.disabled)`);
 		highlightedOption?.classList.remove("highlighted");
 		highlightedOption = optionsEl[index];
 		highlightedOption.classList.add("highlighted");
-		highlightedOption.scrollIntoView({behavior: "smooth", block: "nearest"});
+		if(autoScroll)
+		{
+			highlightedOption.scrollIntoView({behavior: "smooth", block: "nearest"});
+		}
 	}
 
 	/**
@@ -602,7 +605,7 @@ export class WebcimesSelect
 					e.preventDefault();
 					let optionsEl = this.wDropDown!.querySelectorAll(`.option:not(.disabled)`);
 					let highlightedIndex = Array.from(optionsEl).indexOf(highlightedOption);
-					this.setWDropDownHighlightOption((e.key == "ArrowUp" ? (highlightedIndex-1 >= 0 ? highlightedIndex-1 : 0) : (highlightedIndex+1 <= optionsEl.length-1 ? highlightedIndex+1 : optionsEl.length-1)));
+					this.setWDropDownHighlightOption((e.key == "ArrowUp" ? (highlightedIndex-1 >= 0 ? highlightedIndex-1 : 0) : (highlightedIndex+1 <= optionsEl.length-1 ? highlightedIndex+1 : optionsEl.length-1)), true);
 				}
 				if(e.key == "Enter")
 				{
@@ -637,7 +640,7 @@ export class WebcimesSelect
 	private onWDropDownMouseOverOption(e: MouseEvent)
 	{
 		let optionsEl = this.wDropDown!.querySelectorAll(`.option:not(.disabled)`);
-		this.setWDropDownHighlightOption(Array.from(optionsEl).indexOf(e.target as HTMLElement));
+		this.setWDropDownHighlightOption(Array.from(optionsEl).indexOf(e.target as HTMLElement), false);
 	}
 
 	/**

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function()
         element: document.querySelector("select[name='city']"),
         // width: "200px",
         // height: "100px",
-        searchAutoFocus: false,
+        // searchAutoFocus: false,
         onInit(){
             console.log("init");
         },
