@@ -411,7 +411,7 @@ export class WebcimesSelect
 		let optionsEl = document.createElement("template");
 		options.forEach((el, index) => {
 			let optionEl = document.createElement("template");
-			optionEl.innerHTML = `<div class="option ${index==0?"highlighted":""} ${(el.disabled?`disabled`:``)} ${el.classList.toString()}" data-value="${el.value}">${el.innerHTML}</div>\n`;
+			optionEl.innerHTML = `<div class="option ${(el.selected?`selected`:``)} ${index==0?"highlighted":""} ${(el.disabled?`disabled`:``)} ${el.classList.toString()}" data-value="${el.value}">${el.innerHTML}</div>\n`;
 
 			// If option has optgroup parent
 			if(el.closest("optgroup"))

@@ -28,7 +28,7 @@
 {
 	--select-color: inherit;
 	--select-background: #fff;
-	--select-padding: 7.5px 10px;
+	--select-padding: 2.5px 5px;
 	--select-border: 1px solid #ddd;
 	--select-border-radius: 4px;
 	--select-focus-border-color: #aaa;
@@ -46,7 +46,8 @@
 	--select-arrow-background: #666;
 	--select-input-padding: 10px;
 	--select-dropdown-option-padding: 10px;
-	--select-dropdown-option-background-hightlight: #eee;
+	--select-dropdown-option-background-selected: #eee;
+	--select-dropdown-option-background-hightlight: #ddd;
 	--select-dropdown-option-disabled-opacity: 0.5;
 	--select-dropdown-optgroup-option-padding: 10px 10px 10px 20px;
 	--select-dropdown-optgroup-option-padding-rtl: 10px 20px 10px 10px;
@@ -256,6 +257,10 @@
 {
 	padding: var(--select-dropdown-option-padding);
 	cursor: pointer;
+}
+.wDropDown .options .option.selected
+{
+	background: var(--select-dropdown-option-background-selected);
 }
 .wDropDown .options .option.highlighted
 {
