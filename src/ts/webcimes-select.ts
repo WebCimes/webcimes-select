@@ -203,7 +203,9 @@ export class WebcimesSelect
 			}
 
 			// Set option selected on select
-			this.select!.querySelector(`option[value="${value}"`)?.setAttribute("selected", "");
+			let optionEl = this.select!.querySelector(`option[value="${value}"`) as HTMLOptionElement;
+			optionEl.setAttribute("selected", "");
+			optionEl.selected = true;
 
 			// Init option on wSelect
 			this.initWSelectOptions();
@@ -228,7 +230,16 @@ export class WebcimesSelect
 		if(value)
 		{
 			// Remove option selected on select
-			this.select!.querySelector(`option[value="${value}"]:not([disabled])`)?.removeAttribute("selected");
+			let optionEl = this.select!.querySelector(`option[value="${value}"]:not([disabled])`) as HTMLOptionElement;
+			optionEl.removeAttribute("selected");
+			optionEl.selected = false;
+
+			// If select single and allowClear option
+			if(!this.select!.multiple && this.options.allowClear)
+			{
+				// Set and force select value to empty string (or placeholder option if define)
+				this.select!.value = "";
+			}
 
 			// Init option on wSelect
 			this.initWSelectOptions();
@@ -252,13 +263,14 @@ export class WebcimesSelect
 	{
 		this.select!.querySelectorAll(`option:not([disabled])`).forEach((el: HTMLOptionElement) => {
 			// Remove option selected on select
-			this.select!.querySelector(`option[value="${el.value}"]:not([disabled])`)?.removeAttribute("selected");
+			el.removeAttribute("selected");
+			el.selected = false;
 		});
 
 		// If select single and allowClear option
 		if(!this.select!.multiple && this.options.allowClear)
 		{
-			// Set and force select value to empty string (also placeholder option if define)
+			// Set and force select value to empty string (or placeholder option if define)
 			this.select!.value = "";
 		}
 
@@ -596,7 +608,14 @@ export class WebcimesSelect
 				{
 					e.preventDefault();
 					highlightedOption.classList.remove("highlighted");
-					this.addWSelectOption(highlightedOption.getAttribute("data-value"));
+					if(highlightedOption.classList.contains("selected"))
+					{
+						this.removeWSelectOption(highlightedOption.getAttribute("data-value"));
+					}
+					else
+					{
+						this.addWSelectOption(highlightedOption.getAttribute("data-value"));
+					}
 				}
 			}
 			if(e.key == "Escape")
@@ -634,7 +653,14 @@ export class WebcimesSelect
 	 */
 	private onWDropDownClickOption(e: Event)
 	{
-		this.addWSelectOption((e.target as HTMLElement).getAttribute("data-value"));
+		if((e.target as HTMLElement).classList.contains("selected"))
+		{
+			this.removeWSelectOption((e.target as HTMLElement).getAttribute("data-value"));
+		}
+		else
+		{
+			this.addWSelectOption((e.target as HTMLElement).getAttribute("data-value"));
+		}
 	}
 
 	/**
