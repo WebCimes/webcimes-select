@@ -49,6 +49,8 @@ interface Options {
     searchPlaceholder: string | null;
     /** set text for no results found on search, default "No results found" */
     searchTextNoResults: string | null;
+    /** keep dropdown open after selecting an option */
+    keepOpenDropDown: boolean;
     /** callback on init select */
     onInit(): void;
     /** callback on destroy select */

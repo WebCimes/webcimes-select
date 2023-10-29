@@ -53,6 +53,8 @@ interface Options {
 	searchPlaceholder: string | null;
 	/** set text for no results found on search, default "No results found" */
 	searchTextNoResults: string | null;
+	/** keep dropdown open after selecting an option */
+	keepOpenDropDown: boolean;
 	/** callback on init select */
 	onInit(): void;
 	/** callback on destroy select */
@@ -203,15 +205,27 @@ export class WebcimesSelect
 			}
 
 			// Set option selected on select
-			let optionEl = this.select!.querySelector(`option[value="${value}"`) as HTMLOptionElement;
+			let optionEl = this.select!.querySelector(`option[value="${value}"]`) as HTMLOptionElement;
 			optionEl.setAttribute("selected", "");
 			optionEl.selected = true;
 
 			// Init option on wSelect
 			this.initWSelectOptions();
 
-			// Destroy wDropDown
-			this.destroyWDropDown();
+			// If keepOpenDropDown option true
+			if(this.options.keepOpenDropDown)
+			{
+				// Add selected class on dropdown option
+				this.wDropDown!.querySelector(`.option[data-value="${value}"]`)?.classList.add("selected");
+
+				// Set position and width of wDropDown
+				this.setWDropDownPosition(true);
+			}
+			else
+			{
+				// Destroy wDropDown
+				this.destroyWDropDown();
+			}
 	
 			// Callback on set option
 			this.wSelect.dispatchEvent(new CustomEvent("onAddOption"));
@@ -244,8 +258,20 @@ export class WebcimesSelect
 			// Init option on wSelect
 			this.initWSelectOptions();
 
-			// Destroy wDropDown
-			this.destroyWDropDown();
+			// If keepOpenDropDown option true
+			if(this.options.keepOpenDropDown)
+			{
+				// Remove selected class on dropdown option
+				this.wDropDown!.querySelector(`.option[data-value="${value}"]`)?.classList.remove("selected");
+				
+				// Set position and width of wDropDown
+				this.setWDropDownPosition(true);
+			}
+			else
+			{
+				// Destroy wDropDown
+				this.destroyWDropDown();
+			}
 	
 			// Callback on set option
 			this.wSelect.dispatchEvent(new CustomEvent("onRemoveOption"));
@@ -277,8 +303,22 @@ export class WebcimesSelect
 		// Init option on wSelect
 		this.initWSelectOptions();
 
-		// Destroy wDropDown
-		this.destroyWDropDown();
+		// If keepOpenDropDown option true
+		if(this.options.keepOpenDropDown)
+		{
+			// Remove selected class on dropdown option
+			this.wDropDown!.querySelectorAll(`.option`).forEach((el) => {
+				el.classList.remove("selected");
+			});
+			
+			// Set position and width of wDropDown
+			this.setWDropDownPosition(true);
+		}
+		else
+		{
+			// Destroy wDropDown
+			this.destroyWDropDown();
+		}
 	
 		// Callback on set option
 		this.wSelect.dispatchEvent(new CustomEvent("onRemoveAllOptions"));
@@ -610,7 +650,6 @@ export class WebcimesSelect
 				if(e.key == "Enter")
 				{
 					e.preventDefault();
-					highlightedOption.classList.remove("highlighted");
 					if(highlightedOption.classList.contains("selected"))
 					{
 						this.removeWSelectOption(highlightedOption.getAttribute("data-value"));
@@ -697,6 +736,7 @@ export class WebcimesSelect
 			searchAutoFocus: true,
 			searchPlaceholder: "Search",
 			searchTextNoResults: "No results found",
+			keepOpenDropDown: true,
 			onInit: () => {},
 			onDestroy(){},
 			onInitDropDown: () => {},
