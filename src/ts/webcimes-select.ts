@@ -162,7 +162,7 @@ export class WebcimesSelect
 					option.innerHTML = 
 					`<div class="option" data-value="${el.value}">
 						<div class="label" title="${el.innerHTML}">${el.innerHTML}</div>
-						${this.select!.multiple?`<div class="clear"><div class="cross"></div></div>`:``}
+						${this.select!.multiple?`<button type="button" class="clear"><div class="cross"></div></button>`:``}
 					</div>\n`;
 					this.wSelect.querySelector(".options")!.appendChild(option.content);
 				});
@@ -216,7 +216,7 @@ export class WebcimesSelect
 			if(this.options.keepOpenDropDown)
 			{
 				// Add selected class on dropdown option
-				this.wDropDown!.querySelector(`.option[data-value="${value}"]`)?.classList.add("selected");
+				this.wDropDown?.querySelector(`.option[data-value="${value}"]`)?.classList.add("selected");
 
 				// Set position and width of wDropDown
 				this.setWDropDownPosition(true);
@@ -262,7 +262,7 @@ export class WebcimesSelect
 			if(this.options.keepOpenDropDown)
 			{
 				// Remove selected class on dropdown option
-				this.wDropDown!.querySelector(`.option[data-value="${value}"]`)?.classList.remove("selected");
+				this.wDropDown?.querySelector(`.option[data-value="${value}"]`)?.classList.remove("selected");
 				
 				// Set position and width of wDropDown
 				this.setWDropDownPosition(true);
@@ -307,7 +307,7 @@ export class WebcimesSelect
 		if(this.options.keepOpenDropDown)
 		{
 			// Remove selected class on dropdown option
-			this.wDropDown!.querySelectorAll(`.option`).forEach((el) => {
+			this.wDropDown?.querySelectorAll(`.option`).forEach((el) => {
 				el.classList.remove("selected");
 			});
 			
@@ -780,7 +780,7 @@ export class WebcimesSelect
 			this.select.insertAdjacentHTML("afterend", 
 				`<div class="wSelect ${(this.select.multiple?`multiple`:``)} ${(this.options.setClass?this.options.setClass:``)}" ${(this.options.setId?`id="${this.options.setId}"`:``)} ${(this.select.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="0">
 					<div class="options"></div>
-					${(this.options.allowClear?`<div class="clear"><div class="cross"></div></div>`:'')}
+					${(this.options.allowClear?`<button type="button" class="clear"><div class="cross"></div></button>`:'')}
 					<div class="arrow"></div>
 				</div>`
 			);

@@ -105,6 +105,9 @@
 	height: 10px;
 	display: none;
 	margin-left: 10px;
+	border: none;
+	background: none;
+	cursor: pointer;
 }
 .wSelect[dir="rtl"] .clear
 {
