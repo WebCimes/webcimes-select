@@ -10,25 +10,32 @@ document.addEventListener("DOMContentLoaded", function()
         // height: "100px",
         // searchAutoFocus: false,
         onInit(){
-            console.log("init");
+            console.log("onInit");
         },
         onDestroy(){
-            console.log("destroy");
+            console.log("onDestroy");
         },
-        onInitDropDown(){
-            console.log("onInitDropDown");
+        onInitDropdown(){
+            console.log("onInitDropdown");
         },
-        onDestroyDropDown(){
-            console.log("onDestroyDropDown");
+        onDestroyDropdown(){
+            console.log("onDestroyDropdown");
         },
-        onSearchDropDown(value, options){
+        onSearchDropdown(value, options){
             console.log(value);
             console.log(options);
-            console.log("onSearchDropDown");
+            console.log("onSearchDropdown");
         },
-        onSetValue(value){
+        onAddOption(value){
             console.log(value);
-            console.log("onSetValue");
+            console.log("onAddOption");
+        },
+        onRemoveOption(value){
+            console.log(value);
+            console.log("onRemoveOption");
+        },
+        onRemoveAllOptions(){
+            console.log("onRemoveAllOptions");
         },
     });
     let selectTown = new WebcimesSelect({

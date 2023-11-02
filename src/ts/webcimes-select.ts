@@ -14,9 +14,9 @@ declare global {
 	interface GlobalEventHandlersEventMap {
 		onInit: CustomEvent;
 		onDestroy: CustomEvent;
-		onInitDropDown: CustomEvent;
-		onDestroyDropDown: CustomEvent;
-		onSearchDropDown: CustomEvent;
+		onInitDropdown: CustomEvent;
+		onDestroyDropdown: CustomEvent;
+		onSearchDropdown: CustomEvent;
 		onAddOption: CustomEvent;
 		onRemoveOption: CustomEvent;
 		onRemoveAllOptions: CustomEvent;
@@ -54,17 +54,17 @@ interface Options {
 	/** set text for no results found on search, default "No results found" */
 	searchTextNoResults: string | null;
 	/** keep dropdown open after selecting an option */
-	keepOpenDropDown: boolean;
+	keepOpenDropdown: boolean;
 	/** callback on init select */
 	onInit(): void;
 	/** callback on destroy select */
 	onDestroy(): void;
 	/** callback on init dropdown */
-	onInitDropDown(): void;
+	onInitDropdown(): void;
 	/** callback on hide dropdown */
-	onDestroyDropDown(): void;
+	onDestroyDropdown(): void;
 	/** callback on search dropdown */
-	onSearchDropDown(value: string, options: HTMLOptionElement[]): void;
+	onSearchDropdown(value: string, options: HTMLOptionElement[]): void;
 	/** callback on add option */
 	onAddOption(value: string): void;
 	/** callback on remove option */
@@ -81,11 +81,11 @@ export class WebcimesSelect
 	/** Get the dom element of the current select */
 	public select: HTMLSelectElement | null;
 	
-	/** Get the dom element of the current wSelect */
-	public wSelect: HTMLElement;
+	/** Get the dom element of the current webcimesSelect */
+	public webcimesSelect: HTMLElement;
 	
-	/** Get the dom element of the current wDropDown */
-	public wDropDown: HTMLElement | null = null;
+	/** Get the dom element of the current webcimesDropdown */
+	public webcimesDropdown: HTMLElement | null = null;
 
 	/** Options of the current select */
 	private options: Options;
@@ -131,9 +131,9 @@ export class WebcimesSelect
 	}
 
 	/**
-	 * Init options or placeholder on wSelect, according selected option on select field
+	 * Init options or placeholder on webcimesSelect, according selected option on select field
 	 */
-	private initWSelectOptions()
+	private initWebcimesSelectOptions()
 	{
 		if(this.select)
 		{
@@ -145,63 +145,63 @@ export class WebcimesSelect
 				}
 			});
 
-			// Remove old event clear selected option on wSelect
-			this.wSelect.querySelectorAll(".wSelect .option .clear").forEach((el) => {
-				el.removeEventListener("click", this.onWSelectClearOption);
+			// Remove old event clear selected option on webcimesSelect
+			this.webcimesSelect.querySelectorAll(".webcimes-select__option .webcimes-select__clear").forEach((el) => {
+				el.removeEventListener("click", this.onWebcimesSelectClearOption);
 			});
 
 			// Remove old option(s)
-			this.wSelect.querySelector(".options")!.innerHTML = "";
+			this.webcimesSelect.querySelector(".webcimes-select__options")!.innerHTML = "";
 			
 			// If an option is selected, show the value
 			if(selectedOptions.length)
 			{
-				this.wSelect.querySelector(".clear")?.classList.add("active");
+				this.webcimesSelect.querySelector(".webcimes-select > .webcimes-select__clear")?.classList.add("webcimes-select__clear--active");
 				selectedOptions.forEach((el) => {
 					let option = document.createElement("template");
 					option.innerHTML = 
-					`<div class="option" data-value="${el.value}">
-						<div class="label" title="${el.innerHTML}">${el.innerHTML}</div>
-						${this.select!.multiple?`<button type="button" class="clear"><div class="cross"></div></button>`:``}
+					`<div class="webcimes-select__option" data-value="${el.value}">
+						<div class="webcimes-select__option-label" title="${el.innerHTML}">${el.innerHTML}</div>
+						${this.select!.multiple?`<button type="button" class="webcimes-select__clear"><div class="webcimes-select__cross"></div></button>`:``}
 					</div>\n`;
-					this.wSelect.querySelector(".options")!.appendChild(option.content);
+					this.webcimesSelect.querySelector(".webcimes-select__options")!.appendChild(option.content);
 				});
 			}
 			// Else if a placeholder string exist, show the value
 			else if(this.options.placeholder)
 			{
-				this.wSelect.querySelector(".clear")?.classList.remove("active");
+				this.webcimesSelect.querySelector(".webcimes-select > .webcimes-select__clear")?.classList.remove("webcimes-select__clear--active");
 				let option = document.createElement("template");
 				option.innerHTML = 
-				`<div class="option placeholder" data-value="">
-					<div class="label" title="${this.options.placeholder}">${this.options.placeholder}</div>
+				`<div class="webcimes-select__option webcimes-select__option--placeholder" data-value="">
+					<div class="webcimes-select__option-label" title="${this.options.placeholder}">${this.options.placeholder}</div>
 				</div>\n`;
-				this.wSelect.querySelector(".options")!.appendChild(option.content);
+				this.webcimesSelect.querySelector(".webcimes-select__options")!.appendChild(option.content);
 			}
 			// Else if no option selected and no placeholder
 			else
 			{
-				this.wSelect.querySelector(".clear")?.classList.remove("active");
+				this.webcimesSelect.querySelector(".webcimes-select > .webcimes-select__clear")?.classList.remove("webcimes-select__clear--active");
 			}
 
-			// Event clear selected option on wSelect
-			this.wSelect.querySelectorAll(".wSelect .option .clear").forEach((el) => {
-				el.addEventListener("click", this.onWSelectClearOption);
+			// Event clear selected option on webcimesSelect
+			this.webcimesSelect.querySelectorAll(".webcimes-select__option .webcimes-select__clear").forEach((el) => {
+				el.addEventListener("click", this.onWebcimesSelectClearOption);
 			});
 		}
 	}
 
 	/**
-	 * Add option on wSelect
+	 * Add option on webcimesSelect
 	 */
-	private addWSelectOption(value: string | null)
+	private addWebcimesSelectOption(value: string | null)
 	{
 		if(value)
 		{
 			// If select single, remove all options selected
 			if(!this.select!.multiple)
 			{
-				this.removeWSelectAllOptions();
+				this.removeWebcimesSelectAllOptions();
 			}
 
 			// Set option selected on select
@@ -209,26 +209,26 @@ export class WebcimesSelect
 			optionEl.setAttribute("selected", "");
 			optionEl.selected = true;
 
-			// Init option on wSelect
-			this.initWSelectOptions();
+			// Init option on webcimesSelect
+			this.initWebcimesSelectOptions();
 
-			// If keepOpenDropDown option true
-			if(this.options.keepOpenDropDown)
+			// If keepOpenDropdown option true
+			if(this.options.keepOpenDropdown)
 			{
 				// Add selected class on dropdown option
-				this.wDropDown?.querySelector(`.option[data-value="${value}"]`)?.classList.add("selected");
+				this.webcimesDropdown?.querySelector(`.webcimes-dropdown__option[data-value="${value}"]`)?.classList.add("webcimes-dropdown__option--selected");
 
-				// Set position and width of wDropDown
-				this.setWDropDownPosition(true);
+				// Set position and width of webcimesDropdown
+				this.setWebcimesDropdownPosition(true);
 			}
 			else
 			{
-				// Destroy wDropDown
-				this.destroyWDropDown();
+				// Destroy webcimesDropdown
+				this.destroyWebcimesDropdown();
 			}
 	
 			// Callback on set option
-			this.wSelect.dispatchEvent(new CustomEvent("onAddOption"));
+			this.webcimesSelect.dispatchEvent(new CustomEvent("onAddOption"));
 			if(typeof this.options.onAddOption === 'function')
 			{
 				this.options.onAddOption(value);
@@ -237,9 +237,9 @@ export class WebcimesSelect
 	}
 
 	/**
-	 * Remove option on wSelect
+	 * Remove option on webcimesSelect
 	 */
-	private removeWSelectOption(value: string | null)
+	private removeWebcimesSelectOption(value: string | null)
 	{
 		if(value)
 		{
@@ -255,26 +255,26 @@ export class WebcimesSelect
 				this.select!.value = "";
 			}
 
-			// Init option on wSelect
-			this.initWSelectOptions();
+			// Init option on webcimesSelect
+			this.initWebcimesSelectOptions();
 
-			// If keepOpenDropDown option true
-			if(this.options.keepOpenDropDown)
+			// If keepOpenDropdown option true
+			if(this.options.keepOpenDropdown)
 			{
 				// Remove selected class on dropdown option
-				this.wDropDown?.querySelector(`.option[data-value="${value}"]`)?.classList.remove("selected");
+				this.webcimesDropdown?.querySelector(`.webcimes-dropdown__option[data-value="${value}"]`)?.classList.remove("webcimes-dropdown__option--selected");
 				
-				// Set position and width of wDropDown
-				this.setWDropDownPosition(true);
+				// Set position and width of webcimesDropdown
+				this.setWebcimesDropdownPosition(true);
 			}
 			else
 			{
-				// Destroy wDropDown
-				this.destroyWDropDown();
+				// Destroy webcimesDropdown
+				this.destroyWebcimesDropdown();
 			}
 	
 			// Callback on set option
-			this.wSelect.dispatchEvent(new CustomEvent("onRemoveOption"));
+			this.webcimesSelect.dispatchEvent(new CustomEvent("onRemoveOption"));
 			if(typeof this.options.onRemoveOption === 'function')
 			{
 				this.options.onRemoveOption(value);
@@ -283,9 +283,9 @@ export class WebcimesSelect
 	}
 
 	/**
-	 * Remove all options on wSelect
+	 * Remove all options on webcimesSelect
 	 */
-	private removeWSelectAllOptions()
+	private removeWebcimesSelectAllOptions()
 	{
 		this.select!.querySelectorAll(`option:not([disabled])`).forEach((el: HTMLOptionElement) => {
 			// Remove option selected on select
@@ -300,28 +300,28 @@ export class WebcimesSelect
 			this.select!.value = "";
 		}
 
-		// Init option on wSelect
-		this.initWSelectOptions();
+		// Init option on webcimesSelect
+		this.initWebcimesSelectOptions();
 
-		// If keepOpenDropDown option true
-		if(this.options.keepOpenDropDown)
+		// If keepOpenDropdown option true
+		if(this.options.keepOpenDropdown)
 		{
 			// Remove selected class on dropdown option
-			this.wDropDown?.querySelectorAll(`.option`).forEach((el) => {
-				el.classList.remove("selected");
+			this.webcimesDropdown?.querySelectorAll(`.webcimes-dropdown__option`).forEach((el) => {
+				el.classList.remove("webcimes-dropdown__option--selected");
 			});
 			
-			// Set position and width of wDropDown
-			this.setWDropDownPosition(true);
+			// Set position and width of webcimesDropdown
+			this.setWebcimesDropdownPosition(true);
 		}
 		else
 		{
-			// Destroy wDropDown
-			this.destroyWDropDown();
+			// Destroy webcimesDropdown
+			this.destroyWebcimesDropdown();
 		}
 	
 		// Callback on set option
-		this.wSelect.dispatchEvent(new CustomEvent("onRemoveAllOptions"));
+		this.webcimesSelect.dispatchEvent(new CustomEvent("onRemoveAllOptions"));
 		if(typeof this.options.onRemoveAllOptions === 'function')
 		{
 			this.options.onRemoveAllOptions();
@@ -329,91 +329,110 @@ export class WebcimesSelect
 	}
 	
 	/**
-	 * Event clear selected option on wSelect
+	 * Event clear selected option on webcimesSelect
 	 */
-	private onWSelectClearOption(e: Event)
+	private onWebcimesSelectClearOption(e: Event)
 	{
-		this.removeWSelectOption((e.target as HTMLElement).closest(".option")!.getAttribute("data-value"));
+		this.removeWebcimesSelectOption((e.target as HTMLElement).closest(".webcimes-select__option")!.getAttribute("data-value"));
 	}
 	
 	/**
-	 * Event clear all selected options on wSelect
+	 * Event clear all selected options on webcimesSelect
 	 */
-	private onWSelectClearAllOptions(e: Event)
+	private onWebcimesSelectClearAllOptions(e: Event)
 	{
-		this.removeWSelectAllOptions();
+		this.removeWebcimesSelectAllOptions();
 	}
 	
 	/**
-	 * Event on keydown on wSelect
+	 * Event on keydown on webcimesSelect
 	 */
-	private onWSelectKeyDown(e: KeyboardEvent)
+	private onWebcimesSelectKeyDown(e: KeyboardEvent)
 	{
-		if(!this.wDropDown)
+		if((e.target as HTMLElement).closest(".webcimes-select > .webcimes-select__clear"))
 		{
-			// Create wDropDown
-			if(e.key == " " || e.key == "Enter" || e.key == "ArrowUp" || e.key == "ArrowDown")
+			if(e.key == "Enter")
 			{
 				e.preventDefault();
-				this.initWDropDown();
+				this.removeWebcimesSelectAllOptions();
+			}
+		}
+		else if((e.target as HTMLElement).closest(".webcimes-select__option .webcimes-select__clear"))
+		{
+			if(e.key == "Enter")
+			{
+				e.preventDefault();
+				this.removeWebcimesSelectOption((e.target as HTMLElement).closest(".webcimes-select__option")!.getAttribute("data-value"));
+			}
+		}
+		else
+		{
+			if(!this.webcimesDropdown)
+			{
+				// Create webcimesDropdown
+				if(e.key == " " || e.key == "Enter" || e.key == "ArrowUp" || e.key == "ArrowDown")
+				{
+					e.preventDefault();
+					this.initWebcimesDropdown();
+				}
 			}
 		}
 	}
 	
 	/**
-	 * Event init wDropDown on click on wSelect
+	 * Event init webcimesDropdown on click on webcimesSelect
 	 */
-	private onWSelectClickInitWDropDown(e: Event)
+	private onWebcimesSelectClickInitWebcimesDropdown(e: Event)
 	{
-		// If wDropDown is null, create wDropDown
-		if(!this.wDropDown && !(e.target as HTMLElement).closest(".clear"))
+		// If webcimesDropdown is null, create webcimesDropdown
+		if(!this.webcimesDropdown && !(e.target as HTMLElement).closest(".webcimes-select__clear"))
 		{
-			this.initWDropDown();
+			this.initWebcimesDropdown();
 		}
-		// Close wDropDown
+		// Close webcimesDropdown
 		else
 		{
-			this.destroyWDropDown();
+			this.destroyWebcimesDropdown();
 		}
 	}
 
 	/**
-	 * Init wDropDown
+	 * Init webcimesDropdown
 	 */
-	private initWDropDown()
+	private initWebcimesDropdown()
 	{
-		this.wSelect.classList.add("open");
+		this.webcimesSelect.classList.add("webcimes-select--open");
 					
-		// Append wDropDown after select
+		// Append webcimesDropdown after select
 		document.body.insertAdjacentHTML("beforeend", 
-			`<div class="wDropDown" ${(this.select!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="-1">
-				${(this.options.allowSearch?`<div class="search"><input type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholder?`placeholder="${this.options.searchPlaceholder}"`:``)}></div>`:``)}
-				<div class="options" style="max-height:${this.options.maxHeightOptions};" tabindex="-1"></div>
+			`<div class="webcimes-dropdown" ${(this.select!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="-1">
+				${(this.options.allowSearch?`<input class="webcimes-dropdown__search-input" type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholder?`placeholder="${this.options.searchPlaceholder}"`:``)}>`:``)}
+				<div class="webcimes-dropdown__options" style="max-height:${this.options.maxHeightOptions};" tabindex="-1"></div>
 			</div>`
 		);
 
-		// Define wDropDown
-		this.wDropDown = document.body.lastElementChild as HTMLElement;
+		// Define webcimesDropdown
+		this.webcimesDropdown = document.body.lastElementChild as HTMLElement;
 
-		// Set options on wDropDown
+		// Set options on webcimesDropdown
 		let options = Array.from(this.select!.options).filter((el) => {
 			if(el.value !== "")
 			{
 				return el;
 			}
 		});
-		this.setWDropDownOptions(Array.from(options));
+		this.setWebcimesDropdownOptions(Array.from(options));
 		
-		// Set position and width of wDropDown
-		this.setWDropDownPosition();
+		// Set position and width of webcimesDropdown
+		this.setWebcimesDropdownPosition();
 
-		// By default set focus on wDropDown
-		this.wDropDown.focus();
+		// By default set focus on webcimesDropdown
+		this.webcimesDropdown.focus();
 
 		// If allowSearch active
 		if(this.options.allowSearch)
 		{
-			let searchEl = (this.wDropDown.querySelector("input[name='search']") as HTMLInputElement);
+			let searchEl = (this.webcimesDropdown.querySelector(".webcimes-dropdown__search-input") as HTMLInputElement);
 
 			// Set focus on search field
 			if(this.options.searchAutoFocus)
@@ -421,49 +440,49 @@ export class WebcimesSelect
 				searchEl.focus();
 			}
 
-			// Event search options on wDropDown
-			searchEl.addEventListener("input", this.onWDropDownSearch);
+			// Event search options on webcimesDropdown
+			searchEl.addEventListener("input", this.onWebcimesDropdownSearch);
 		}
 
-		// Event on keydown on wDropDown 
-		this.wDropDown.addEventListener("keydown", this.onWDropDownKeyPress);
+		// Event on keydown on webcimesDropdown 
+		this.webcimesDropdown.addEventListener("keydown", this.onWebcimesDropdownKeyPress);
 
-		// Event on mouseover option on wDropDown 
-		this.wDropDown.querySelectorAll(".option:not(.disabled)").forEach((el) => {
-			el.addEventListener("mouseover", this.onWDropDownMouseOverOption)
+		// Event on mouseover option on webcimesDropdown 
+		this.webcimesDropdown.querySelectorAll(".webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)").forEach((el) => {
+			el.addEventListener("mouseover", this.onWebcimesDropdownMouseOverOption)
 		});
 
-		// Event on resize on WDropDown
-		window.addEventListener("resize", this.onWDropDownResize);
+		// Event on resize on WebcimesDropdown
+		window.addEventListener("resize", this.onWebcimesDropdownResize);
 
-		// Event destroy on click or keydown outside wDropDown
+		// Event destroy on click or keydown outside webcimesDropdown
 		['click', 'keydown'].forEach((typeEvent) => {
-			document.addEventListener(typeEvent, this.onWDropDownDestroy);
+			document.addEventListener(typeEvent, this.onWebcimesDropdownDestroy);
 		});
 		
 		// Callback on init dropdown
-		this.wSelect.dispatchEvent(new CustomEvent("onInitDropDown"));
-		if(typeof this.options.onInitDropDown === 'function')
+		this.webcimesSelect.dispatchEvent(new CustomEvent("onInitDropdown"));
+		if(typeof this.options.onInitDropdown === 'function')
 		{
-			this.options.onInitDropDown();
+			this.options.onInitDropdown();
 		}
 	}
 
 	/**
-	 * Set wDropDown options
+	 * Set webcimesDropdown options
 	 */
-	private setWDropDownOptions(options: HTMLOptionElement[])
+	private setWebcimesDropdownOptions(options: HTMLOptionElement[])
 	{
-		// Remove old event on select option on WDropDown
-		this.wDropDown!.querySelectorAll(".option:not(.disabled)").forEach((el: HTMLElement) => {
-			el.removeEventListener("click", this.onWDropDownClickOption);
+		// Remove old event on select option on WebcimesDropdown
+		this.webcimesDropdown!.querySelectorAll(".webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)").forEach((el: HTMLElement) => {
+			el.removeEventListener("click", this.onWebcimesDropdownClickOption);
 		});
 
 		// Set options
 		let optionsEl = document.createElement("template");
 		options.forEach((el, index) => {
 			let optionEl = document.createElement("template");
-			optionEl.innerHTML = `<div class="option ${(el.selected?`selected`:``)} ${index==0?"highlighted":""} ${(el.disabled?`disabled`:``)} ${el.classList.toString()}" data-value="${el.value}">${el.innerHTML}</div>\n`;
+			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${index==0?"webcimes-dropdown__option--highlighted":""} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" data-value="${el.value}">${el.innerHTML}</div>\n`;
 
 			// If option has optgroup parent
 			if(el.closest("optgroup"))
@@ -471,18 +490,18 @@ export class WebcimesSelect
 				let label = el.closest("optgroup")!.label;
 
 				// Create the optgroup if has not already been created
-				if(!optionsEl.content.querySelector(`.optGroup[data-label='${label}']`))
+				if(!optionsEl.content.querySelector(`.webcimes-dropdown__opt-group[data-label='${label}']`))
 				{
 					let optGroupEl = document.createElement("template");
 					optGroupEl.innerHTML = 
-					`<div class="optGroup" data-label="${label}">
-						<div class="label">${label}</div>
+					`<div class="webcimes-dropdown__opt-group" data-label="${label}">
+						<div class="webcimes-dropdown__opt-group-label">${label}</div>
 					</div>\n`;
 					optionsEl.content.appendChild(optGroupEl.content);
 				}
 
 				// Add option to optgroup
-				optionsEl.content.querySelector(`.optGroup[data-label='${label}']`)?.appendChild(optionEl.content);
+				optionsEl.content.querySelector(`.webcimes-dropdown__opt-group[data-label='${label}']`)?.appendChild(optionEl.content);
 			}
 			else
 			{
@@ -490,63 +509,63 @@ export class WebcimesSelect
 				optionsEl.content.appendChild(optionEl.content);
 			}
 		});
-		this.wDropDown!.querySelector(".options")!.replaceChildren(optionsEl.content);
+		this.webcimesDropdown!.querySelector(".webcimes-dropdown__options")!.replaceChildren(optionsEl.content);
 
-		// Event on select option on WDropDown
-		this.wDropDown!.querySelectorAll(".option:not(.disabled)").forEach((el: HTMLElement) => {
-			el.addEventListener("click", this.onWDropDownClickOption);
+		// Event on select option on WebcimesDropdown
+		this.webcimesDropdown!.querySelectorAll(".webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)").forEach((el: HTMLElement) => {
+			el.addEventListener("click", this.onWebcimesDropdownClickOption);
 		});
 	}
 
 	/**
-	 * Set wDropDown position and width, relative to wSelect
+	 * Set webcimesDropdown position and width, relative to webcimesSelect
 	 */
-	private setWDropDownPosition(keepDirection: boolean = false)
+	private setWebcimesDropdownPosition(keepDirection: boolean = false)
 	{
-		if(this.wDropDown)
+		if(this.webcimesDropdown)
 		{
-			let wSelectRect = this.wSelect.getBoundingClientRect();
+			let webcimesSelectRect = this.webcimesSelect.getBoundingClientRect();
 
-			// If the wDropDown is too high for the bottom of the window, then we direct it to the top (or if keepDirection set to true and directionTop already exist)
+			// If the webcimesDropdown is too high for the bottom of the window, then we direct it to the top (or if keepDirection set to true and webcimes-select--direction-top already exist)
 			if(
-				(keepDirection && this.wSelect.classList.contains("directionTop")) || 
-				(!keepDirection && wSelectRect.bottom + this.wDropDown.getBoundingClientRect().height > window.innerHeight)
+				(keepDirection && this.webcimesSelect.classList.contains("webcimes-select--direction-top")) || 
+				(!keepDirection && webcimesSelectRect.bottom + this.webcimesDropdown.getBoundingClientRect().height > window.innerHeight)
 			)
 			{
-				this.wSelect.classList.remove("directionBottom");
-				this.wSelect.classList.add("directionTop");
-				this.wDropDown.classList.remove("directionBottom");
-				this.wDropDown.classList.add("directionTop");
-				this.wDropDown.style.top = (wSelectRect.top - this.wDropDown.getBoundingClientRect().height + window.scrollY)+"px";
+				this.webcimesSelect.classList.remove("webcimes-select--direction-bottom");
+				this.webcimesSelect.classList.add("webcimes-select--direction-top");
+				this.webcimesDropdown.classList.remove("webcimes-dropdown--direction-bottom");
+				this.webcimesDropdown.classList.add("webcimes-dropdown--direction-top");
+				this.webcimesDropdown.style.top = (webcimesSelectRect.top - this.webcimesDropdown.getBoundingClientRect().height + window.scrollY)+"px";
 			}
 			// Else direct it to the bottom
 			else
 			{
-				this.wSelect.classList.remove("directionTop");
-				this.wSelect.classList.add("directionBottom");
-				this.wDropDown.classList.remove("directionTop");
-				this.wDropDown.classList.add("directionBottom");
-				this.wDropDown.style.top = (wSelectRect.bottom + window.scrollY)+"px";
+				this.webcimesSelect.classList.remove("webcimes-select--direction-top");
+				this.webcimesSelect.classList.add("webcimes-select--direction-bottom");
+				this.webcimesDropdown.classList.remove("webcimes-dropdown--direction-top");
+				this.webcimesDropdown.classList.add("webcimes-dropdown--direction-bottom");
+				this.webcimesDropdown.style.top = (webcimesSelectRect.bottom + window.scrollY)+"px";
 			}
 
-			// Set wDropDown left position
-			this.wDropDown.style.left = (wSelectRect.left + window.scrollX)+"px";
+			// Set webcimesDropdown left position
+			this.webcimesDropdown.style.left = (webcimesSelectRect.left + window.scrollX)+"px";
 
-			// Set wDropDown width
-			this.wDropDown.style.width = wSelectRect.width+"px";
+			// Set webcimesDropdown width
+			this.webcimesDropdown.style.width = webcimesSelectRect.width+"px";
 		}
 	}
 
 	/**
 	 * Set highlight option
 	 */
-	private setWDropDownHighlightOption(index: number, autoScroll: boolean)
+	private setWebcimesDropdownHighlightOption(index: number, autoScroll: boolean)
 	{
-		let highlightedOption = this.wDropDown!.querySelector(".option.highlighted");
-		let optionsEl = this.wDropDown!.querySelectorAll(`.option:not(.disabled)`);
-		highlightedOption?.classList.remove("highlighted");
+		let highlightedOption = this.webcimesDropdown!.querySelector(".webcimes-dropdown__option--highlighted");
+		let optionsEl = this.webcimesDropdown!.querySelectorAll(`.webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)`);
+		highlightedOption?.classList.remove("webcimes-dropdown__option--highlighted");
 		highlightedOption = optionsEl[index];
-		highlightedOption.classList.add("highlighted");
+		highlightedOption.classList.add("webcimes-dropdown__option--highlighted");
 		if(autoScroll)
 		{
 			highlightedOption.scrollIntoView({behavior: "smooth", block: "nearest"});
@@ -554,45 +573,49 @@ export class WebcimesSelect
 	}
 
 	/**
-	 * Destroy wDropDown
+	 * Destroy webcimesDropdown
 	 */
-	private destroyWDropDown()
+	private destroyWebcimesDropdown()
 	{
-		if(this.wDropDown)
+		if(this.webcimesDropdown)
 		{
-			// Destroy wDropDown
-			this.wSelect.classList.remove("open");
-			(this.wDropDown.querySelector("input[name='search']") as HTMLElement).removeEventListener("input", this.onWDropDownSearch);
-			this.wDropDown.removeEventListener("keydown", this.onWDropDownKeyPress);
-			window.removeEventListener("resize", this.onWDropDownResize);
+			// Destroy webcimesDropdown
+			this.webcimesSelect.classList.remove("webcimes-select--open");
+			(this.webcimesDropdown.querySelector(".webcimes-dropdown__search-input") as HTMLElement).removeEventListener("input", this.onWebcimesDropdownSearch);
+			this.webcimesDropdown.removeEventListener("keydown", this.onWebcimesDropdownKeyPress);
+			window.removeEventListener("resize", this.onWebcimesDropdownResize);
 			['click', 'keydown'].forEach((typeEvent) => {
-				document.removeEventListener(typeEvent, this.onWDropDownDestroy);
+				document.removeEventListener(typeEvent, this.onWebcimesDropdownDestroy);
 			});
-			this.wDropDown.querySelectorAll(".option:not(.disabled)").forEach((el: HTMLElement) => {
-				el.removeEventListener("click", this.onWDropDownClickOption);
+			this.webcimesDropdown.querySelectorAll(".webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)").forEach((el: HTMLElement) => {
+				el.removeEventListener("click", this.onWebcimesDropdownClickOption);
 			});
-			this.wDropDown.remove();
-			this.wDropDown = null;
+			this.webcimesDropdown.remove();
+			this.webcimesDropdown = null;
 
-			// Set focus to wSelect after destroy wDropDown (only if no other wDropDown is open)
-			if(!document.querySelector(".wDropDown"))
+			// Set focus to webcimesSelect after destroy webcimesDropdown (only if no other webcimesDropdown is open)
+			if(!document.querySelector(".webcimes-dropdown"))
 			{
-				this.wSelect.focus();
+				this.webcimesSelect.focus();
 			}
 
+			// Remove class direction on webcimesSelect after destroy dropdown
+			this.webcimesSelect.classList.remove("webcimes-select--direction-bottom");
+			this.webcimesSelect.classList.remove("webcimes-select--direction-top");
+
 			// Callback on destroy dropdown
-			this.wSelect.dispatchEvent(new CustomEvent("onDestroyDropDown"));
-			if(typeof this.options.onDestroyDropDown === 'function')
+			this.webcimesSelect.dispatchEvent(new CustomEvent("onDestroyDropdown"));
+			if(typeof this.options.onDestroyDropdown === 'function')
 			{
-				this.options.onDestroyDropDown();
+				this.options.onDestroyDropdown();
 			}
 		}
 	}
 
 	/**
-	 * Event search options on wDropDown
+	 * Event search options on webcimesDropdown
 	 */
-	private onWDropDownSearch(e: Event)
+	private onWebcimesDropdownSearch(e: Event)
 	{
 		// Search options
 		let regexSearch = new RegExp((e.target as HTMLInputElement).value, "i");
@@ -610,109 +633,109 @@ export class WebcimesSelect
 		if(options.length == 0 && this.options.searchTextNoResults)
 		{
 			let optionEl = document.createElement("option");
-			optionEl.classList.add("noResults");
+			optionEl.classList.add("webcimes-dropdown__option--no-results");
 			optionEl.innerHTML = this.options.searchTextNoResults;
 			options.push(optionEl);
 		}
 
-		// Set options on wDropDown
-		this.setWDropDownOptions(options);
+		// Set options on webcimesDropdown
+		this.setWebcimesDropdownOptions(options);
 		
-		// Set position and width of wDropDown
-		this.setWDropDownPosition(true);
+		// Set position and width of webcimesDropdown
+		this.setWebcimesDropdownPosition(true);
 
 		// Callback on search dropdown
-		this.wSelect.dispatchEvent(new CustomEvent("onSearchDropDown"));
-		if(typeof this.options.onSearchDropDown === 'function')
+		this.webcimesSelect.dispatchEvent(new CustomEvent("onSearchDropdown"));
+		if(typeof this.options.onSearchDropdown === 'function')
 		{
-			this.options.onSearchDropDown((e.target as HTMLInputElement).value, options);
+			this.options.onSearchDropdown((e.target as HTMLInputElement).value, options);
 		}
 	}
 
 	/**
-	 * Event on keydown on wDropDown 
+	 * Event on keydown on webcimesDropdown 
 	 */
-	private onWDropDownKeyPress(e: KeyboardEvent)
+	private onWebcimesDropdownKeyPress(e: KeyboardEvent)
 	{
-		// If KeyboardEvent not comming from wSelect
-		if(e.target != this.wSelect)
+		// If KeyboardEvent not comming from webcimesSelect
+		if(e.target != this.webcimesSelect)
 		{
-			let highlightedOption = this.wDropDown!.querySelector(".option.highlighted");
+			let highlightedOption = this.webcimesDropdown!.querySelector(".webcimes-dropdown__option--highlighted");
 			if(highlightedOption)
 			{
 				if(e.key == "ArrowUp" || e.key == "ArrowDown")
 				{
 					e.preventDefault();
-					let optionsEl = this.wDropDown!.querySelectorAll(`.option:not(.disabled)`);
+					let optionsEl = this.webcimesDropdown!.querySelectorAll(`.webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)`);
 					let highlightedIndex = Array.from(optionsEl).indexOf(highlightedOption);
-					this.setWDropDownHighlightOption((e.key == "ArrowUp" ? (highlightedIndex-1 >= 0 ? highlightedIndex-1 : 0) : (highlightedIndex+1 <= optionsEl.length-1 ? highlightedIndex+1 : optionsEl.length-1)), true);
+					this.setWebcimesDropdownHighlightOption((e.key == "ArrowUp" ? (highlightedIndex-1 >= 0 ? highlightedIndex-1 : 0) : (highlightedIndex+1 <= optionsEl.length-1 ? highlightedIndex+1 : optionsEl.length-1)), true);
 				}
 				if(e.key == "Enter")
 				{
 					e.preventDefault();
-					if(highlightedOption.classList.contains("selected"))
+					if(highlightedOption.classList.contains("webcimes-dropdown__option--selected"))
 					{
-						this.removeWSelectOption(highlightedOption.getAttribute("data-value"));
+						this.removeWebcimesSelectOption(highlightedOption.getAttribute("data-value"));
 					}
 					else
 					{
-						this.addWSelectOption(highlightedOption.getAttribute("data-value"));
+						this.addWebcimesSelectOption(highlightedOption.getAttribute("data-value"));
 					}
 				}
 			}
 			if(e.key == "Escape")
 			{
 				e.preventDefault();
-				this.destroyWDropDown();
+				this.destroyWebcimesDropdown();
 			}
 			if(e.key == "Tab")
 			{
 				e.preventDefault();
-				this.destroyWDropDown();
+				this.destroyWebcimesDropdown();
 			}
 		}
 	}
 
 	/**
-	 * Event on mouseover option on wDropDown 
+	 * Event on mouseover option on webcimesDropdown 
 	 */
-	private onWDropDownMouseOverOption(e: MouseEvent)
+	private onWebcimesDropdownMouseOverOption(e: MouseEvent)
 	{
-		let optionsEl = this.wDropDown!.querySelectorAll(`.option:not(.disabled)`);
-		this.setWDropDownHighlightOption(Array.from(optionsEl).indexOf(e.target as HTMLElement), false);
+		let optionsEl = this.webcimesDropdown!.querySelectorAll(`.webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)`);
+		this.setWebcimesDropdownHighlightOption(Array.from(optionsEl).indexOf(e.target as HTMLElement), false);
 	}
 
 	/**
-	 * Event on resize on WDropDown
+	 * Event on resize on WebcimesDropdown
 	 */
-	private onWDropDownResize(e: Event)
+	private onWebcimesDropdownResize(e: Event)
 	{
-		this.setWDropDownPosition();
+		this.setWebcimesDropdownPosition();
 	}
 
 	/**
-	 * Event on select option on WDropDown
+	 * Event on select option on WebcimesDropdown
 	 */
-	private onWDropDownClickOption(e: Event)
+	private onWebcimesDropdownClickOption(e: Event)
 	{
-		if((e.target as HTMLElement).classList.contains("selected"))
+		if((e.target as HTMLElement).classList.contains("webcimes-dropdown__option--selected"))
 		{
-			this.removeWSelectOption((e.target as HTMLElement).getAttribute("data-value"));
+			this.removeWebcimesSelectOption((e.target as HTMLElement).getAttribute("data-value"));
 		}
 		else
 		{
-			this.addWSelectOption((e.target as HTMLElement).getAttribute("data-value"));
+			this.addWebcimesSelectOption((e.target as HTMLElement).getAttribute("data-value"));
 		}
 	}
 
 	/**
-	 * Event destroy on click or keydown outside wDropDown
+	 * Event destroy on click or keydown outside webcimesDropdown
 	 */
-	private onWDropDownDestroy(e: Event)
+	private onWebcimesDropdownDestroy(e: Event)
 	{
-		if((e.target as HTMLElement).closest(".wSelect") != this.wSelect && (e.target as HTMLElement).closest(".wDropDown") != this.wDropDown)
+		if((e.target as HTMLElement).closest(".webcimes-select") != this.webcimesSelect && (e.target as HTMLElement).closest(".webcimes-dropdown") != this.webcimesDropdown)
 		{
-			this.destroyWDropDown();
+			this.destroyWebcimesDropdown();
 		}
 	}
 
@@ -736,12 +759,12 @@ export class WebcimesSelect
 			searchAutoFocus: true,
 			searchPlaceholder: "Search",
 			searchTextNoResults: "No results found",
-			keepOpenDropDown: true,
+			keepOpenDropdown: true,
 			onInit: () => {},
 			onDestroy(){},
-			onInitDropDown: () => {},
-			onDestroyDropDown: () => {},
-			onSearchDropDown: () => {},
+			onInitDropdown: () => {},
+			onDestroyDropdown: () => {},
+			onSearchDropdown: () => {},
 			onAddOption: () => {},
 			onRemoveOption: () => {},
 			onRemoveAllOptions: () => {},
@@ -749,16 +772,16 @@ export class WebcimesSelect
 		this.options = {...defaults, ...options};
 
 		// Bind "this" to all events
-		this.onWSelectClearOption = this.onWSelectClearOption.bind(this);
-		this.onWSelectClearAllOptions = this.onWSelectClearAllOptions.bind(this);
-		this.onWSelectKeyDown = this.onWSelectKeyDown.bind(this);
-		this.onWSelectClickInitWDropDown = this.onWSelectClickInitWDropDown.bind(this);
-		this.onWDropDownSearch = this.onWDropDownSearch.bind(this);
-		this.onWDropDownKeyPress = this.onWDropDownKeyPress.bind(this);
-		this.onWDropDownMouseOverOption = this.onWDropDownMouseOverOption.bind(this);
-		this.onWDropDownResize = this.onWDropDownResize.bind(this);
-		this.onWDropDownClickOption = this.onWDropDownClickOption.bind(this);
-		this.onWDropDownDestroy = this.onWDropDownDestroy.bind(this);
+		this.onWebcimesSelectClearOption = this.onWebcimesSelectClearOption.bind(this);
+		this.onWebcimesSelectClearAllOptions = this.onWebcimesSelectClearAllOptions.bind(this);
+		this.onWebcimesSelectKeyDown = this.onWebcimesSelectKeyDown.bind(this);
+		this.onWebcimesSelectClickInitWebcimesDropdown = this.onWebcimesSelectClickInitWebcimesDropdown.bind(this);
+		this.onWebcimesDropdownSearch = this.onWebcimesDropdownSearch.bind(this);
+		this.onWebcimesDropdownKeyPress = this.onWebcimesDropdownKeyPress.bind(this);
+		this.onWebcimesDropdownMouseOverOption = this.onWebcimesDropdownMouseOverOption.bind(this);
+		this.onWebcimesDropdownResize = this.onWebcimesDropdownResize.bind(this);
+		this.onWebcimesDropdownClickOption = this.onWebcimesDropdownClickOption.bind(this);
+		this.onWebcimesDropdownDestroy = this.onWebcimesDropdownDestroy.bind(this);
 		
 		// Call init method
 		this.init();
@@ -776,17 +799,17 @@ export class WebcimesSelect
 			// Hide select
 			this.select.style.display = "none";
 
-			// Append wSelect after select
+			// Append webcimesSelect after select
 			this.select.insertAdjacentHTML("afterend", 
-				`<div class="wSelect ${(this.select.multiple?`multiple`:``)} ${(this.options.setClass?this.options.setClass:``)}" ${(this.options.setId?`id="${this.options.setId}"`:``)} ${(this.select.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="0">
-					<div class="options"></div>
-					${(this.options.allowClear?`<button type="button" class="clear"><div class="cross"></div></button>`:'')}
-					<div class="arrow"></div>
+				`<div class="webcimes-select ${(this.select.multiple?`webcimes-select--multiple`:``)} ${(this.options.setClass?this.options.setClass:``)}" ${(this.options.setId?`id="${this.options.setId}"`:``)} ${(this.select.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="0">
+					<div class="webcimes-select__options"></div>
+					${(this.options.allowClear?`<button type="button" class="webcimes-select__clear"><div class="webcimes-select__cross"></div></button>`:'')}
+					<div class="webcimes-select__arrow"></div>
 				</div>`
 			);
 
-			// Define wSelect
-			this.wSelect = this.select.nextElementSibling as HTMLElement;
+			// Define webcimesSelect
+			this.webcimesSelect = this.select.nextElementSibling as HTMLElement;
 
 			// Set placeholder
 			if(!this.options.placeholder)
@@ -797,40 +820,40 @@ export class WebcimesSelect
 				}
 			}
 
-			// Width of wSelect
+			// Width of webcimesSelect
 			if(this.options.width != "auto" && this.options.width)
 			{
-				this.wSelect.style.setProperty("width", this.options.width);
+				this.webcimesSelect.style.setProperty("width", this.options.width);
 			}
 
 			// Height of select
 			if(this.options.height != "auto" && this.options.height)
 			{
-				this.wSelect.style.setProperty("height", this.options.height);
+				this.webcimesSelect.style.setProperty("height", this.options.height);
 			}
 
 			// Style
 			if(this.options.style)
 			{
-				let oldStyle = this.wSelect.getAttribute("style");
-				this.wSelect.setAttribute("style", oldStyle+this.options.style);
+				let oldStyle = this.webcimesSelect.getAttribute("style");
+				this.webcimesSelect.setAttribute("style", oldStyle+this.options.style);
 			}
 
-			// Set wSelect value (or placeholder)
-			this.initWSelectOptions();
+			// Set webcimesSelect value (or placeholder)
+			this.initWebcimesSelectOptions();
 
-			// Event clear all selected options on wSelect
-			this.wSelect.querySelector(".wSelect > .clear")?.addEventListener("click", this.onWSelectClearAllOptions);
+			// Event clear all selected options on webcimesSelect
+			this.webcimesSelect.querySelector(".webcimes-select > .webcimes-select__clear")?.addEventListener("click", this.onWebcimesSelectClearAllOptions);
 
-			// Event on keydown on wSelect
-			this.wSelect.addEventListener("keydown", this.onWSelectKeyDown);
+			// Event on keydown on webcimesSelect
+			this.webcimesSelect.addEventListener("keydown", this.onWebcimesSelectKeyDown);
 
-			// Event init wDropDown on click on wSelect
-			this.wSelect.addEventListener("click", this.onWSelectClickInitWDropDown);
+			// Event init webcimesDropdown on click on webcimesSelect
+			this.webcimesSelect.addEventListener("click", this.onWebcimesSelectClickInitWebcimesDropdown);
 
 			// Callback on init select (set a timeout of zero, to wait for some dom to load)
 			setTimeout(() => {
-				this.wSelect.dispatchEvent(new CustomEvent("onInit"));
+				this.webcimesSelect.dispatchEvent(new CustomEvent("onInit"));
 				if(typeof this.options.onInit === 'function')
 				{
 					this.options.onInit();
@@ -844,15 +867,15 @@ export class WebcimesSelect
 	 */
 	public destroy()
 	{
-		this.wSelect.querySelectorAll(".wSelect .option .clear").forEach((el) => {
-			el.removeEventListener("click", this.onWSelectClearOption);
+		this.webcimesSelect.querySelectorAll(".webcimes-select__option .webcimes-select__clear").forEach((el) => {
+			el.removeEventListener("click", this.onWebcimesSelectClearOption);
 		});
-		this.wSelect.querySelector(".wSelect > .clear")?.removeEventListener("click", this.onWSelectClearAllOptions);
-		this.wSelect.removeEventListener("keydown", this.onWSelectKeyDown);
-		this.wSelect.removeEventListener("click", this.onWSelectClickInitWDropDown);
+		this.webcimesSelect.querySelector(".webcimes-select > .webcimes-select__clear")?.removeEventListener("click", this.onWebcimesSelectClearAllOptions);
+		this.webcimesSelect.removeEventListener("keydown", this.onWebcimesSelectKeyDown);
+		this.webcimesSelect.removeEventListener("click", this.onWebcimesSelectClickInitWebcimesDropdown);
 
 		// Callback on destroy select
-		this.wSelect.dispatchEvent(new CustomEvent("onDestroy"));
+		this.webcimesSelect.dispatchEvent(new CustomEvent("onDestroy"));
 		if(typeof this.options.onDestroy === 'function')
 		{
 			this.options.onDestroy();
