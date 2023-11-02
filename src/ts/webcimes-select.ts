@@ -406,7 +406,7 @@ export class WebcimesSelect
 		// Append webcimesDropdown after select
 		document.body.insertAdjacentHTML("beforeend", 
 			`<div class="webcimes-dropdown" ${(this.select!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="-1">
-				${(this.options.allowSearch?`<input class="webcimes-dropdown__search-input" type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholder?`placeholder="${this.options.searchPlaceholder}"`:``)}>`:``)}
+				${(this.options.allowSearch?`<input class="webcimes-dropdown__search-input" type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholder?`placeholder="${this.options.searchPlaceholder}" title="${this.options.searchPlaceholder}"`:``)}>`:``)}
 				<div class="webcimes-dropdown__options" style="max-height:${this.options.maxHeightOptions};" tabindex="-1"></div>
 			</div>`
 		);
@@ -482,7 +482,7 @@ export class WebcimesSelect
 		let optionsEl = document.createElement("template");
 		options.forEach((el, index) => {
 			let optionEl = document.createElement("template");
-			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${index==0?"webcimes-dropdown__option--highlighted":""} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" data-value="${el.value}">${el.innerHTML}</div>\n`;
+			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${index==0?"webcimes-dropdown__option--highlighted":""} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" data-value="${el.value}" title="${el.innerHTML}">${el.innerHTML}</div>\n`;
 
 			// If option has optgroup parent
 			if(el.closest("optgroup"))
@@ -494,7 +494,7 @@ export class WebcimesSelect
 				{
 					let optGroupEl = document.createElement("template");
 					optGroupEl.innerHTML = 
-					`<div class="webcimes-dropdown__opt-group" data-label="${label}">
+					`<div class="webcimes-dropdown__opt-group" data-label="${label}" title="${label}">
 						<div class="webcimes-dropdown__opt-group-label">${label}</div>
 					</div>\n`;
 					optionsEl.content.appendChild(optGroupEl.content);

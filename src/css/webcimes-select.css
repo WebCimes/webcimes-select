@@ -152,7 +152,7 @@
 }
 .webcimes-select__option
 {
-	flex: 0 0 auto;
+	flex: 0 1 auto;
 	margin: var(--select-option-margin);
 	border: var(--select-option-multiple-border);
 	border-color: transparent;
@@ -170,6 +170,8 @@
 .webcimes-select__option-label
 {
 	padding: var(--select-option-padding);
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 .webcimes-select--multiple .webcimes-select__option .webcimes-select__clear
 {
@@ -181,7 +183,7 @@
 	border-right: none;
 	background: var(--select-option-multiple-clear-background);
 	margin: 0;
-	padding: 0;
+	padding: 0 10px;
 	transition: background 0.3s;
 }
 .webcimes-select--multiple .webcimes-select__option .webcimes-select__clear:hover,
@@ -258,6 +260,8 @@
 {
 	padding: var(--select-dropdown-option-padding);
 	font-weight: 600;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 .webcimes-dropdown__options
 {
@@ -267,6 +271,8 @@
 {
 	padding: var(--select-dropdown-option-padding);
 	cursor: pointer;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 .webcimes-dropdown__option--selected
 {
