@@ -6,9 +6,7 @@ document.addEventListener("DOMContentLoaded", function()
 {
     let selectCity = new WebcimesSelect({
         element: document.querySelector("select[name='city']"),
-        // width: "200px",
-        // height: "100px",
-        // searchAutoFocus: false,
+        keepOpenDropdown: true,
         onInit(){
             console.log("onInit");
         },
@@ -38,17 +36,8 @@ document.addEventListener("DOMContentLoaded", function()
             console.log("onRemoveAllOptions");
         },
     });
-    let selectTown = new WebcimesSelect({
-        element: document.querySelector("select[name='town']"),
-        searchAutoFocus: true,
-        // beforeDestroy: () => {
-        //     console.log("destroy modal 1");
-        // },
-        beforeDestroy(){
-            console.log("destroy modal 1");
-        },
+
+    let selectCity2 = new WebcimesSelect({
+        element: document.querySelector("select[name='city2']"),
     });
-    // document.addEventListener("click", () => {
-    //     selectCity.destroy();
-    // });
 });

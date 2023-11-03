@@ -42,7 +42,7 @@ interface Options {
 	/** add extra css style to select, default null */
 	style: string | null;
 	/** set placeholder text, default null */
-	placeholder: string | null;
+	placeholderText: string | null;
 	/** allow clear selected options, default true */
 	allowClear: boolean;
 	/** allow search options, default true */
@@ -50,10 +50,10 @@ interface Options {
 	/** autofocus on search field when open select, default true */
 	searchAutoFocus: boolean;
 	/** set placeholder text on search field, default "Search" */
-	searchPlaceholder: string | null;
+	searchPlaceholderText: string | null;
 	/** set text for no results found on search, default "No results found" */
-	searchTextNoResults: string | null;
-	/** keep dropdown open after selecting an option */
+	searchNoResultsText: string | null;
+	/** keep dropdown open after selecting an option, default false */
 	keepOpenDropdown: boolean;
 	/** callback on init select */
 	onInit(): void;
@@ -61,7 +61,7 @@ interface Options {
 	onDestroy(): void;
 	/** callback on init dropdown */
 	onInitDropdown(): void;
-	/** callback on hide dropdown */
+	/** callback on destroy dropdown */
 	onDestroyDropdown(): void;
 	/** callback on search dropdown */
 	onSearchDropdown(value: string, options: HTMLOptionElement[]): void;
@@ -168,13 +168,13 @@ export class WebcimesSelect
 				});
 			}
 			// Else if a placeholder string exist, show the value
-			else if(this.options.placeholder)
+			else if(this.options.placeholderText)
 			{
 				this.webcimesSelect.querySelector(".webcimes-select > .webcimes-select__clear")?.classList.remove("webcimes-select__clear--active");
 				let option = document.createElement("template");
 				option.innerHTML = 
 				`<div class="webcimes-select__option webcimes-select__option--placeholder" data-value="">
-					<div class="webcimes-select__option-label" title="${this.options.placeholder}">${this.options.placeholder}</div>
+					<div class="webcimes-select__option-label" title="${this.options.placeholderText}">${this.options.placeholderText}</div>
 				</div>\n`;
 				this.webcimesSelect.querySelector(".webcimes-select__options")!.appendChild(option.content);
 			}
@@ -406,7 +406,7 @@ export class WebcimesSelect
 		// Append webcimesDropdown after select
 		document.body.insertAdjacentHTML("beforeend", 
 			`<div class="webcimes-dropdown" ${(this.select!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="-1">
-				${(this.options.allowSearch?`<input class="webcimes-dropdown__search-input" type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholder?`placeholder="${this.options.searchPlaceholder}" title="${this.options.searchPlaceholder}"`:``)}>`:``)}
+				${(this.options.allowSearch?`<input class="webcimes-dropdown__search-input" type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholderText?`placeholder="${this.options.searchPlaceholderText}" title="${this.options.searchPlaceholderText}"`:``)}>`:``)}
 				<div class="webcimes-dropdown__options" style="max-height:${this.options.maxHeightOptions};" tabindex="-1"></div>
 			</div>`
 		);
@@ -630,11 +630,11 @@ export class WebcimesSelect
 		});
 
 		// If no option match the search, and searchTextNoResults not null, then show no results
-		if(options.length == 0 && this.options.searchTextNoResults)
+		if(options.length == 0 && this.options.searchNoResultsText)
 		{
 			let optionEl = document.createElement("option");
 			optionEl.classList.add("webcimes-dropdown__option--no-results");
-			optionEl.innerHTML = this.options.searchTextNoResults;
+			optionEl.innerHTML = this.options.searchNoResultsText;
 			options.push(optionEl);
 		}
 
@@ -753,13 +753,13 @@ export class WebcimesSelect
 			height: 'auto',
 			maxHeightOptions: '200px',
 			style: null,
-			placeholder: null,
+			placeholderText: null,
 			allowClear: true,
 			allowSearch: true,
 			searchAutoFocus: true,
-			searchPlaceholder: "Search",
-			searchTextNoResults: "No results found",
-			keepOpenDropdown: true,
+			searchPlaceholderText: "Search",
+			searchNoResultsText: "No results found",
+			keepOpenDropdown: false,
 			onInit: () => {},
 			onDestroy(){},
 			onInitDropdown: () => {},
@@ -812,11 +812,11 @@ export class WebcimesSelect
 			this.webcimesSelect = this.select.nextElementSibling as HTMLElement;
 
 			// Set placeholder
-			if(!this.options.placeholder)
+			if(!this.options.placeholderText)
 			{
 				if(this.select.querySelector("option[value='']"))
 				{
-					this.options.placeholder = this.select.querySelector("option[value='']")!.innerHTML;
+					this.options.placeholderText = this.select.querySelector("option[value='']")!.innerHTML;
 				}
 			}
 

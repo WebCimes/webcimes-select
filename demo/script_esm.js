@@ -4,44 +4,31 @@ import { WebcimesSelect } from "../dist/js/webcimes-select.esm.js";
 // Wait for dom content loaded
 document.addEventListener("DOMContentLoaded", function()
 {
-    const myModal = new WebcimesSelect({
-        setId: null, // set specific id to the modal, default "null"
-        setClass: null, // set specific class to the modal, default "null"
-        width: 'auto', // width (specify the unit), default "auto"
-        height: 'auto', // height (specify the unit), default "auto"
-        titleHtml: "My title", // html for title, default "null"
-        bodyHtml: "My Body", // html for body, default "null"
-        buttonCancelHtml: "Cancel", // html for cancel button, default "null"
-        buttonConfirmHtml: "Confirm", // html for confirm button, default "null"
-        closeOnCancelButton: true, // close the modal after trigger cancel button, default "true"
-        closeOnConfirmButton: true, // close the modal after trigger confirm button, default "true"
-        showCloseButton: true, // show the close button, default "true"
-        allowCloseOutside: false, // allow to close modal when click outside, default "true"
-        allowMovement: true, // possibility to move the modal, default "true"
-        moveFromHeader: true, // if allowMovement is set to "true", ability to move modal from header, default "true"
-        moveFromBody: false, // if allowMovement is set to "true", ability to move modal from body, default "false"
-        moveFromFooter: true, // if allowMovement is set to "true", ability to move modal from footer, default "true"
-        stickyHeader: true, // keep sticky (visible) the header when scrolling, default "true"
-        stickyFooter: true, // keep sticky (visible) the footer when scrolling, default "true"
-        style: null, // add extra style css to the modal, default null
-        animationOnShow: 'animDropDown', // "animDropDown" or "animFadeIn" for enter animation, default "animDropDown"
-        animationOnDestroy: 'animDropUp', // "animDropUp" or "animFadeOut" for end animation, default "animDropUp"
-        animationDuration: 500, // anim duration in ms, default "500"
-        beforeShow: () => {console.log("before show");}, // callback before show modal
-        afterShow: () => {console.log("after show");}, // callback after show modal
-        beforeDestroy: () => {console.log("before destroy");}, // callback before destroy modal
-        afterDestroy: () => {console.log("after destroy");}, // callback after destroy modal
-        onCancelButton: () => {console.log("on cancel button");}, // callback after trigger cancel button
-        onConfirmButton: () => {console.log("on confirm button");}, // callback after trigger confirm button
-    });
-
-    const myModal2 = new WebcimesSelect({
-        titleHtml: "My title", // html for title, default "null"
-        bodyHtml: document.querySelector(".test").outerHTML, // html for body, default "null"
-        buttonCancelHtml: "Cancel", // html for cancel button, default "null"
-        buttonConfirmHtml: "Confirm", // html for confirm button, default "null"
-        closeOnConfirmButton: false, // close the modal after trigger confirm button, default "true"
-        afterShow: () => {console.log(myModal2.webcimesSelects); console.log(myModal2.modal);}, // callback before show modal
-        onConfirmButton: () => {myModal2.destroy();}, // callback after trigger confirm button
+    // Apply class WebcimesSelect to all select fields
+    document.querySelectorAll("select").forEach((el) => {
+        const mySelect = new WebcimesSelect({
+            element: el, // Element (selector string or HTMLElement)
+            setId: null, // set a specific id on the select. default "null"
+            setClass: null, // set a specific class on the select, default "null"
+            width: 'auto', // width (specify unit), default "auto"
+            height: 'auto', // height (specify unit), default "auto"
+            maxHeightOptions: "200px", // max-height for options list (specify unit), default "200px"
+            style: null, // add extra css style to select, default null
+            placeholderText: null, // set placeholder text, default null
+            allowClear: true, // allow clear selected options, default true
+            allowSearch: true, // allow search options, default true 
+            searchAutoFocus: true, // autofocus on search field when open select, default true
+            searchPlaceholderText: "Search", // set placeholder text on search field, default "Search"
+            searchNoResultsText: "No results found", // set text for no results found on search, default "No results found"
+            keepOpenDropdown: false, // keep dropdown open after selecting an option, default false
+            onInit(){console.log("onInit");}, // callback on init select
+            onDestroy(){console.log("onDestroy");}, // callback on destroy select
+            onInitDropdown(){console.log("onInitDropdown");}, // callback on init dropdown
+            onDestroyDropdown(){console.log("onDestroyDropdown");}, // callback on destroy dropdown
+            onSearchDropdown(value, options){console.log("onSearchDropdown");}, // callback on search dropdown
+            onAddOption(value){console.log("onAddOption");}, // callback on add option
+            onRemoveOption(value){console.log("onRemoveOption");}, // callback on remove option
+            onRemoveAllOptions(){console.log("onRemoveAllOptions");}, // callback on  all options
+        });
     });
 });

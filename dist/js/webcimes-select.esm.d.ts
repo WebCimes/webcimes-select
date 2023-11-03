@@ -38,7 +38,7 @@ interface Options {
     /** add extra css style to select, default null */
     style: string | null;
     /** set placeholder text, default null */
-    placeholder: string | null;
+    placeholderText: string | null;
     /** allow clear selected options, default true */
     allowClear: boolean;
     /** allow search options, default true */
@@ -46,10 +46,10 @@ interface Options {
     /** autofocus on search field when open select, default true */
     searchAutoFocus: boolean;
     /** set placeholder text on search field, default "Search" */
-    searchPlaceholder: string | null;
+    searchPlaceholderText: string | null;
     /** set text for no results found on search, default "No results found" */
-    searchTextNoResults: string | null;
-    /** keep dropdown open after selecting an option */
+    searchNoResultsText: string | null;
+    /** keep dropdown open after selecting an option, default false */
     keepOpenDropdown: boolean;
     /** callback on init select */
     onInit(): void;
@@ -57,7 +57,7 @@ interface Options {
     onDestroy(): void;
     /** callback on init dropdown */
     onInitDropdown(): void;
-    /** callback on hide dropdown */
+    /** callback on destroy dropdown */
     onDestroyDropdown(): void;
     /** callback on search dropdown */
     onSearchDropdown(value: string, options: HTMLOptionElement[]): void;
