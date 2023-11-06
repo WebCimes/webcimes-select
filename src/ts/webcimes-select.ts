@@ -447,11 +447,6 @@ export class WebcimesSelect
 		// Event on keydown on webcimesDropdown 
 		this.webcimesDropdown.addEventListener("keydown", this.onWebcimesDropdownKeyPress);
 
-		// Event on mouseover option on webcimesDropdown 
-		this.webcimesDropdown.querySelectorAll(".webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)").forEach((el) => {
-			el.addEventListener("mouseover", this.onWebcimesDropdownMouseOverOption)
-		});
-
 		// Event on resize on WebcimesDropdown
 		window.addEventListener("resize", this.onWebcimesDropdownResize);
 
@@ -473,9 +468,10 @@ export class WebcimesSelect
 	 */
 	private setWebcimesDropdownOptions(options: HTMLOptionElement[])
 	{
-		// Remove old event on select option on WebcimesDropdown
+		// Remove old events on WebcimesDropdown option
 		this.webcimesDropdown!.querySelectorAll(".webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)").forEach((el: HTMLElement) => {
 			el.removeEventListener("click", this.onWebcimesDropdownClickOption);
+			el.removeEventListener("mouseover", this.onWebcimesDropdownMouseOverOption)
 		});
 
 		// Set options
@@ -511,9 +507,10 @@ export class WebcimesSelect
 		});
 		this.webcimesDropdown!.querySelector(".webcimes-dropdown__options")!.replaceChildren(optionsEl.content);
 
-		// Event on select option on WebcimesDropdown
+		// Events on WebcimesDropdown option
 		this.webcimesDropdown!.querySelectorAll(".webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)").forEach((el: HTMLElement) => {
 			el.addEventListener("click", this.onWebcimesDropdownClickOption);
+			el.addEventListener("mouseover", this.onWebcimesDropdownMouseOverOption)
 		});
 	}
 
@@ -589,6 +586,7 @@ export class WebcimesSelect
 			});
 			this.webcimesDropdown.querySelectorAll(".webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)").forEach((el: HTMLElement) => {
 				el.removeEventListener("click", this.onWebcimesDropdownClickOption);
+				el.removeEventListener("mouseover", this.onWebcimesDropdownMouseOverOption)
 			});
 			this.webcimesDropdown.remove();
 			this.webcimesDropdown = null;
