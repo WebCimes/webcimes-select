@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function()
 {
     let selectCity = new WebcimesSelect({
         element: document.querySelector("select[name='city']"),
+        style: "background:red; color:blue;",
         keepOpenDropdown: true,
         onInit(){
             console.log("onInit");

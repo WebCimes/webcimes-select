@@ -1,6 +1,10 @@
 # webcimes-select
 
-Create and animate modals simply, you can use multiple modals at the same time, create alert or confirm modal with buttons, move modals, set title, set body, etc.. It works with vanilla javascript + html + css.
+Just create beautiful select boxes, it supports search, single select, multiple select, keyboard control, clear options, dropdown can also be opened over an overflow parent, and many other options.
+
+All options selected by Webcimes-Select are directly applied to the form's native select, to support sending form.
+
+It works with vanilla javascript + html + css, no dependencies are required and the module it's built in a very lightweight size.
 
 Once the `webcimes-select` javascript is defined, we can simply call the WebcimesSelect class with the desired options.
 
@@ -72,144 +76,121 @@ You can directly load the udm module in the script tag:
 
 ## Usage
 
-### Call `WebcimesSelect` for create modal:
+### Call `WebcimesSelect` for create custom select:
 ```javascript
 // Wait for dom content loaded or call WebcimesSelect before the end of body
 document.addEventListener("DOMContentLoaded", function()
 {
-	// Create modal
-	const myModal = new WebcimesSelect({
-		setId: null, // set a specific id on the modal. default "null" 
-		setClass: null, // set a specific class on the modal, default "null"
-		width: 'auto', // width (specify unit), default "auto"
-		height: 'auto', // height (specify unit), default "auto"
-		titleHtml: "My title", // html for title, default "null"
-		bodyHtml: "My Body", // html for body, default "null"
-		buttonCancelHtml: "Cancel", // html for cancel button, default "null"
-		buttonConfirmHtml: "Confirm", // html for confirm button, default "null"
-		closeOnCancelButton: false, // close modal after trigger cancel button, default "true"
-		closeOnConfirmButton: true, // close modal after trigger confirm button, default "true"
-		showCloseButton: true, // show close button, default "true"
-		allowCloseOutside: false, // allow the modal to close when clicked outside, default "true"
-		allowMovement: true, // ability to move modal, default "true"
-		moveFromHeader: true, // if allowMovement is set to "true", ability to move modal from header, default "true"
-		moveFromBody: false, // if allowMovement is set to "true", ability to move modal from body, default "false"
-		moveFromFooter: true, // if allowMovement is set to "true", ability to move modal from footer, default "true"
-		stickyHeader: true, // keep header sticky (visible) when scrolling, default "true"
-		stickyFooter: true, // keep footer sticky (visible) when scrolling, default "true"
-		style: null, // add extra css style to modal, default null
-		animationOnShow: 'animDropDown', // "animDropDown" or "animFadeIn" for show animation, default "animDropDown"
-		animationOnDestroy: 'animDropUp', // "animDropUp" or "animFadeOut" for destroy animation, default "animDropUp"
-		animationDuration: 500, // animation duration in ms, default "500"
-		beforeShow: () => {console.log("before show");}, // callback before show modal
-		afterShow: () => {console.log("after show");}, // callback after show modal
-		beforeDestroy: () => {console.log("before destroy");}, // callback before destroy modal
-		afterDestroy: () => {console.log("after destroy");}, // callback after destroy modal
-		onCancelButton: () => {console.log("on cancel button");}, // callback after triggering cancel button
-		onConfirmButton: () => {console.log("on confirm button");}, // callback after triggering confirm button
-	});
+    // Apply class WebcimesSelect to all select fields
+    document.querySelectorAll("select").forEach((el) => {
+        const mySelect = new WebcimesSelect({
+            element: el, // Element (selector string or HTMLElement)
+            setId: null, // set a specific id on the select. default "null"
+            setClass: null, // set a specific class on the select, default "null"
+            width: 'auto', // width (specify unit), default "auto"
+            height: 'auto', // height (specify unit), default "auto"
+            maxHeightOptions: "200px", // max-height for options list (specify unit), default "200px"
+            style: null, // add extra css style to select, default null
+            placeholderText: null, // set placeholder text, default null
+            allowClear: true, // allow clear selected options, default true
+            allowSearch: true, // allow search options, default true 
+            searchAutoFocus: true, // autofocus on search field when open select, default true
+            searchPlaceholderText: "Search", // set placeholder text on search field, default "Search"
+            searchNoResultsText: "No results found", // set text for no results found on search, default "No results found"
+            keepOpenDropdown: false, // keep dropdown open after selecting an option, default false
+            onInit(){console.log("onInit");}, // callback on init select
+            onDestroy(){console.log("onDestroy");}, // callback on destroy select
+            onInitDropdown(){console.log("onInitDropdown");}, // callback on init dropdown
+            onDestroyDropdown(){console.log("onDestroyDropdown");}, // callback on destroy dropdown
+            onSearchDropdown(value, options){console.log("onSearchDropdown");}, // callback on search dropdown
+            onAddOption(value){console.log("onAddOption");}, // callback on add option
+            onRemoveOption(value){console.log("onRemoveOption");}, // callback on remove option
+            onRemoveAllOptions(){console.log("onRemoveAllOptions");}, // callback on  all options
+        });
+    });
 });
 ```
 
-### Modal html structure:
-After a creating a modal, the basic html structure look like this:
+### Set basic parameter on the select:
+All parameters are optional (except `element`).
+
+```javascript
+const mySelect = new WebcimesSelect({
+	element: el, // Element (selector string or HTMLElement)
+});
+```
+
+### Scale select:
+By default `height` and `width` are set to `auto`, the select will also be sized according to the html content. The `width` will be relative to the parent container and the `height` depending on the options selected.
+
+You can also set the `height` or `width` by specifying the value with a number and a unit.
+
+The `maxHeightOptions` defaults to 200px, and corresponds to the options container inside the drop-down list, if too many options exceed the value of `maxHeightOptions`, a scrollbar will appear inside the options container.
+
+```javascript
+const mySelect = new WebcimesSelect({
+	element: el, // Element (selector string or HTMLElement)
+	width: 'auto', // width (specify unit), default "auto"
+	height: 'auto', // height (specify unit), default "auto"
+	maxHeightOptions: "200px", // max-height for options list (specify unit), default "200px"
+});
+```
+
+### Select behavior:
+Below are the different options for customize the select behavior.
+
+- `allowClear` to allow clearing of selected options (for single and multiple selects).
+- `allowSearch` is used to create an input search field in the drop-down list.
+- `keepOpenDropdown` to keep the drop-down list open after selecting an option (more useful with a multiple select).
+
+```javascript
+const mySelect = new WebcimesSelect({
+	element: el, // Element (selector string or HTMLElement)
+	allowClear: true, // allow clear selected options, default true
+	allowSearch: true, // allow search options, default true 
+	keepOpenDropdown: false, // keep dropdown open after selecting an option, default false
+});
+```
+
+### Placeholder:
+By default, the placeholder will be set based on the text defined inside the option having the `value=""` attribute (this is a method to set a placeholder on a natural select). We also recommend adding the `disabled` and `selected` attributes like this:
 
 ```html
-<div class="modal">
-	<div class="modalHeader">
-		<div class="title">My title</div>
-		<button class="close"></button>
-	</div>
-	<div class="modalBody">
-		My body
-	</div>
-	<div class="modalFooter">
-		<button class="cancel">Cancel</button>
-		<button class="confirm">Confirm</button>
-	</div>
-</div>
+<select name="mySelect" title="My title">
+	<option disabled selected value="">My placeholder</option>
+</select>
 ```
 
-### Set basic parameter on the modal:
-All parameters are optionnal, but to set the base message on the modal you can use `titleHtml` to create the title, `bodyHtml` contain the main message of the modal, and `buttonCancelHtml` & `buttonConfirmHtml` contain the html for each button.
+But if you prefer, you can also set the placeholder with the `placeholderText` option. Just note that it will replace the placeholder text in case you also set the placeholder with the previous method.
 
-For these 4 fields you can just directly write the text or define tags, or call html from an element like this : 
+### Customize text:
+You can customize the default text by setting these options:
+- `placeholderText` is used to set/replace basic placeholder text.
+- `searchPlaceholderText` matches the placeholder text inside the search field in the dropdown container.
+- `searchNoResultsText` is the text that appears if no results are found from the search field.
 
 ```javascript
-const myModal = new WebcimesSelect({
-	titleHtml: "My title <span style='color:red'>with red color</span>", // directly put an html tag or attribute like span and style
-	bodyHtml: document.querySelector("#myID").outerHTML, // set html from an HTML element
-	buttonCancelHtml: "Cancel <img src='my-url' alt=''>", // put the img tag
-	buttonConfirmHtml: "Confirm", // or just text
+const mySelect = new WebcimesSelect({
+	element: el, // Element (selector string or HTMLElement)
+	placeholderText: null, // set placeholder text, default null
+	searchPlaceholderText: "Search", // set placeholder text on search field, default "Search"
+	searchNoResultsText: "No results found", // set text for no results found on search, default "No results found"
 });
 ```
 
-if any of these 4 fields is set to null (the default), it will not appear on the modal
-
-### Remove specific structure of the modal:
-If you want to completely remove `modalHeader`, `modalBody` or `modalFooter` you need:
-
-To remove `modalHeader`: set `titleHtml` to `null` and `showCloseButton` to `false`
-
-To remove `modalBody`: set `bodyHtml` to `null`
-
-To remove `modalFooter`: set `buttonCancelHtml` to `null` and `buttonConfirmHtml` to `null`
-
-### Scale the modal:
-By default the `height` and `width` are set to `auto`, the modal will also be sized according to the html content.
-
-You can also set the determined `height` or `width` by indicating the value with a number and a unit.
+### Add extra style to the select:
+You can define the style of the select with `css`, but you can also use the `style` property which allows to directly add an additional style to the select.
 
 ```javascript
 const myModal = new WebcimesSelect({
-	width: '80vm',
-	height: '200px',
+	style: "background:red; color:cyan;",
 });
 ```
 
-### Modal behavior:
-Below are the different options for customize the modal behavior.
 
-```javascript
-const myModal = new WebcimesSelect({
-	closeOnCancelButton: false, // close modal after triggering cancel button, default "true"
-	closeOnConfirmButton: false, // close modal after triggering confirm button, default "true"
-	showCloseButton: true, // show close button, default "true"
-	allowCloseOutside: false, // allows the modal to close when clicked outside, default "true"
-	allowMovement: true, // ability to move modal, default "true"
-	moveFromHeader: true, // if allowMovement is set to "true", ability to move modal from header, default "true"
-	moveFromBody: false, // if allowMovement is set to "true", ability to move modal from body, default "false"
-	moveFromFooter: true, // if allowMovement is set to "true", ability to move modal from footer, default "true"
-	stickyHeader: true, // keep header sticky (visible) when scrolling, default "true"
-	stickyFooter: true, // keep footer sticky (visible) when scrolling, default "true"
-});
-```
 
-### Add extra style to the modal:
-You can define the style of the modal with `css`, but you can also use the style property which allows to directly add an additional style to the modal.
 
-```javascript
-const myModal = new WebcimesSelect({
-	style: "background:black; color:#fff; text-align:center;",
-});
-```
 
-### Animation:
-Once the modal is created, it will be shown and hidden with an animation, you can choose between two animations for each case:
-
-For `animationOnShow` you can choose between `animDropDown` or `animFadeIn`
-
-For `animationOnDestroy` you can choose between `animDropUp` or `animFadeOut`
-
-And you can set the duration of all animation by setting `animationDuration` with a number in ms.
-
-```javascript
-const myModal = new WebcimesSelect({
-	animationOnShow: 'animDropDown', // "animDropDown" or "animFadeIn" for show animation, default "animDropDown"
-	animationOnDestroy: 'animDropUp', // "animDropUp" or "animFadeOut" for destroy animation, default "animDropUp"
-	animationDuration: 500, // anim duration in ms, default "500"
-});
-```
 
 ### Get dom element
 You can get the dom element of the current modal like this:

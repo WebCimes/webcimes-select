@@ -833,7 +833,7 @@ export class WebcimesSelect
 			// Style
 			if(this.options.style)
 			{
-				let oldStyle = this.webcimesSelect.getAttribute("style");
+				let oldStyle = this.webcimesSelect.getAttribute("style")??"";
 				this.webcimesSelect.setAttribute("style", oldStyle+this.options.style);
 			}
 
