@@ -23,9 +23,9 @@ document.addEventListener("DOMContentLoaded", function()
             onDestroy(){console.log("onDestroy");}, // callback on destroy select
             onInitDropdown(){console.log("onInitDropdown");}, // callback on init dropdown
             onDestroyDropdown(){console.log("onDestroyDropdown");}, // callback on destroy dropdown
-            onSearchDropdown(value, options){console.log("onSearchDropdown");}, // callback on search dropdown
-            onAddOption(value){console.log("onAddOption");}, // callback on add option
-            onRemoveOption(value){console.log("onRemoveOption");}, // callback on remove option
+            onSearchDropdown(value, options){console.log("onSearchDropdown"); console.log(value); console.log(options);}, // callback on search dropdown
+            onAddOption(value){console.log("onAddOption"); console.log(value);}, // callback on add option
+            onRemoveOption(value){console.log("onRemoveOption"); console.log(value);}, // callback on remove option
             onRemoveAllOptions(){console.log("onRemoveAllOptions");}, // callback on  all options
         });
     });

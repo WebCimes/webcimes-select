@@ -2,9 +2,9 @@
 
 Just create beautiful select boxes, it supports search, single select, multiple select, keyboard control, clear options, dropdown can also be opened over an overflow parent, and many other options.
 
-All options selected by Webcimes-Select are directly applied to the form's native select, to support sending form.
+All options selected by Webcimes-Select are directly applied to the form's native select, to support sending native form.
 
-It works with vanilla javascript + html + css, no dependencies are required and the module it's built in a very lightweight size.
+Inspired by select2, but opposed to it, it works with vanilla javascript + html + css, no dependencies are required and the module is built in a very lightweight size.
 
 Once the `webcimes-select` javascript is defined, we can simply call the WebcimesSelect class with the desired options.
 
@@ -102,9 +102,9 @@ document.addEventListener("DOMContentLoaded", function()
             onDestroy(){console.log("onDestroy");}, // callback on destroy select
             onInitDropdown(){console.log("onInitDropdown");}, // callback on init dropdown
             onDestroyDropdown(){console.log("onDestroyDropdown");}, // callback on destroy dropdown
-            onSearchDropdown(value, options){console.log("onSearchDropdown");}, // callback on search dropdown
-            onAddOption(value){console.log("onAddOption");}, // callback on add option
-            onRemoveOption(value){console.log("onRemoveOption");}, // callback on remove option
+            onSearchDropdown(value, options){console.log("onSearchDropdown"); console.log(value); console.log(options);}, // callback on search dropdown
+            onAddOption(value){console.log("onAddOption"); console.log(value);}, // callback on add option
+            onRemoveOption(value){console.log("onRemoveOption"); console.log(value);}, // callback on remove option
             onRemoveAllOptions(){console.log("onRemoveAllOptions");}, // callback on  all options
         });
     });
@@ -182,52 +182,62 @@ const mySelect = new WebcimesSelect({
 You can define the style of the select with `css`, but you can also use the `style` property which allows to directly add an additional style to the select.
 
 ```javascript
-const myModal = new WebcimesSelect({
+const mySelect = new WebcimesSelect({
 	style: "background:red; color:cyan;",
 });
 ```
 
-
-
-
-
-
 ### Get dom element
-You can get the dom element of the current modal like this:
+You can get the dom element of the `native select` like this:
 
 ```javascript
 // Get the instance
-const myModal = new WebcimesSelect(...);
+const mySelect = new WebcimesSelect(...);
 
 // Things
 
-// Then get the dom element of the current modal
-myModal.modal;
+// Then get the dom element of the native select
+mySelect.select;
 ```
 
-Or you can get the global container of all modals like this:
+Or you can Get the dom element of the current `webcimesSelect` like this:
 
 ```javascript
 // Get the instance
-const myModal = new WebcimesSelect(...);
+const mySelect = new WebcimesSelect(...);
 
 // Things
 
-// Then get the dom element containing all modals
-myModal.webcimesSelects;
+// Then get the dom element of the current webcimesSelect
+mySelect.webcimesSelect;
+```
+
+Or you can also get the dom element of the current `webcimesDropdown` like this:
+
+```javascript
+// Get the instance
+const mySelect = new WebcimesSelect(...);
+
+// Things
+
+// Then get the dom element of the current webcimesDropdown
+mySelect.webcimesDropdown;
 ```
 
 ### Events:
-Multiple events exist, which allow to interact with the modal at each step. You can use all events below: 
+Multiple events exist, which allow to interact with the select at each step. You can use all events below: 
 
 ```javascript
-const myModal = new WebcimesSelect({
-	beforeShow: () => {console.log("before show");}, // callback before show modal
-	afterShow: () => {console.log("after show");}, // callback after show modal
-	beforeDestroy: () => {console.log("before destroy");}, // callback before destroy modal
-	afterDestroy: () => {console.log("after destroy");}, // callback after destroy modal
-	onCancelButton: () => {console.log("on cancel button");}, // callback after triggering cancel button
-	onConfirmButton: () => {console.log("on confirm button");}, // callback after triggering confirm button
+const mySelect = new WebcimesSelect({
+	element: el, // Element (selector string or HTMLElement)
+	onInit(){console.log("onInit");}, // callback on init select
+	onDestroy(){console.log("onDestroy");}, // callback on destroy select
+	onInitDropdown(){console.log("onInitDropdown");}, // callback on init dropdown
+	onDestroyDropdown(){console.log("onDestroyDropdown");}, // callback on destroy dropdown
+	onSearchDropdown(value, options){console.log("onSearchDropdown"); console.log(value); console.log(options);}, // callback on search dropdown
+	onAddOption(value){console.log("onAddOption"); console.log(value);}, // callback on add option
+	onRemoveOption(value){console.log("onRemoveOption"); console.log(value);}, // callback on remove option
+	onRemoveAllOptions(){console.log("onRemoveAllOptions");}, // callback on  all options
 });
 ```
 
@@ -235,59 +245,63 @@ You can also use `addEventListener` for get the events from the instance like th
 
 ```javascript
 // Get the instance
-const myModal = new WebcimesSelect(...);
+const mySelect = new WebcimesSelect(...);
 
-// Create an event on the current modal
-myModal.modal.addEventListener("afterDestroy", () => {
-	console.log("after destroy");
+// Create an event on the current select
+selectCity.webcimesSelect.addEventListener("onSearchDropdown", (e) => {
+	console.log("onSearchDropdown");
+	console.log(e.detail.value); // Get parameter with e.detail
+	console.log(e.detail.options); // Get parameter with e.detail
 });
 ```
 
 ### Destroy
-To destroy the modal, you have several ways:
-
-- You can use basic close button with `showCloseButton` property set to `true`
-
-- Use `cancel` or `confirm` button with `closeOnCancelButton` or `closeOnConfirmButton` property set to `true`
-
-- Add a custom button, and set its class to `close`
-
-- Destroy the modal manually with the `destroy` method, like this:
+To destroy the select, you can call the `destroy` method, like this:
 
 ```javascript
 // Get the instance
-const myModal = new WebcimesSelect(...);
+const mySelect = new WebcimesSelect(...);
 
 // Things
 
 // Then call the destroy method:
-myModal.destroy();
+mySelect.destroy();
 ```
 
-### Style modals:
-You can style modal with the following field applying to the class of `.webcimesSelects` (for background and z-index behind the modal) and `.webcimesSelects > .modal` (for modal):
+### Style select:
+You can style select with the following field applying to the class of `.webcimes-select, .webcimes-dropdown`:
 
 ```css
-.webcimesSelects
+.webcimes-select,
+.webcimes-dropdown
 {
-	--webcimes-selects-background: rgba(0,0,0,0.8);
-	--webcimes-selects-z-index: 5;
-}
-.webcimesSelects > .modal
-{
-	--modal-color: inherit;
-	--modal-background: #fff;
-	--modal-border-color: #ddd;
-	--modal-box-shadow: 1px 1px 3px 0px #444;
-	--modal-title-font-size: 24px;
-	--modal-button-cancel-background: rgba(102,102,102,1);
-	--modal-button-cancel-background-hover: rgba(102,102,102,0.7);
-	--modal-button-cancel-color: #fff;
-	--modal-button-cancel-color-hover: #fff;
-	--modal-button-confirm-background: rgba(0,0,0,1);
-	--modal-button-confirm-background-hover: rgba(0,0,0,0.7);
-	--modal-button-confirm-color: #fff;
-	--modal-button-confirm-color-hover: #fff;
+	--select-color: inherit;
+	--select-background: #fff;
+	--select-padding: 2.5px 5px;
+	--select-border: 1px solid #ddd;
+	--select-border-radius: 4px;
+	--select-focus-border-color: #aaa;
+	--select-option-margin: 2.5px 5px 2.5px 0;
+	--select-option-padding: 5px;
+	--select-option-multiple-color: inherit;
+	--select-option-multiple-background: #ddd;
+	--select-option-multiple-border: 1px solid #bbb;
+	--select-option-multiple-border-radius: 4px;
+	--select-option-multiple-clear-background: #ddd;
+	--select-option-multiple-clear-background-hover: #eee;
+	--select-placeholder-opacity: 0.7;
+	--select-cross-background: #666;
+	--select-cross-background-hover: #000;
+	--select-arrow-background: #666;
+	--select-input-padding: 10px;
+	--select-dropdown-option-padding: 10px;
+	--select-dropdown-option-color-selected: inherit;
+	--select-dropdown-option-background-selected: #eee;
+	--select-dropdown-option-color-hightlight: #fff;
+	--select-dropdown-option-background-hightlight: #888;
+	--select-dropdown-option-disabled-opacity: 0.5;
+	--select-dropdown-optgroup-option-padding: 10px 10px 10px 20px;
+	--select-dropdown-optgroup-option-padding-rtl: 10px 20px 10px 10px;
 }
 ```
 

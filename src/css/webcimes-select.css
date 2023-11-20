@@ -43,11 +43,13 @@
 	--select-placeholder-opacity: 0.7;
 	--select-cross-background: #666;
 	--select-cross-background-hover: #000;
-	--select-arrowebcimes-background: #666;
+	--select-arrow-background: #666;
 	--select-input-padding: 10px;
 	--select-dropdown-option-padding: 10px;
+	--select-dropdown-option-color-selected: inherit;
 	--select-dropdown-option-background-selected: #eee;
-	--select-dropdown-option-background-hightlight: #ddd;
+	--select-dropdown-option-color-hightlight: #fff;
+	--select-dropdown-option-background-hightlight: #888;
 	--select-dropdown-option-disabled-opacity: 0.5;
 	--select-dropdown-optgroup-option-padding: 10px 10px 10px 20px;
 	--select-dropdown-optgroup-option-padding-rtl: 10px 20px 10px 10px;
@@ -203,7 +205,7 @@
 {
 	position: relative;
 	border-style: solid;
-	border-color: var(--select-arrowebcimes-background) transparent transparent transparent;
+	border-color: var(--select-arrow-background) transparent transparent transparent;
 	border-width: 5px;
 	transition: transform 0.5s;
 	transform-origin: center 2.5px;
@@ -276,10 +278,12 @@
 }
 .webcimes-dropdown__option--selected
 {
+	color: var(--select-dropdown-option-color-selected);
 	background: var(--select-dropdown-option-background-selected);
 }
 .webcimes-dropdown__option--highlighted
 {
+	color: var(--select-dropdown-option-color-hightlight);
 	background: var(--select-dropdown-option-background-hightlight);
 }
 .webcimes-dropdown__option--disabled

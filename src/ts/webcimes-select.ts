@@ -643,7 +643,12 @@ export class WebcimesSelect
 		this.setWebcimesDropdownPosition(true);
 
 		// Callback on search dropdown
-		this.webcimesSelect.dispatchEvent(new CustomEvent("onSearchDropdown"));
+		this.webcimesSelect.dispatchEvent(new CustomEvent("onSearchDropdown", {
+			"detail": {
+				"value":(e.target as HTMLInputElement).value,
+				"options":options,
+			}
+		}));
 		if(typeof this.options.onSearchDropdown === 'function')
 		{
 			this.options.onSearchDropdown((e.target as HTMLInputElement).value, options);

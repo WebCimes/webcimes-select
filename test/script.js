@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function()
 {
     let selectCity = new WebcimesSelect({
         element: document.querySelector("select[name='city']"),
-        style: "background:red; color:blue;",
         keepOpenDropdown: true,
         onInit(){
             console.log("onInit");
@@ -36,6 +35,12 @@ document.addEventListener("DOMContentLoaded", function()
         onRemoveAllOptions(){
             console.log("onRemoveAllOptions");
         },
+    });
+    // selectCity.destroy();
+    selectCity.webcimesSelect.addEventListener("onSearchDropdown", (e) => {
+        console.log("onSearchDropdown");
+        console.log(e.detail.value);
+        console.log(e.detail.options);
     });
 
     let selectCity2 = new WebcimesSelect({
