@@ -91,19 +91,19 @@ export declare class WebcimesSelect {
     /**
      * Init options or placeholder on webcimesSelect, according selected option on select field
      */
-    private initWebcimesSelectOptions;
+    initWebcimesSelectOptions(): void;
     /**
      * Add option on webcimesSelect
      */
-    private addWebcimesSelectOption;
+    addWebcimesSelectOption(value: string | null): void;
     /**
      * Remove option on webcimesSelect
      */
-    private removeWebcimesSelectOption;
+    removeWebcimesSelectOption(value: string | null): void;
     /**
      * Remove all options on webcimesSelect
      */
-    private removeWebcimesSelectAllOptions;
+    removeWebcimesSelectAllOptions(): void;
     /**
      * Event clear selected option on webcimesSelect
      */

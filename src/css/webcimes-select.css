@@ -48,8 +48,8 @@
 	--select-dropdown-option-padding: 10px;
 	--select-dropdown-option-color-selected: inherit;
 	--select-dropdown-option-background-selected: #eee;
-	--select-dropdown-option-color-hightlight: #fff;
-	--select-dropdown-option-background-hightlight: #888;
+	--select-dropdown-option-color-hightlight: inherit;
+	--select-dropdown-option-background-hightlight: #ccc;
 	--select-dropdown-option-disabled-opacity: 0.5;
 	--select-dropdown-optgroup-option-padding: 10px 10px 10px 20px;
 	--select-dropdown-optgroup-option-padding-rtl: 10px 20px 10px 10px;

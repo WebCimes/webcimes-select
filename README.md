@@ -255,6 +255,58 @@ selectCity.webcimesSelect.addEventListener("onSearchDropdown", (e) => {
 });
 ```
 
+### Refresh options
+To update/refresh the select options (after changing the native select options for example), you can call the `initWebcimesSelectOptions` method, like this:
+
+```javascript
+// Get the instance
+const mySelect = new WebcimesSelect(...);
+
+// Things
+
+// Then call the init options method:
+mySelect.initWebcimesSelectOptions();
+```
+
+### Add selected option
+To add a selected option, you can call the `addWebcimesSelectOption` method, like this:
+
+```javascript
+// Get the instance
+const mySelect = new WebcimesSelect(...);
+
+// Things
+
+// Then call the add selected option method:
+mySelect.addWebcimesSelectOption("Paris");
+```
+
+### Remove selected option
+To remove a selected option, you can call the `removeWebcimesSelectOption` method, like this:
+
+```javascript
+// Get the instance
+const mySelect = new WebcimesSelect(...);
+
+// Things
+
+// Then call the remove selected option method:
+mySelect.removeWebcimesSelectOption("Paris");
+```
+
+### Remove all selected option
+To remove all selected options, you can call the `removeWebcimesSelectAllOptions` method, like this:
+
+```javascript
+// Get the instance
+const mySelect = new WebcimesSelect(...);
+
+// Things
+
+// Then call the remove all selected options method:
+mySelect.removeWebcimesSelectAllOptions();
+```
+
 ### Destroy
 To destroy the select, you can call the `destroy` method, like this:
 
@@ -297,8 +349,8 @@ You can style select with the following field applying to the class of `.webcime
 	--select-dropdown-option-padding: 10px;
 	--select-dropdown-option-color-selected: inherit;
 	--select-dropdown-option-background-selected: #eee;
-	--select-dropdown-option-color-hightlight: #fff;
-	--select-dropdown-option-background-hightlight: #888;
+	--select-dropdown-option-color-hightlight: inherit;
+	--select-dropdown-option-background-hightlight: #ccc;
 	--select-dropdown-option-disabled-opacity: 0.5;
 	--select-dropdown-optgroup-option-padding: 10px 10px 10px 20px;
 	--select-dropdown-optgroup-option-padding-rtl: 10px 20px 10px 10px;

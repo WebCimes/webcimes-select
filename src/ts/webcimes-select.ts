@@ -133,7 +133,7 @@ export class WebcimesSelect
 	/**
 	 * Init options or placeholder on webcimesSelect, according selected option on select field
 	 */
-	private initWebcimesSelectOptions()
+	public initWebcimesSelectOptions()
 	{
 		if(this.select)
 		{
@@ -194,7 +194,7 @@ export class WebcimesSelect
 	/**
 	 * Add option on webcimesSelect
 	 */
-	private addWebcimesSelectOption(value: string | null)
+	public addWebcimesSelectOption(value: string | null)
 	{
 		if(value)
 		{
@@ -205,9 +205,12 @@ export class WebcimesSelect
 			}
 
 			// Set option selected on select
-			let optionEl = this.select!.querySelector(`option[value="${value}"]`) as HTMLOptionElement;
-			optionEl.setAttribute("selected", "");
-			optionEl.selected = true;
+			let optionEl = this.select!.querySelector(`option[value="${value}"]`) as HTMLOptionElement | null;
+			if(optionEl)
+			{
+				optionEl.setAttribute("selected", "");
+				optionEl.selected = true;
+			}
 
 			// Init option on webcimesSelect
 			this.initWebcimesSelectOptions();
@@ -239,14 +242,17 @@ export class WebcimesSelect
 	/**
 	 * Remove option on webcimesSelect
 	 */
-	private removeWebcimesSelectOption(value: string | null)
+	public removeWebcimesSelectOption(value: string | null)
 	{
 		if(value)
 		{
 			// Remove option selected on select
-			let optionEl = this.select!.querySelector(`option[value="${value}"]:not([disabled])`) as HTMLOptionElement;
-			optionEl.removeAttribute("selected");
-			optionEl.selected = false;
+			let optionEl = this.select!.querySelector(`option[value="${value}"]:not([disabled])`) as HTMLOptionElement | null;
+			if(optionEl)
+			{
+				optionEl.removeAttribute("selected");
+				optionEl.selected = false;
+			}
 
 			// If select single and allowClear option
 			if(!this.select!.multiple && this.options.allowClear)
@@ -285,7 +291,7 @@ export class WebcimesSelect
 	/**
 	 * Remove all options on webcimesSelect
 	 */
-	private removeWebcimesSelectAllOptions()
+	public removeWebcimesSelectAllOptions()
 	{
 		this.select!.querySelectorAll(`option:not([disabled])`).forEach((el: HTMLOptionElement) => {
 			// Remove option selected on select

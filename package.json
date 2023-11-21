@@ -17,8 +17,10 @@
   "license": "MIT",
   "keywords": [
     "select",
+    "single select",
     "multiple select",
     "multiple options",
+    "options",
     "clear",
     "search",
     "select2",
