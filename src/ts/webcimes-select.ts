@@ -231,7 +231,11 @@ export class WebcimesSelect
 			}
 	
 			// Callback on set option
-			this.webcimesSelect.dispatchEvent(new CustomEvent("onAddOption"));
+			this.webcimesSelect.dispatchEvent(new CustomEvent("onAddOption", {
+				"detail": {
+					"value": value,
+				}
+			}));
 			if(typeof this.options.onAddOption === 'function')
 			{
 				this.options.onAddOption(value);
@@ -280,7 +284,11 @@ export class WebcimesSelect
 			}
 	
 			// Callback on set option
-			this.webcimesSelect.dispatchEvent(new CustomEvent("onRemoveOption"));
+			this.webcimesSelect.dispatchEvent(new CustomEvent("onRemoveOption", {
+				"detail": {
+					"value": value,
+				}
+			}));
 			if(typeof this.options.onRemoveOption === 'function')
 			{
 				this.options.onRemoveOption(value);
@@ -651,8 +659,8 @@ export class WebcimesSelect
 		// Callback on search dropdown
 		this.webcimesSelect.dispatchEvent(new CustomEvent("onSearchDropdown", {
 			"detail": {
-				"value":(e.target as HTMLInputElement).value,
-				"options":options,
+				"value": (e.target as HTMLInputElement).value,
+				"options": options,
 			}
 		}));
 		if(typeof this.options.onSearchDropdown === 'function')
