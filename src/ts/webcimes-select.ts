@@ -78,16 +78,16 @@ interface Options {
  */
 export class WebcimesSelect
 {
-	/** Get the dom element of the current select */
+	/** Get the dom element of the native select */
 	public select: HTMLSelectElement | null;
 	
-	/** Get the dom element of the current webcimesSelect */
+	/** Get the dom element of webcimesSelect */
 	public webcimesSelect: HTMLElement;
 	
-	/** Get the dom element of the current webcimesDropdown */
+	/** Get the dom element of webcimesDropdown */
 	public webcimesDropdown: HTMLElement | null = null;
 
-	/** Options of the current select */
+	/** Options of WebcimesSelect */
 	private options: Options;
 
 	/**
@@ -791,7 +791,7 @@ export class WebcimesSelect
 	}
 
 	/**
-	 * Initialization of the current select
+	 * Initialization of webcimesSelect
 	 */
     private init()
 	{
@@ -866,16 +866,26 @@ export class WebcimesSelect
     }
 
 	/**
-	 * Destroy current select
+	 * Destroy webcimesSelect and revert to native select
 	 */
 	public destroy()
 	{
+		// Destroy dropdown if exist
+		this.destroyWebcimesDropdown();
+
+		// Remove events
 		this.webcimesSelect.querySelectorAll(".webcimes-select__option .webcimes-select__clear").forEach((el) => {
 			el.removeEventListener("click", this.onWebcimesSelectClearOption);
 		});
 		this.webcimesSelect.querySelector(".webcimes-select > .webcimes-select__clear")?.removeEventListener("click", this.onWebcimesSelectClearAllOptions);
 		this.webcimesSelect.removeEventListener("keydown", this.onWebcimesSelectKeyDown);
 		this.webcimesSelect.removeEventListener("click", this.onWebcimesSelectClickInitWebcimesDropdown);
+
+		// Show select
+		this.select!.style.removeProperty("display");
+
+		// Remove webcimesSelect
+		this.webcimesSelect.remove();
 
 		// Callback on destroy select
 		this.webcimesSelect.dispatchEvent(new CustomEvent("onDestroy"));

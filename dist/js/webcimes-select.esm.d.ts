@@ -72,13 +72,13 @@ interface Options {
  * Class WebcimesSelect
  */
 export declare class WebcimesSelect {
-    /** Get the dom element of the current select */
+    /** Get the dom element of the native select */
     select: HTMLSelectElement | null;
-    /** Get the dom element of the current webcimesSelect */
+    /** Get the dom element of webcimesSelect */
     webcimesSelect: HTMLElement;
-    /** Get the dom element of the current webcimesDropdown */
+    /** Get the dom element of webcimesDropdown */
     webcimesDropdown: HTMLElement | null;
-    /** Options of the current select */
+    /** Options of WebcimesSelect */
     private options;
     /**
      * Convert elements entry to an array of HTMLElement
@@ -169,11 +169,11 @@ export declare class WebcimesSelect {
      */
     constructor(options: Options);
     /**
-     * Initialization of the current select
+     * Initialization of webcimesSelect
      */
     private init;
     /**
-     * Destroy current select
+     * Destroy webcimesSelect and revert to native select
      */
     destroy(): void;
 }
