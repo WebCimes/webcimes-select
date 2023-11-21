@@ -81,6 +81,10 @@ export declare class WebcimesSelect {
     /** Options of WebcimesSelect */
     private options;
     /**
+     * Create select
+     */
+    constructor(options: Options);
+    /**
      * Convert elements entry to an array of HTMLElement
      */
     private getHtmlElements;
@@ -88,6 +92,14 @@ export declare class WebcimesSelect {
      * Convert element entry to an HTMLElement
      */
     private getHtmlElement;
+    /**
+     * Initialization of webcimesSelect
+     */
+    private init;
+    /**
+     * Destroy webcimesSelect and revert to native select
+     */
+    destroy(): void;
     /**
      * Init options or placeholder on webcimesSelect, according selected option on select field
      */
@@ -164,18 +176,6 @@ export declare class WebcimesSelect {
      * Event destroy on click or keydown outside webcimesDropdown
      */
     private onWebcimesDropdownDestroy;
-    /**
-     * Create select
-     */
-    constructor(options: Options);
-    /**
-     * Initialization of webcimesSelect
-     */
-    private init;
-    /**
-     * Destroy webcimesSelect and revert to native select
-     */
-    destroy(): void;
 }
 export {};
 //# sourceMappingURL=webcimes-select.d.ts.map
