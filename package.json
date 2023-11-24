@@ -1,7 +1,7 @@
 {
   "name": "webcimes-select",
   "version": "1.0.0",
-  "description": "Just create beautiful select boxes, it supports search, single select, multiple select, keyboard control, clear options, dropdown can also be opened over an overflow parent, and many other options. It works with vanilla javascript + html + css, no dependencies are required",
+  "description": "Just create beautiful select boxes, it supports search, single select, multiple select, keyboard control, clear options, dropdown can also be opened over an overflow parent, optgroup support, rtl support, and many other options. It works with vanilla javascript + html + css, no dependencies are required",
   "main": "./dist/js/webcimes-select.udm.js",
   "module": "./dist/js/webcimes-select.esm.js",
   "types": "./src/ts/webcimes-select.d.ts",
@@ -17,15 +17,15 @@
   "license": "MIT",
   "keywords": [
     "select",
-    "single select",
-    "multiple select",
-    "multiple options",
+    "select single",
+    "select multiple",
+    "multiple",
     "options",
     "clear",
     "search",
     "select2",
     "javascript",
-    "vanilla javascript"
+    "vanilla"
   ],
   "bugs": {
     "url": "https://github.com/WebCimes/webcimes-select/issues"

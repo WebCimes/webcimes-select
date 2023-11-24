@@ -1,6 +1,6 @@
 # webcimes-select
 
-Just create beautiful select boxes, it supports search, single select, multiple select, keyboard control, clear options, dropdown can also be opened over an overflow parent, and many other options.
+Just create beautiful select boxes, it supports search, single select, multiple select, keyboard control, clear options, dropdown can also be opened over an overflow parent, optgroup support, rtl support, and many other options.
 
 All options selected by Webcimes-Select are directly applied to the form's native select, to support sending native form.
 
@@ -150,6 +150,31 @@ const mySelect = new WebcimesSelect({
 	allowSearch: true, // allow search options, default true 
 	keepOpenDropdown: false, // keep dropdown open after selecting an option, default false
 });
+```
+
+### Use optgroup:
+You can use optgroup by setting optgroup element in native select like this:
+
+```html
+<select name="mySelect">
+	<optgroup label="France">
+		<option value="Paris">Paris</option>
+		<option value="Marseille">Marseille</option>
+	</optgroup>
+	<optgroup label="Italie">
+		<option value="Rome">Rome</option>
+		<option value="Venise">Venise</option>
+	</optgroup>
+</select>
+```
+
+### Use RTL (Right to left):
+To set the select to use RTL (right to left), you need to put the `dir` attribute inside the native select, like this:
+
+```html
+<select name="mySelect" dir="rtl">
+	<option>...</option>
+</select>
 ```
 
 ### Placeholder:
