@@ -10,7 +10,7 @@ Once the `webcimes-select` javascript is defined, we can simply call the Webcime
 
 ## Installation
 
-Use the npm package manager to install webcimes-select.
+Use the <a href="https://www.npmjs.com/package/webcimes-select" target="_blank">npm package</a> manager to install webcimes-select.
 
 ```bash
 npm install webcimes-select
