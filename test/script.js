@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function()
             console.log("onRemoveAllOptions");
         },
     });
-    selectCity.webcimesSelect.addEventListener("onSearchDropdown", (e) => {
+    selectCity.select.addEventListener("onSearchDropdown", (e) => {
         console.log("onSearchDropdown");
         console.log(e.detail.value);
         console.log(e.detail.options);

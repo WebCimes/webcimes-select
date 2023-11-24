@@ -73,11 +73,11 @@ interface Options {
  */
 export declare class WebcimesSelect {
     /** Get the dom element of the native select */
-    select: HTMLSelectElement | null;
-    /** Get the dom element of webcimesSelect */
-    webcimesSelect: HTMLElement;
-    /** Get the dom element of webcimesDropdown */
-    webcimesDropdown: HTMLElement | null;
+    nativeSelect: HTMLSelectElement | null;
+    /** Get the dom element of select */
+    select: HTMLElement;
+    /** Get the dom element of dropdown */
+    dropdown: HTMLElement | null;
     /** Options of WebcimesSelect */
     private options;
     /**
@@ -93,89 +93,89 @@ export declare class WebcimesSelect {
      */
     private getHtmlElement;
     /**
-     * Initialization of webcimesSelect
+     * Initialization of select
      */
     private init;
     /**
-     * Destroy webcimesSelect and revert to native select
+     * Destroy select and revert to native select
      */
     destroy(): void;
     /**
-     * Init options or placeholder on webcimesSelect, according selected option on select field
+     * Init options or placeholder on select, according selected option on native select field
      */
-    initWebcimesSelectOptions(): void;
+    initOptions(): void;
     /**
-     * Add option on webcimesSelect
+     * Add option on select
      */
-    addWebcimesSelectOption(value: string | null): void;
+    addOption(value: string | null): void;
     /**
-     * Remove option on webcimesSelect
+     * Remove option on select
      */
-    removeWebcimesSelectOption(value: string | null): void;
+    removeOption(value: string | null): void;
     /**
-     * Remove all options on webcimesSelect
+     * Remove all options on select
      */
-    removeWebcimesSelectAllOptions(): void;
+    removeAllOptions(): void;
     /**
-     * Event clear selected option on webcimesSelect
+     * Event clear selected option on select
      */
-    private onWebcimesSelectClearOption;
+    private onClearOption;
     /**
-     * Event clear all selected options on webcimesSelect
+     * Event clear all selected options on select
      */
-    private onWebcimesSelectClearAllOptions;
+    private onClearAllOptions;
     /**
-     * Event on keydown on webcimesSelect
+     * Event on keydown on select
      */
-    private onWebcimesSelectKeyDown;
+    private onKeyDown;
     /**
-     * Event init webcimesDropdown on click on webcimesSelect
+     * Event init dropdown on click on select
      */
-    private onWebcimesSelectClickInitWebcimesDropdown;
+    private onClickInitDropdown;
     /**
-     * Init webcimesDropdown
+     * Init dropdown
      */
-    private initWebcimesDropdown;
+    private initDropdown;
     /**
-     * Set webcimesDropdown options
+     * Destroy dropdown
      */
-    private setWebcimesDropdownOptions;
+    private destroyDropdown;
     /**
-     * Set webcimesDropdown position and width, relative to webcimesSelect
+     * Set dropdown options
      */
-    private setWebcimesDropdownPosition;
+    private setDropdownOptions;
+    /**
+     * Set dropdown position and width, relative to select
+     */
+    private setDropdownPosition;
     /**
      * Set highlight option
      */
-    private setWebcimesDropdownHighlightOption;
+    private setDropdownHighlightOption;
     /**
-     * Destroy webcimesDropdown
+     * Event search options on dropdown
      */
-    private destroyWebcimesDropdown;
+    private onDropdownSearch;
     /**
-     * Event search options on webcimesDropdown
+     * Event on keydown on dropdown
      */
-    private onWebcimesDropdownSearch;
+    private onDropdownKeyDown;
     /**
-     * Event on keydown on webcimesDropdown
+     * Event on mouseover option on dropdown
      */
-    private onWebcimesDropdownKeyPress;
+    private onDropdownMouseOverOption;
     /**
-     * Event on mouseover option on webcimesDropdown
+     * Event on resize on Dropdown
      */
-    private onWebcimesDropdownMouseOverOption;
+    private onDropdownResize;
     /**
-     * Event on resize on WebcimesDropdown
+     * Event on select option on Dropdown
      */
-    private onWebcimesDropdownResize;
+    private onDropdownClickOption;
     /**
-     * Event on select option on WebcimesDropdown
+     * Event destroy on click or keydown outside dropdown
      */
-    private onWebcimesDropdownClickOption;
-    /**
-     * Event destroy on click or keydown outside webcimesDropdown
-     */
-    private onWebcimesDropdownDestroy;
+    private onDropdownDestroy;
 }
 export {};
 //# sourceMappingURL=webcimes-select.d.ts.map

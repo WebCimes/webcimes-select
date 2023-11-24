@@ -197,10 +197,22 @@ const mySelect = new WebcimesSelect(...);
 // Things
 
 // Then get the dom element of the native select
+mySelect.nativeSelect;
+```
+
+Or you can Get the dom element of the current `select` like this:
+
+```javascript
+// Get the instance
+const mySelect = new WebcimesSelect(...);
+
+// Things
+
+// Then get the dom element of the current select
 mySelect.select;
 ```
 
-Or you can Get the dom element of the current `webcimesSelect` like this:
+Or you can also get the dom element of the current `dropdown` like this:
 
 ```javascript
 // Get the instance
@@ -208,20 +220,8 @@ const mySelect = new WebcimesSelect(...);
 
 // Things
 
-// Then get the dom element of the current webcimesSelect
-mySelect.webcimesSelect;
-```
-
-Or you can also get the dom element of the current `webcimesDropdown` like this:
-
-```javascript
-// Get the instance
-const mySelect = new WebcimesSelect(...);
-
-// Things
-
-// Then get the dom element of the current webcimesDropdown
-mySelect.webcimesDropdown;
+// Then get the dom element of the current dropdown
+mySelect.dropdown;
 ```
 
 ### Events:
@@ -248,7 +248,7 @@ You can also use `addEventListener` for get the events from the instance like th
 const mySelect = new WebcimesSelect(...);
 
 // Create an event on the current select
-selectCity.webcimesSelect.addEventListener("onSearchDropdown", (e) => {
+selectCity.select.addEventListener("onSearchDropdown", (e) => {
 	console.log("onSearchDropdown");
 	console.log(e.detail.value); // Get parameter with e.detail
 	console.log(e.detail.options); // Get parameter with e.detail
@@ -256,7 +256,7 @@ selectCity.webcimesSelect.addEventListener("onSearchDropdown", (e) => {
 ```
 
 ### Refresh options
-To update/refresh the select options (after changing the native select options for example), you can call the `initWebcimesSelectOptions` method, like this:
+To update/refresh the select options (after changing the native select options for example), you can call the `initOptions` method, like this:
 
 ```javascript
 // Get the instance
@@ -265,11 +265,11 @@ const mySelect = new WebcimesSelect(...);
 // Things
 
 // Then call the init options method:
-mySelect.initWebcimesSelectOptions();
+mySelect.initOptions();
 ```
 
 ### Add selected option
-To add a selected option, you can call the `addWebcimesSelectOption` method, like this:
+To add a selected option, you can call the `addOption` method, like this:
 
 ```javascript
 // Get the instance
@@ -278,11 +278,11 @@ const mySelect = new WebcimesSelect(...);
 // Things
 
 // Then call the add selected option method:
-mySelect.addWebcimesSelectOption("Paris");
+mySelect.addOption("Paris");
 ```
 
 ### Remove selected option
-To remove a selected option, you can call the `removeWebcimesSelectOption` method, like this:
+To remove a selected option, you can call the `removeOption` method, like this:
 
 ```javascript
 // Get the instance
@@ -291,11 +291,11 @@ const mySelect = new WebcimesSelect(...);
 // Things
 
 // Then call the remove selected option method:
-mySelect.removeWebcimesSelectOption("Paris");
+mySelect.removeOption("Paris");
 ```
 
 ### Remove all selected option
-To remove all selected options, you can call the `removeWebcimesSelectAllOptions` method, like this:
+To remove all selected options, you can call the `removeAllOptions` method, like this:
 
 ```javascript
 // Get the instance
@@ -304,7 +304,7 @@ const mySelect = new WebcimesSelect(...);
 // Things
 
 // Then call the remove all selected options method:
-mySelect.removeWebcimesSelectAllOptions();
+mySelect.removeAllOptions();
 ```
 
 ### Destroy
