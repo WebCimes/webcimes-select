@@ -112,7 +112,7 @@ export class WebcimesSelect
 			searchNoResultsText: "No results found",
 			keepOpenDropdown: false,
 			onInit: () => {},
-			onDestroy(){},
+			onDestroy: () => {},
 			onInitDropdown: () => {},
 			onDestroyDropdown: () => {},
 			onSearchDropdown: () => {},
