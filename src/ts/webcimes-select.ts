@@ -93,7 +93,7 @@ export class WebcimesSelect
 	/**
 	 * Create select
 	 */
-	constructor(options: Options)
+	constructor(options: Partial<Options>)
 	{
 		// Defaults
 		const defaults: Options = {

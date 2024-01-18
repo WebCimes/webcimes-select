@@ -83,7 +83,7 @@ export declare class WebcimesSelect {
     /**
      * Create select
      */
-    constructor(options: Options);
+    constructor(options: Partial<Options>);
     /**
      * Convert elements entry to an array of HTMLElement
      */
