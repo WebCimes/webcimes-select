@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function()
         keepOpenDropdown: true,
         onInit(){
             console.log("onInit");
+            selectCity.disable();
         },
         onDestroy(){
             console.log("onDestroy");

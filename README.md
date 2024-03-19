@@ -280,6 +280,24 @@ selectCity.select.addEventListener("onSearchDropdown", (e) => {
 });
 ```
 
+### Disable select
+To disable the select, you can call the `disable` method, like this:
+
+```javascript
+// Get the instance
+const mySelect = new WebcimesSelect(...);
+
+// Things
+
+// Then call the disable method:
+mySelect.disable();
+```
+
+You can also remove the disabled attribute like this:
+```javascript
+mySelect.disable(false);
+```
+
 ### Refresh options
 To update/refresh the select options (after changing the native select options for example), you can call the `initOptions` method, like this:
 
@@ -318,7 +336,7 @@ const mySelect = new WebcimesSelect(...);
 // Then call the remove selected option method:
 mySelect.removeOption("Paris");
 ```
-Just note that if an option is disabled and selected by default, you cannot remove it.
+Just note that if the select or an option is disabled, you cannot remove it.
 
 ### Remove all selected option
 To remove all selected options, you can call the `removeAllOptions` method, like this:
@@ -332,7 +350,7 @@ const mySelect = new WebcimesSelect(...);
 // Then call the remove all selected options method:
 mySelect.removeAllOptions();
 ```
-Just note that if an option is disabled and selected by default, you cannot remove it.
+Just note that if the select or an option is disabled, you cannot remove them.
 
 ### Destroy
 To destroy the select, you can call the `destroy` method, like this:

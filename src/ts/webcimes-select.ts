@@ -192,7 +192,7 @@ export class WebcimesSelect
 
 			// Append select after native select
 			this.nativeSelect.insertAdjacentHTML("afterend", 
-				`<div class="webcimes-select ${(this.nativeSelect.multiple?`webcimes-select--multiple`:``)} ${(this.options.setClass?this.options.setClass:``)}" ${(this.options.setId?`id="${this.options.setId}"`:``)} ${(this.nativeSelect.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="0">
+				`<div class="webcimes-select ${(this.nativeSelect.multiple?`webcimes-select--multiple`:``)} ${this.nativeSelect.disabled?`webcimes-select--disabled`:``} ${(this.options.setClass?this.options.setClass:``)}" ${(this.options.setId?`id="${this.options.setId}"`:``)} ${(this.nativeSelect.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="0">
 					<div class="webcimes-select__options"></div>
 					${(this.options.allowClear?`<button type="button" class="webcimes-select__clear"><div class="webcimes-select__cross"></div></button>`:'')}
 					<div class="webcimes-select__arrow"></div>
@@ -280,6 +280,28 @@ export class WebcimesSelect
 		if(typeof this.options.onDestroy === 'function')
 		{
 			this.options.onDestroy();
+		}
+	}
+
+	/**
+	 * Set select disabled or not
+	 */
+	public disable(disable: boolean = true)
+	{
+		if(this.nativeSelect)
+		{
+			if(disable)
+			{
+				this.nativeSelect.setAttribute("disabled", "");
+				this.nativeSelect.disabled = true;
+				this.select.classList.add("webcimes-select--disabled");
+			}
+			else
+			{
+				this.nativeSelect.removeAttribute("disabled");
+				this.nativeSelect.disabled = false;
+				this.select.classList.remove("webcimes-select--disabled");
+			}
 		}
 	}
 
@@ -401,7 +423,7 @@ export class WebcimesSelect
 	 */
 	public removeOption(value: string | null)
 	{
-		if(value)
+		if(value && !this.nativeSelect?.disabled)
 		{
 			// Remove option selected on native select
 			let optionEl = this.nativeSelect!.querySelector(`option[value="${value}"]:not([disabled])`) as HTMLOptionElement | null;
@@ -454,44 +476,47 @@ export class WebcimesSelect
 	 */
 	public removeAllOptions()
 	{
-		// Remove option selected on native select
-		this.nativeSelect!.querySelectorAll(`option:not([disabled])`).forEach((el: HTMLOptionElement) => {
-			el.removeAttribute("selected");
-			el.selected = false;
-		});
-
-		// If native select single and allowClear option
-		if(!this.nativeSelect!.multiple && this.options.allowClear)
+		if(!this.nativeSelect?.disabled)
 		{
-			// Set and force native select value to empty string (or placeholder option if define)
-			this.nativeSelect!.value = "";
-		}
-
-		// Init option on select
-		this.initOptions();
-
-		// If keepOpenDropdown option true
-		if(this.options.keepOpenDropdown)
-		{
-			// Remove selected class on dropdown option
-			this.dropdown?.querySelectorAll(`.webcimes-dropdown__option`).forEach((el) => {
-				el.classList.remove("webcimes-dropdown__option--selected");
+			// Remove option selected on native select
+			this.nativeSelect!.querySelectorAll(`option:not([disabled])`).forEach((el: HTMLOptionElement) => {
+				el.removeAttribute("selected");
+				el.selected = false;
 			});
-			
-			// Set position and width of dropdown
-			this.setDropdownPosition(true);
-		}
-		else
-		{
-			// Destroy dropdown
-			this.destroyDropdown();
-		}
-	
-		// Callback on set option
-		this.select.dispatchEvent(new CustomEvent("onRemoveAllOptions"));
-		if(typeof this.options.onRemoveAllOptions === 'function')
-		{
-			this.options.onRemoveAllOptions();
+
+			// If native select single and allowClear option
+			if(!this.nativeSelect!.multiple && this.options.allowClear)
+			{
+				// Set and force native select value to empty string (or placeholder option if define)
+				this.nativeSelect!.value = "";
+			}
+
+			// Init option on select
+			this.initOptions();
+
+			// If keepOpenDropdown option true
+			if(this.options.keepOpenDropdown)
+			{
+				// Remove selected class on dropdown option
+				this.dropdown?.querySelectorAll(`.webcimes-dropdown__option`).forEach((el) => {
+					el.classList.remove("webcimes-dropdown__option--selected");
+				});
+				
+				// Set position and width of dropdown
+				this.setDropdownPosition(true);
+			}
+			else
+			{
+				// Destroy dropdown
+				this.destroyDropdown();
+			}
+		
+			// Callback on set option
+			this.select.dispatchEvent(new CustomEvent("onRemoveAllOptions"));
+			if(typeof this.options.onRemoveAllOptions === 'function')
+			{
+				this.options.onRemoveAllOptions();
+			}
 		}
 	}
 	
@@ -568,65 +593,68 @@ export class WebcimesSelect
 	 */
 	private initDropdown()
 	{
-		this.select.classList.add("webcimes-select--open");
-					
-		// Append dropdown before the end of body
-		document.body.insertAdjacentHTML("beforeend", 
-			`<div class="webcimes-dropdown" ${(this.nativeSelect!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="-1">
-				${(this.options.allowSearch?`<input class="webcimes-dropdown__search-input" type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholderText?`placeholder="${this.options.searchPlaceholderText}" title="${this.options.searchPlaceholderText}"`:``)}>`:``)}
-				<div class="webcimes-dropdown__options" style="max-height:${this.options.maxHeightOptions};" tabindex="-1"></div>
-			</div>`
-		);
-
-		// Define dropdown
-		this.dropdown = document.body.lastElementChild as HTMLElement;
-
-		// Set options on dropdown
-		let options = Array.from(this.nativeSelect!.options).filter((el) => {
-			if(el.value !== "")
-			{
-				return el;
-			}
-		});
-		this.setDropdownOptions(Array.from(options));
-		
-		// Set position and width of dropdown
-		this.setDropdownPosition();
-
-		// By default set focus on dropdown
-		this.dropdown.focus();
-
-		// If allowSearch active
-		if(this.options.allowSearch)
+		if(!this.nativeSelect?.disabled)
 		{
-			let searchEl = (this.dropdown.querySelector(".webcimes-dropdown__search-input") as HTMLInputElement);
+			this.select.classList.add("webcimes-select--open");
+						
+			// Append dropdown before the end of body
+			document.body.insertAdjacentHTML("beforeend", 
+				`<div class="webcimes-dropdown" ${(this.nativeSelect!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} tabindex="-1">
+					${(this.options.allowSearch?`<input class="webcimes-dropdown__search-input" type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholderText?`placeholder="${this.options.searchPlaceholderText}" title="${this.options.searchPlaceholderText}"`:``)}>`:``)}
+					<div class="webcimes-dropdown__options" style="max-height:${this.options.maxHeightOptions};" tabindex="-1"></div>
+				</div>`
+			);
 
-			// Set focus on search field
-			if(this.options.searchAutoFocus)
+			// Define dropdown
+			this.dropdown = document.body.lastElementChild as HTMLElement;
+
+			// Set options on dropdown
+			let options = Array.from(this.nativeSelect!.options).filter((el) => {
+				if(el.value !== "")
+				{
+					return el;
+				}
+			});
+			this.setDropdownOptions(Array.from(options));
+			
+			// Set position and width of dropdown
+			this.setDropdownPosition();
+
+			// By default set focus on dropdown
+			this.dropdown.focus();
+
+			// If allowSearch active
+			if(this.options.allowSearch)
 			{
-				searchEl.focus();
+				let searchEl = (this.dropdown.querySelector(".webcimes-dropdown__search-input") as HTMLInputElement);
+
+				// Set focus on search field
+				if(this.options.searchAutoFocus)
+				{
+					searchEl.focus();
+				}
+
+				// Event search options on dropdown
+				searchEl.addEventListener("input", this.onDropdownSearch);
 			}
 
-			// Event search options on dropdown
-			searchEl.addEventListener("input", this.onDropdownSearch);
-		}
+			// Event on keydown on dropdown 
+			this.dropdown.addEventListener("keydown", this.onDropdownKeyDown);
 
-		// Event on keydown on dropdown 
-		this.dropdown.addEventListener("keydown", this.onDropdownKeyDown);
+			// Event on resize on Dropdown
+			window.addEventListener("resize", this.onDropdownResize);
 
-		// Event on resize on Dropdown
-		window.addEventListener("resize", this.onDropdownResize);
-
-		// Event destroy on click or keydown outside dropdown
-		['click', 'keydown'].forEach((typeEvent) => {
-			document.addEventListener(typeEvent, this.onDropdownDestroy);
-		});
-		
-		// Callback on init dropdown
-		this.select.dispatchEvent(new CustomEvent("onInitDropdown"));
-		if(typeof this.options.onInitDropdown === 'function')
-		{
-			this.options.onInitDropdown();
+			// Event destroy on click or keydown outside dropdown
+			['click', 'keydown'].forEach((typeEvent) => {
+				document.addEventListener(typeEvent, this.onDropdownDestroy);
+			});
+			
+			// Callback on init dropdown
+			this.select.dispatchEvent(new CustomEvent("onInitDropdown"));
+			if(typeof this.options.onInitDropdown === 'function')
+			{
+				this.options.onInitDropdown();
+			}
 		}
 	}
 

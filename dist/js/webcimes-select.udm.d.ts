@@ -101,6 +101,10 @@ export declare class WebcimesSelect {
      */
     destroy(): void;
     /**
+     * Set select disabled or not
+     */
+    disable(disable?: boolean): void;
+    /**
      * Init options or placeholder on select, according selected option on native select field
      */
     initOptions(): void;
