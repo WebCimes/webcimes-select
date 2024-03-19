@@ -318,6 +318,7 @@ const mySelect = new WebcimesSelect(...);
 // Then call the remove selected option method:
 mySelect.removeOption("Paris");
 ```
+Just note that if an option is disabled and selected by default, you cannot remove it.
 
 ### Remove all selected option
 To remove all selected options, you can call the `removeAllOptions` method, like this:
@@ -331,6 +332,7 @@ const mySelect = new WebcimesSelect(...);
 // Then call the remove all selected options method:
 mySelect.removeAllOptions();
 ```
+Just note that if an option is disabled and selected by default, you cannot remove it.
 
 ### Destroy
 To destroy the select, you can call the `destroy` method, like this:

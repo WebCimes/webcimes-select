@@ -315,7 +315,7 @@ export class WebcimesSelect
 					option.innerHTML = 
 					`<div class="webcimes-select__option" data-value="${el.value}">
 						<div class="webcimes-select__option-label" title="${el.innerHTML}">${el.innerHTML}</div>
-						${this.nativeSelect!.multiple?`<button type="button" class="webcimes-select__clear"><div class="webcimes-select__cross"></div></button>`:``}
+						${this.nativeSelect!.multiple && !el.disabled?`<button type="button" class="webcimes-select__clear"><div class="webcimes-select__cross"></div></button>`:``}
 					</div>\n`;
 					this.select.querySelector(".webcimes-select__options")!.appendChild(option.content);
 				});
@@ -682,11 +682,14 @@ export class WebcimesSelect
 			el.removeEventListener("mouseover", this.onDropdownMouseOverOption)
 		});
 
+		// Get first highlighted option index, if option not disabled
+		let firstHighlightedOption = options.findIndex((el) => !el.disabled);
+
 		// Set options
 		let optionsEl = document.createElement("template");
 		options.forEach((el, index) => {
 			let optionEl = document.createElement("template");
-			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${index==0?"webcimes-dropdown__option--highlighted":""} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" data-value="${el.value}" title="${el.innerHTML}">${el.innerHTML}</div>\n`;
+			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${firstHighlightedOption==index?"webcimes-dropdown__option--highlighted":""} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" data-value="${el.value}" title="${el.innerHTML}">${el.innerHTML}</div>\n`;
 
 			// If option has optgroup parent
 			if(el.closest("optgroup"))
