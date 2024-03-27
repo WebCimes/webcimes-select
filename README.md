@@ -95,9 +95,11 @@ document.addEventListener("DOMContentLoaded", function()
             allowClear: true, // allow clear selected options, default true
             allowSearch: true, // allow search options, default true 
             searchAutoFocus: true, // autofocus on search field when open select, default true
+            keepOpenDropdown: false, // keep dropdown open after selecting an option, default false
+            removeOptionText: "Remove option", // set remove text for title and aria-label for remove option button, default "Remove option"
+            removeAllOptionsText: "Remove all options", // set remove text for title and aria-label for remove all options button, default "Remove all options"
             searchPlaceholderText: "Search", // set placeholder text on search field, default "Search"
             searchNoResultsText: "No results found", // set text for no results found on search, default "No results found"
-            keepOpenDropdown: false, // keep dropdown open after selecting an option, default false
             onInit(){console.log("onInit");}, // callback on init select
             onDestroy(){console.log("onDestroy");}, // callback on destroy select
             onInitDropdown(){console.log("onInitDropdown");}, // callback on init dropdown
@@ -191,6 +193,8 @@ But if you prefer, you can also set the placeholder with the `placeholderText` o
 ### Customize text:
 You can customize the default text by setting these options:
 - `placeholderText` is used to set/replace basic placeholder text.
+- `removeOptionText` is the title and aria-label text that appears on remove option button.
+- `removeAllOptionsText` is the title and aria-label text that appears on remove all options button.
 - `searchPlaceholderText` matches the placeholder text inside the search field in the dropdown container.
 - `searchNoResultsText` is the text that appears if no results are found from the search field.
 
@@ -198,6 +202,8 @@ You can customize the default text by setting these options:
 const mySelect = new WebcimesSelect({
 	element: el, // Element (selector string or HTMLElement)
 	placeholderText: null, // set placeholder text, default null
+	removeOptionText: "Remove option", // set remove text for title and aria-label for remove option button, default "Remove option"
+	removeAllOptionsText: "Remove all options", // set remove text for title and aria-label for remove all options button, default "Remove all options"
 	searchPlaceholderText: "Search", // set placeholder text on search field, default "Search"
 	searchNoResultsText: "No results found", // set text for no results found on search, default "No results found"
 });

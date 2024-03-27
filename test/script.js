@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", function()
     let selectCity = new WebcimesSelect({
         element: document.querySelector("select[name='city']"),
         keepOpenDropdown: true,
+        allowSearch: false,
         onInit(){
             console.log("onInit");
-            selectCity.disable();
         },
         onDestroy(){
             console.log("onDestroy");

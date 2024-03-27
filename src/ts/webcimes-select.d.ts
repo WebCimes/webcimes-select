@@ -37,20 +37,24 @@ interface Options {
     maxHeightOptions: string;
     /** add extra css style to select, default null */
     style: string | null;
-    /** set placeholder text, default null */
-    placeholderText: string | null;
     /** allow clear selected options, default true */
     allowClear: boolean;
     /** allow search options, default true */
     allowSearch: boolean;
     /** autofocus on search field when open select, default true */
     searchAutoFocus: boolean;
+    /** keep dropdown open after selecting an option, default false */
+    keepOpenDropdown: boolean;
+    /** set placeholder text, default null */
+    placeholderText: string | null;
+    /** set remove text for title and aria-label for remove option button, default "Remove option" */
+    removeOptionText: string;
+    /** set remove text for title and aria-label for remove all options button, default "Remove all options" */
+    removeAllOptionsText: string;
     /** set placeholder text on search field, default "Search" */
     searchPlaceholderText: string | null;
     /** set text for no results found on search, default "No results found" */
     searchNoResultsText: string | null;
-    /** keep dropdown open after selecting an option, default false */
-    keepOpenDropdown: boolean;
     /** callback on init select */
     onInit(): void;
     /** callback on destroy select */

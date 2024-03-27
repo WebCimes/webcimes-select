@@ -1,0 +1,4 @@
+aria label sur select principale (possiblité aria label via native select ou via une option)
+Option group nvda
+aria label pour élément déja sélectionner dans liste / dropdown ?
+icone pour élément déja sélectionner dans liste / dropdown ? 

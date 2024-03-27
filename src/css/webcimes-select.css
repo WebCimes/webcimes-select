@@ -203,8 +203,8 @@
 	border-right: inherit;
 	border-left: none;
 }
-.webcimes-select:not(.webcimes-select--disabled) .webcimes-select--multiple .webcimes-select__option .webcimes-select__clear:hover,
-.webcimes-select:not(.webcimes-select--disabled) .webcimes-select--multiple .webcimes-select__option .webcimes-select__clear:focus
+.webcimes-select:not(.webcimes-select--disabled).webcimes-select--multiple .webcimes-select__option .webcimes-select__clear:hover,
+.webcimes-select:not(.webcimes-select--disabled).webcimes-select--multiple .webcimes-select__option .webcimes-select__clear:focus
 {
 	background: var(--select-option-multiple-clear-background-hover);
 }
