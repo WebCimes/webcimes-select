@@ -1,2 +1,1 @@
-aria label pour élément déja sélectionner dans liste / dropdown ?
 icone pour élément déja sélectionner dans liste / dropdown ? 

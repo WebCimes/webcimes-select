@@ -86,6 +86,8 @@ export declare class WebcimesSelect {
     dropdown: HTMLElement | null;
     /** Options of WebcimesSelect */
     private options;
+    /** Get the unique id of dropdown options */
+    private idDropdownOptions;
     /**
      * Create select
      */
@@ -98,6 +100,12 @@ export declare class WebcimesSelect {
      * Convert element entry to an HTMLElement
      */
     private getHtmlElement;
+    /**
+     * Get a unique ID, related to the prefix
+     * @param prefix
+     * @param element Find if the ID already exist in provided dom element
+     */
+    private getUniqueID;
     /**
      * Initialization of select
      */

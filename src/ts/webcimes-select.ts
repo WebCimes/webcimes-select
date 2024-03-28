@@ -95,6 +95,9 @@ export class WebcimesSelect
 
 	/** Options of WebcimesSelect */
 	private options: Options;
+	
+	/** Get the unique id of dropdown options */
+	private idDropdownOptions: string;
 
 	/**
 	 * Create select
@@ -186,6 +189,26 @@ export class WebcimesSelect
 		}
 		return htmlElement;
 	}
+	
+	/**
+	 * Get a unique ID, related to the prefix
+	 * @param prefix
+	 * @param element Find if the ID already exist in provided dom element
+	 */
+	
+	private getUniqueID(prefix: string, element: HTMLElement | Document | DocumentFragment | null = null)
+	{
+		// If element is null, set document
+		element = element ?? document;
+		
+		// Generate a unique ID
+		do
+		{
+			prefix += Math.floor(Math.random()*10000);
+		} while (element.querySelector(`#${prefix}`));
+		
+		return prefix;
+	}
 
 	/**
 	 * Initialization of select
@@ -208,9 +231,12 @@ export class WebcimesSelect
 				}
 			}
 
+			// Set id for dropdown options
+			this.idDropdownOptions = this.getUniqueID("webcimes-dropdown-options-");
+
 			// Append select after native select
 			this.nativeSelect.insertAdjacentHTML("afterend", 
-				`<div class="webcimes-select ${(this.nativeSelect.multiple?`webcimes-select--multiple`:``)} ${this.nativeSelect.disabled?`webcimes-select--disabled`:``} ${(this.options.setClass?this.options.setClass:``)}" ${(this.options.setId?`id="${this.options.setId}"`:``)} ${(this.nativeSelect.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} role="combobox" aria-controls="webcimes-dropdown__options" aria-expanded="false" aria-haspopup="listbox" ${this.options.ariaLabel?`aria-label="${this.options.ariaLabel}"`:``} tabindex="0">
+				`<div class="webcimes-select ${(this.nativeSelect.multiple?`webcimes-select--multiple`:``)} ${this.nativeSelect.disabled?`webcimes-select--disabled`:``} ${(this.options.setClass?this.options.setClass:``)}" ${(this.options.setId?`id="${this.options.setId}"`:``)} ${(this.nativeSelect.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} role="combobox" aria-controls="${this.idDropdownOptions}" aria-expanded="false" aria-haspopup="listbox" ${this.options.ariaLabel?`aria-label="${this.options.ariaLabel}"`:``} tabindex="0">
 					<div class="webcimes-select__options"></div>
 					${(this.options.allowClear?`<button type="button" class="webcimes-select__clear" title="${this.options.removeAllOptionsText}" aria-label="${this.options.removeAllOptionsText}"><div class="webcimes-select__cross"></div></button>`:'')}
 					<div class="webcimes-select__arrow"></div>
@@ -414,6 +440,9 @@ export class WebcimesSelect
 				// Add selected class on dropdown option
 				this.dropdown?.querySelector(`.webcimes-dropdown__option[data-value="${value}"]`)?.classList.add("webcimes-dropdown__option--selected");
 
+				// Set aria-selected on dropdown option to true
+				this.dropdown?.querySelector(`.webcimes-dropdown__option[data-value="${value}"]`)?.setAttribute("aria-selected", "true");
+
 				// Set position and width of dropdown
 				this.setDropdownPosition(true);
 			}
@@ -466,6 +495,9 @@ export class WebcimesSelect
 			{
 				// Remove selected class on dropdown option
 				this.dropdown?.querySelector(`.webcimes-dropdown__option[data-value="${value}"]`)?.classList.remove("webcimes-dropdown__option--selected");
+
+				// Set aria-selected on dropdown option to false
+				this.dropdown?.querySelector(`.webcimes-dropdown__option[data-value="${value}"]`)?.setAttribute("aria-selected", "false");
 				
 				// Set position and width of dropdown
 				this.setDropdownPosition(true);
@@ -515,9 +547,10 @@ export class WebcimesSelect
 			// If keepOpenDropdown option true
 			if(this.options.keepOpenDropdown)
 			{
-				// Remove selected class on dropdown option
+				// Remove selected class on dropdown option and set aria-selected to false
 				this.dropdown?.querySelectorAll(`.webcimes-dropdown__option`).forEach((el) => {
 					el.classList.remove("webcimes-dropdown__option--selected");
+					el.setAttribute("aria-selected", "false");
 				});
 				
 				// Set position and width of dropdown
@@ -618,9 +651,9 @@ export class WebcimesSelect
 						
 			// Append dropdown before the end of body
 			document.body.insertAdjacentHTML("beforeend", 
-				`<div class="webcimes-dropdown" ${(this.nativeSelect!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} role="combobox" aria-controls="webcimes-dropdown__options" aria-expanded="true" tabindex="-1">
-					${(this.options.allowSearch?`<input class="webcimes-dropdown__search-input" type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholderText?`placeholder="${this.options.searchPlaceholderText}" title="${this.options.searchPlaceholderText}" aria-label="${this.options.searchPlaceholderText}"`:``)} role="combobox" aria-controls="webcimes-dropdown__options" aria-expanded="true" aria-autocomplete="list">`:``)}
-					<div class="webcimes-dropdown__options" id="webcimes-dropdown__options" style="max-height:${this.options.maxHeightOptions};" role="listbox" tabindex="-1"></div>
+				`<div class="webcimes-dropdown" ${(this.nativeSelect!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} role="combobox" aria-controls="${this.idDropdownOptions}" aria-expanded="true" aria-haspopup="listbox" tabindex="-1">
+					${(this.options.allowSearch?`<input class="webcimes-dropdown__search-input" type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholderText?`placeholder="${this.options.searchPlaceholderText}" title="${this.options.searchPlaceholderText}" aria-label="${this.options.searchPlaceholderText}"`:``)} role="combobox" aria-controls="${this.idDropdownOptions}" aria-expanded="true" aria-haspopup="listbox" aria-autocomplete="list">`:``)}
+					<div class="webcimes-dropdown__options" id="${this.idDropdownOptions}" style="max-height:${this.options.maxHeightOptions};" role="listbox" ${this.nativeSelect?.multiple?`aria-multiselectable="true"`:``} tabindex="-1"></div>
 				</div>`
 			);
 
@@ -638,6 +671,9 @@ export class WebcimesSelect
 			
 			// Set position and width of dropdown
 			this.setDropdownPosition();
+
+			// Set highlight option on first option
+			this.setDropdownHighlightOption(0, true);
 
 			// By default set focus on dropdown
 			this.dropdown.focus();
@@ -730,14 +766,11 @@ export class WebcimesSelect
 			el.removeEventListener("mouseover", this.onDropdownMouseOverOption)
 		});
 
-		// Get first highlighted option index, if option not disabled
-		let firstHighlightedOption = options.findIndex((el) => !el.disabled);
-
 		// Set options
 		let optionsEl = document.createElement("template");
 		options.forEach((el, index) => {
 			let optionEl = document.createElement("template");
-			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${firstHighlightedOption==index?"webcimes-dropdown__option--highlighted":""} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" data-value="${el.value}" title="${el.innerHTML}" role="option" aria-label="${el.innerHTML}">${el.innerHTML}</div>\n`;
+			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" id="${this.getUniqueID("webcimes-dropdown__option__", optionsEl.content)}" data-value="${el.value}" title="${el.innerHTML}" role="option" aria-label="${el.innerHTML}" aria-selected="${(el.selected?`true`:`false`)}">${el.innerHTML}</div>\n`;
 
 			// If option has optgroup parent
 			if(el.closest("optgroup"))
@@ -749,7 +782,7 @@ export class WebcimesSelect
 				{
 					let optGroupEl = document.createElement("template");
 					optGroupEl.innerHTML = 
-					`<div class="webcimes-dropdown__opt-group" data-label="${label}" title="${label}" role="group" aria-label="${label}" id="test22">
+					`<div class="webcimes-dropdown__opt-group" data-label="${label}" title="${label}" role="group" aria-label="${label}">
 						<div class="webcimes-dropdown__opt-group-label" role="presentation">${label}</div>
 					</div>\n`;
 					optionsEl.content.appendChild(optGroupEl.content);
@@ -819,14 +852,21 @@ export class WebcimesSelect
 	{
 		let highlightedOption = this.dropdown!.querySelector(".webcimes-dropdown__option--highlighted");
 		let optionsEl = this.dropdown!.querySelectorAll(`.webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)`);
+
+		// Remove highlighted class on old option
 		highlightedOption?.classList.remove("webcimes-dropdown__option--highlighted");
-		highlightedOption?.removeAttribute("aria-selected");
-		highlightedOption = optionsEl[index];
-		highlightedOption.classList.add("webcimes-dropdown__option--highlighted");
-		highlightedOption.setAttribute("aria-selected", "true");
-		if(autoScroll)
+
+		// Set highlighted class on new option
+		if(optionsEl[index])
 		{
-			highlightedOption.scrollIntoView({behavior: "smooth", block: "nearest"});
+			highlightedOption = optionsEl[index];
+			highlightedOption.classList.add("webcimes-dropdown__option--highlighted");
+			this.dropdown!.setAttribute("aria-activedescendant", highlightedOption.id);
+			this.dropdown?.querySelector(".webcimes-dropdown__search-input")?.setAttribute("aria-activedescendant", highlightedOption.id);
+			if(autoScroll)
+			{
+				highlightedOption.scrollIntoView({behavior: "smooth", block: "nearest"});
+			}
 		}
 	}
 
@@ -861,6 +901,9 @@ export class WebcimesSelect
 		
 		// Set position and width of dropdown
 		this.setDropdownPosition(true);
+		
+		// Set highlight option on first option
+		this.setDropdownHighlightOption(0, true);
 
 		// Callback on search dropdown
 		this.select.dispatchEvent(new CustomEvent("onSearchDropdown", {
