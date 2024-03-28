@@ -55,6 +55,8 @@ interface Options {
     searchPlaceholderText: string | null;
     /** set text for no results found on search, default "No results found" */
     searchNoResultsText: string | null;
+    /** set aria-label for select, default null */
+    ariaLabel: string | null;
     /** callback on init select */
     onInit(): void;
     /** callback on destroy select */

@@ -190,6 +190,17 @@ By default, the placeholder will be set based on the text defined inside the opt
 
 But if you prefer, you can also set the placeholder with the `placeholderText` option. Just note that it will replace the placeholder text in case you also set the placeholder with the previous method.
 
+### Aria label:
+By default, the aria-label will be set based on the attribute of the natural select, like this:
+
+```html
+<select name="mySelect" title="My title" aria-label="My label">
+	...
+</select>
+```
+
+But if you prefer, you can also set the aria-label with the `ariaLabel` option. Just note that it will replace the aria-label text in case you also set the aria-label with the previous method.
+
 ### Customize text:
 You can customize the default text by setting these options:
 - `placeholderText` is used to set/replace basic placeholder text.
@@ -197,6 +208,7 @@ You can customize the default text by setting these options:
 - `removeAllOptionsText` is the title and aria-label text that appears on remove all options button.
 - `searchPlaceholderText` matches the placeholder text inside the search field in the dropdown container.
 - `searchNoResultsText` is the text that appears if no results are found from the search field.
+- `ariaLabel` is the accessibility text that appears on the select.
 
 ```javascript
 const mySelect = new WebcimesSelect({
@@ -206,6 +218,7 @@ const mySelect = new WebcimesSelect({
 	removeAllOptionsText: "Remove all options", // set remove text for title and aria-label for remove all options button, default "Remove all options"
 	searchPlaceholderText: "Search", // set placeholder text on search field, default "Search"
 	searchNoResultsText: "No results found", // set text for no results found on search, default "No results found"
+	ariaLabel: null, // set aria-label for select, default null
 });
 ```
 
