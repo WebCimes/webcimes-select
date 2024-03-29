@@ -651,7 +651,7 @@ export class WebcimesSelect
 						
 			// Append dropdown before the end of body
 			document.body.insertAdjacentHTML("beforeend", 
-				`<div class="webcimes-dropdown" ${(this.nativeSelect!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} role="combobox" aria-controls="${this.idDropdownOptions}" aria-expanded="true" aria-haspopup="listbox" tabindex="-1">
+				`<div class="webcimes-dropdown" ${(this.nativeSelect!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)}>
 					${(this.options.allowSearch?`<input class="webcimes-dropdown__search-input" type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholderText?`placeholder="${this.options.searchPlaceholderText}" title="${this.options.searchPlaceholderText}" aria-label="${this.options.searchPlaceholderText}"`:``)} role="combobox" aria-controls="${this.idDropdownOptions}" aria-expanded="true" aria-haspopup="listbox" aria-autocomplete="list">`:``)}
 					<div class="webcimes-dropdown__options" id="${this.idDropdownOptions}" style="max-height:${this.options.maxHeightOptions};" role="listbox" ${this.nativeSelect?.multiple?`aria-multiselectable="true"`:``} tabindex="-1"></div>
 				</div>`
@@ -675,9 +675,6 @@ export class WebcimesSelect
 			// Set highlight option on first option
 			this.setDropdownHighlightOption(0, true);
 
-			// By default set focus on dropdown
-			this.dropdown.focus();
-
 			// If allowSearch active
 			if(this.options.allowSearch)
 			{
@@ -691,10 +688,13 @@ export class WebcimesSelect
 
 				// Event search options on dropdown
 				searchEl.addEventListener("input", this.onDropdownSearch);
+				
+				// Event on dropdown keydown on search field
+				searchEl.addEventListener("keydown", this.onDropdownKeyDown);
 			}
 
-			// Event on keydown on dropdown 
-			this.dropdown.addEventListener("keydown", this.onDropdownKeyDown);
+			// Event on dropdown keydown on select
+			this.select.addEventListener("keydown", this.onDropdownKeyDown);
 
 			// Event on resize on Dropdown
 			window.addEventListener("resize", this.onDropdownResize);
@@ -724,7 +724,8 @@ export class WebcimesSelect
 			this.select.classList.remove("webcimes-select--open");
 			this.select.setAttribute("aria-expanded", "false");
 			(this.dropdown.querySelector(".webcimes-dropdown__search-input") as HTMLElement)?.removeEventListener("input", this.onDropdownSearch);
-			this.dropdown.removeEventListener("keydown", this.onDropdownKeyDown);
+			(this.dropdown.querySelector(".webcimes-dropdown__search-input") as HTMLElement)?.removeEventListener("keydown", this.onDropdownKeyDown);
+			this.select.removeEventListener("keydown", this.onDropdownKeyDown);
 			window.removeEventListener("resize", this.onDropdownResize);
 			['click', 'keydown'].forEach((typeEvent) => {
 				document.removeEventListener(typeEvent, this.onDropdownDestroy);
@@ -861,8 +862,8 @@ export class WebcimesSelect
 		{
 			highlightedOption = optionsEl[index];
 			highlightedOption.classList.add("webcimes-dropdown__option--highlighted");
-			this.dropdown!.setAttribute("aria-activedescendant", highlightedOption.id);
-			this.dropdown?.querySelector(".webcimes-dropdown__search-input")?.setAttribute("aria-activedescendant", highlightedOption.id);
+			this.select!.setAttribute("aria-activedescendant", highlightedOption.id);
+			this.dropdown!.querySelector(".webcimes-dropdown__search-input")?.setAttribute("aria-activedescendant", highlightedOption.id);
 			if(autoScroll)
 			{
 				highlightedOption.scrollIntoView({behavior: "smooth", block: "nearest"});
@@ -923,42 +924,38 @@ export class WebcimesSelect
 	 */
 	private onDropdownKeyDown(e: KeyboardEvent)
 	{
-		// If KeyboardEvent not comming from select
-		if(e.target != this.select)
+		let highlightedOption = this.dropdown!.querySelector(".webcimes-dropdown__option--highlighted");
+		if(highlightedOption)
 		{
-			let highlightedOption = this.dropdown!.querySelector(".webcimes-dropdown__option--highlighted");
-			if(highlightedOption)
-			{
-				if(e.key == "ArrowUp" || e.key == "ArrowDown")
-				{
-					e.preventDefault();
-					let optionsEl = this.dropdown!.querySelectorAll(`.webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)`);
-					let highlightedIndex = Array.from(optionsEl).indexOf(highlightedOption);
-					this.setDropdownHighlightOption((e.key == "ArrowUp" ? (highlightedIndex-1 >= 0 ? highlightedIndex-1 : 0) : (highlightedIndex+1 <= optionsEl.length-1 ? highlightedIndex+1 : optionsEl.length-1)), true);
-				}
-				if(e.key == "Enter")
-				{
-					e.preventDefault();
-					if(highlightedOption.classList.contains("webcimes-dropdown__option--selected"))
-					{
-						this.removeOption(highlightedOption.getAttribute("data-value"));
-					}
-					else
-					{
-						this.addOption(highlightedOption.getAttribute("data-value"));
-					}
-				}
-			}
-			if(e.key == "Escape")
+			if(e.key == "ArrowUp" || e.key == "ArrowDown")
 			{
 				e.preventDefault();
-				this.destroyDropdown();
+				let optionsEl = this.dropdown!.querySelectorAll(`.webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)`);
+				let highlightedIndex = Array.from(optionsEl).indexOf(highlightedOption);
+				this.setDropdownHighlightOption((e.key == "ArrowUp" ? (highlightedIndex-1 >= 0 ? highlightedIndex-1 : 0) : (highlightedIndex+1 <= optionsEl.length-1 ? highlightedIndex+1 : optionsEl.length-1)), true);
 			}
-			if(e.key == "Tab")
+			if(e.key == "Enter")
 			{
 				e.preventDefault();
-				this.destroyDropdown();
+				if(highlightedOption.classList.contains("webcimes-dropdown__option--selected"))
+				{
+					this.removeOption(highlightedOption.getAttribute("data-value"));
+				}
+				else
+				{
+					this.addOption(highlightedOption.getAttribute("data-value"));
+				}
 			}
+		}
+		if(e.key == "Escape")
+		{
+			e.preventDefault();
+			this.destroyDropdown();
+		}
+		if(e.key == "Tab")
+		{
+			e.preventDefault();
+			this.destroyDropdown();
 		}
 	}
 
