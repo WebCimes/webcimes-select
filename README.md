@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", function()
             removeAllOptionsText: "Remove all options", // set remove text for title and aria-label for remove all options button, default "Remove all options"
             searchPlaceholderText: "Search", // set placeholder text on search field, default "Search"
             searchNoResultsText: "No results found", // set text for no results found on search, default "No results found"
+            optionIconSelectedText: "Selected", // set icon selected text into option dropdown, default "Selected"
             onInit(){console.log("onInit");}, // callback on init select
             onDestroy(){console.log("onDestroy");}, // callback on destroy select
             onInitDropdown(){console.log("onInitDropdown");}, // callback on init dropdown
@@ -208,6 +209,7 @@ You can customize the default text by setting these options:
 - `removeAllOptionsText` is the title and aria-label text that appears on remove all options button.
 - `searchPlaceholderText` matches the placeholder text inside the search field in the dropdown container.
 - `searchNoResultsText` is the text that appears if no results are found from the search field.
+- `optionIconSelectedText` is the the title and aria-label text that appears on icon option dropdown if option is selected.
 - `ariaLabel` is the accessibility text that appears on the select.
 
 ```javascript
@@ -218,6 +220,7 @@ const mySelect = new WebcimesSelect({
 	removeAllOptionsText: "Remove all options", // set remove text for title and aria-label for remove all options button, default "Remove all options"
 	searchPlaceholderText: "Search", // set placeholder text on search field, default "Search"
 	searchNoResultsText: "No results found", // set text for no results found on search, default "No results found"
+	optionIconSelectedText: "Selected", // set icon selected text into option dropdown, default "Selected"
 	ariaLabel: null, // set aria-label for select, default null
 });
 ```

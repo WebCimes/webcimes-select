@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function()
             removeAllOptionsText: "Remove all options", // set remove text for title and aria-label for remove all options button, default "Remove all options"
             searchPlaceholderText: "Search", // set placeholder text on search field, default "Search"
             searchNoResultsText: "No results found", // set text for no results found on search, default "No results found"
+            optionIconSelectedText: "Selected", // set icon selected text into option dropdown, default "Selected"
             ariaLabel: null, // set aria-label for select, default null
             onInit(){console.log("onInit");}, // callback on init select
             onDestroy(){console.log("onDestroy");}, // callback on destroy select

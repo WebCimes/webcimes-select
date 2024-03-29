@@ -59,6 +59,8 @@ interface Options {
 	searchPlaceholderText: string | null;
 	/** set text for no results found on search, default "No results found" */
 	searchNoResultsText: string | null;
+	/** set icon selected text into option dropdown, default "Selected" */
+	optionIconSelectedText: string | null;
 	/** set aria-label for select, default null */
 	ariaLabel: string | null;
 	/** callback on init select */
@@ -122,6 +124,7 @@ export class WebcimesSelect
 			removeAllOptionsText: "Remove all options",
 			searchPlaceholderText: "Search",
 			searchNoResultsText: "No results found",
+            optionIconSelectedText: "Selected",
 			ariaLabel: null,
 			onInit: () => {},
 			onDestroy: () => {},
@@ -773,7 +776,7 @@ export class WebcimesSelect
 			let optionEl = document.createElement("template");
 			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" id="${this.getUniqueID("webcimes-dropdown__option__", optionsEl.content)}" data-value="${el.value}" title="${el.innerHTML}" role="option" aria-label="${el.innerHTML}" aria-selected="${(el.selected?`true`:`false`)}">
 				${el.innerHTML}
-				<svg class="webcimes-dropdown__icon-selected" xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" aria-labelledby="iconSelectedTitle" fill="none" stroke="currentColor"><title id="iconSelectedTitle">Selected</title><polyline points="7 13 10 16 17 9"></polyline><circle cx="12" cy="12" r="10"></circle></svg>
+				<svg class="webcimes-dropdown__icon-selected" xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" aria-labelledby="iconSelectedTitle" fill="none" stroke="currentColor"><title id="iconSelectedTitle">${this.options.optionIconSelectedText}</title><polyline points="7 13 10 16 17 9"></polyline><circle cx="12" cy="12" r="10"></circle></svg>
 			</div>\n`;
 
 			// If option has optgroup parent
