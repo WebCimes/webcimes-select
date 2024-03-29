@@ -49,6 +49,8 @@ interface Options {
 	searchAutoFocus: boolean;
 	/** keep dropdown open after selecting an option, default false */
 	keepOpenDropdown: boolean;
+	/** set default language for texts, default "en" */
+	language: string;
 	/** set placeholder text, default null */
 	placeholderText: string | null;
     /** set remove text for title and aria-label for remove option button, default "Remove option" */
@@ -101,6 +103,66 @@ export class WebcimesSelect
 	/** Get the unique id of dropdown options */
 	private idDropdownOptions: string;
 
+	/** Set the default texts for each language */
+	private texts: { [key: string]: { [key: string]: string } } = {
+		"en": {
+			"removeOptionText": "Remove option",
+			"removeAllOptionsText": "Remove all options",
+			"searchPlaceholderText": "Search",
+			"searchNoResultsText": "No results found",
+			"optionIconSelectedText": "Selected",
+		},
+		"fr": {
+			"removeOptionText": "Supprimer l'option",
+			"removeAllOptionsText": "Supprimer toutes les options",
+			"searchPlaceholderText": "Rechercher",
+			"searchNoResultsText": "Aucun résultat trouvé",
+			"optionIconSelectedText": "Sélectionné",
+		},
+		"es": {
+			"removeOptionText": "Eliminar opción",
+			"removeAllOptionsText": "Eliminar todas las opciones",
+			"searchPlaceholderText": "Buscar",
+			"searchNoResultsText": "No se encontraron resultados",
+			"optionIconSelectedText": "Seleccionado",
+		},
+		"de": {
+			"removeOptionText": "Option entfernen",
+			"removeAllOptionsText": "Alle Optionen entfernen",
+			"searchPlaceholderText": "Suche",
+			"searchNoResultsText": "Keine Ergebnisse gefunden",
+			"optionIconSelectedText": "Ausgewählt",
+		},
+		"it": {
+			"removeOptionText": "Rimuovi opzione",
+			"removeAllOptionsText": "Rimuovi tutte le opzioni",
+			"searchPlaceholderText": "Cerca",
+			"searchNoResultsText": "Nessun risultato trovato",
+			"optionIconSelectedText": "Selezionato",
+		},
+		"pt": {
+			"removeOptionText": "Remover opção",
+			"removeAllOptionsText": "Remover todas as opções",
+			"searchPlaceholderText": "Pesquisar",
+			"searchNoResultsText": "Nenhum resultado encontrado",
+			"optionIconSelectedText": "Selecionado",
+		},
+		"nl": {
+			"removeOptionText": "Optie verwijderen",
+			"removeAllOptionsText": "Alle opties verwijderen",
+			"searchPlaceholderText": "Zoeken",
+			"searchNoResultsText": "Geen resultaten gevonden",
+			"optionIconSelectedText": "Geselecteerd",
+		},
+		"ru": {
+			"removeOptionText": "Удалить опцию",
+			"removeAllOptionsText": "Удалить все опции",
+			"searchPlaceholderText": "Поиск",
+			"searchNoResultsText": "Результаты не найдены",
+			"optionIconSelectedText": "Выбрано",
+		},
+	}
+
 	/**
 	 * Create select
 	 */
@@ -119,12 +181,13 @@ export class WebcimesSelect
 			allowSearch: true,
 			searchAutoFocus: true,
 			keepOpenDropdown: false,
+			language: "en",
 			placeholderText: null,
-			removeOptionText: "Remove option",
-			removeAllOptionsText: "Remove all options",
-			searchPlaceholderText: "Search",
-			searchNoResultsText: "No results found",
-            optionIconSelectedText: "Selected",
+			removeOptionText: this.texts["en"]["removeOptionText"],
+			removeAllOptionsText: this.texts["en"]["removeAllOptionsText"],
+			searchPlaceholderText: this.texts["en"]["searchPlaceholderText"],
+			searchNoResultsText: this.texts["en"]["searchNoResultsText"],
+            optionIconSelectedText: this.texts["en"]["optionIconSelectedText"],
 			ariaLabel: null,
 			onInit: () => {},
 			onDestroy: () => {},
@@ -135,6 +198,18 @@ export class WebcimesSelect
 			onRemoveOption: () => {},
 			onRemoveAllOptions: () => {},
 		}
+
+		// If options language is set, set texts according to the language
+		if(options.language && this.texts[options.language])
+		{
+			defaults.removeOptionText = this.texts[options.language]["removeOptionText"];
+			defaults.removeAllOptionsText = this.texts[options.language]["removeAllOptionsText"];
+			defaults.searchPlaceholderText = this.texts[options.language]["searchPlaceholderText"];
+			defaults.searchNoResultsText = this.texts[options.language]["searchNoResultsText"];
+			defaults.optionIconSelectedText = this.texts[options.language]["optionIconSelectedText"];
+		}
+
+		// Merge defaults and options
 		this.options = {...defaults, ...options};
 
 		// Bind "this" to all events

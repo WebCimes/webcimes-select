@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function()
             allowSearch: true, // allow search options, default true 
             searchAutoFocus: true, // autofocus on search field when open select, default true
             keepOpenDropdown: false, // keep dropdown open after selecting an option, default false
+            language: "en", // set default language for texts, default "en"
             placeholderText: null, // set placeholder text, default null
             removeOptionText: "Remove option", // set remove text for title and aria-label for remove option button, default "Remove option"
             removeAllOptionsText: "Remove all options", // set remove text for title and aria-label for remove all options button, default "Remove all options"

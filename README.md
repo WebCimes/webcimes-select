@@ -225,6 +225,21 @@ const mySelect = new WebcimesSelect({
 });
 ```
 
+### Customize default language for texts:
+
+You can choose a default language for all texts, actually `"en" / "fr" / "es" / "de" / "it" / "pt" / "nl" / "ru" ` is supported.
+
+All default texts will be translated into the defined language.
+
+```javascript
+const mySelect = new WebcimesSelect({
+	element: el, // Element (selector string or HTMLElement)
+	language: "en", // set default language for texts, default "en"
+});
+```
+
+Just note that if you customize the default text for any of these attributes "`removeOptionText, removeAllOptionsText, searchPlaceholderText, searchNoResultsText, optionIconSelectedText`", it will override the default text, even if you set the `language` attribute to a language other than the default `"en"` language.
+
 ### Add extra style to the select:
 You can define the style of the select with `css`, but you can also use the `style` property which allows to directly add an additional style to the select.
 

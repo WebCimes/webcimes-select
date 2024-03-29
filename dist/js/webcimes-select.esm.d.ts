@@ -45,6 +45,8 @@ interface Options {
     searchAutoFocus: boolean;
     /** keep dropdown open after selecting an option, default false */
     keepOpenDropdown: boolean;
+    /** set default language for texts, default "en" */
+    language: string;
     /** set placeholder text, default null */
     placeholderText: string | null;
     /** set remove text for title and aria-label for remove option button, default "Remove option" */
@@ -90,6 +92,8 @@ export declare class WebcimesSelect {
     private options;
     /** Get the unique id of dropdown options */
     private idDropdownOptions;
+    /** Set the default texts for each language */
+    private texts;
     /**
      * Create select
      */

@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function()
         element: document.querySelector("select[name='city']"),
         keepOpenDropdown: true,
         allowSearch: false,
+        language: "fr",
         onInit(){
             console.log("onInit");
         },
