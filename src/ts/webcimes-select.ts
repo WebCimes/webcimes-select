@@ -771,7 +771,10 @@ export class WebcimesSelect
 		let optionsEl = document.createElement("template");
 		options.forEach((el, index) => {
 			let optionEl = document.createElement("template");
-			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" id="${this.getUniqueID("webcimes-dropdown__option__", optionsEl.content)}" data-value="${el.value}" title="${el.innerHTML}" role="option" aria-label="${el.innerHTML}" aria-selected="${(el.selected?`true`:`false`)}">${el.innerHTML}</div>\n`;
+			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" id="${this.getUniqueID("webcimes-dropdown__option__", optionsEl.content)}" data-value="${el.value}" title="${el.innerHTML}" role="option" aria-label="${el.innerHTML}" aria-selected="${(el.selected?`true`:`false`)}">
+				${el.innerHTML}
+				<svg class="webcimes-dropdown__icon-selected" xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" aria-labelledby="iconSelectedTitle" fill="none" stroke="currentColor"><title id="iconSelectedTitle">Selected</title><polyline points="7 13 10 16 17 9"></polyline><circle cx="12" cy="12" r="10"></circle></svg>
+			</div>\n`;
 
 			// If option has optgroup parent
 			if(el.closest("optgroup"))
@@ -964,8 +967,12 @@ export class WebcimesSelect
 	 */
 	private onDropdownMouseOverOption(e: MouseEvent)
 	{
-		let optionsEl = this.dropdown!.querySelectorAll(`.webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)`);
-		this.setDropdownHighlightOption(Array.from(optionsEl).indexOf(e.target as HTMLElement), false);
+		let optionEl = (e.target as HTMLElement).closest(".webcimes-dropdown__option");
+		if(optionEl)
+		{
+			let optionsEl = this.dropdown!.querySelectorAll(`.webcimes-dropdown__option:not(.webcimes-dropdown__option--disabled)`);
+			this.setDropdownHighlightOption(Array.from(optionsEl).indexOf(optionEl), false);
+		}
 	}
 
 	/**
@@ -981,13 +988,17 @@ export class WebcimesSelect
 	 */
 	private onDropdownClickOption(e: Event)
 	{
-		if((e.target as HTMLElement).classList.contains("webcimes-dropdown__option--selected"))
+		let optionEl = (e.target as HTMLElement).closest(".webcimes-dropdown__option");
+		if(optionEl)
 		{
-			this.removeOption((e.target as HTMLElement).getAttribute("data-value"));
-		}
-		else
-		{
-			this.addOption((e.target as HTMLElement).getAttribute("data-value"));
+			if(optionEl.classList.contains("webcimes-dropdown__option--selected"))
+			{
+				this.removeOption(optionEl.getAttribute("data-value"));
+			}
+			else
+			{
+				this.addOption(optionEl.getAttribute("data-value"));
+			}
 		}
 	}
 

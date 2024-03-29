@@ -290,6 +290,9 @@
 	cursor: pointer;
 	text-overflow: ellipsis;
 	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 .webcimes-select--disabled .webcimes-dropdown__option
 {
@@ -315,6 +318,18 @@
 {
 	cursor: default;
 	background: none;
+}
+.webcimes-dropdown__option .webcimes-dropdown__icon-selected
+{
+	display: none;
+	flex: 0 0 auto;
+	width: 20px;
+	height: 20px;
+	margin-left: 10px;
+}
+.webcimes-dropdown__option--selected .webcimes-dropdown__icon-selected
+{
+	display: block;
 }
 .webcimes-dropdown__opt-group .webcimes-dropdown__option
 {
