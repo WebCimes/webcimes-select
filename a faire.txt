@@ -1,2 +1,0 @@
-icone pour élément déja sélectionner dans liste / dropdown ? 
-color for highlight option

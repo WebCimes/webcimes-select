@@ -1,6 +1,10 @@
 # webcimes-select
 
-Just create beautiful select boxes, it supports search, single select, multiple select, keyboard control, clear options, dropdown can also be opened over an overflow parent, optgroup support, rtl support, and many other options.
+Just create beautiful select boxes, it supports single select and multiple select.
+
+Many features exist, like search, multilingual, keyboard control, delete options, dropdown can also be opened on overflow parent, optgroup support, rtl support and many other options.
+
+`webcimes-select` also comes with full support for web accessibility and screen readers.
 
 All options selected by Webcimes-Select are directly applied to the form's native select, to support sending native form.
 
@@ -17,7 +21,7 @@ npm install webcimes-select
 ```
 
 ### ESM
-Compared to JS bundlers (like Webpack), using ESM in the browser requires you to use the full path and filename instead of the module name.
+Compared to JS bundlers (like Webpack or Vite), using ESM in the browser requires you to use the full path and filename instead of the module name.
 You can use an importmap to resolve the arbitrary module names to complete paths (not needed if you use JS bundlers):
 ```html
 <html>
@@ -53,7 +57,7 @@ Or you can also set the full path directly in the import:
 	...
 ```
 
-Or with JS bundlers (like Webpack) you can call directly the module :
+Or with JS bundlers (like Webpack or Vite) you can call directly the module :
 ```javascript
 import { WebcimesSelect } from "webcimes-select";
 ```
@@ -412,27 +416,28 @@ You can style select with the following field applying to the class of `.webcime
 	--select-color: inherit;
 	--select-background: #fff;
 	--select-padding: 2.5px 5px;
-	--select-border: 1px solid #ddd;
+	--select-border: 1px solid #cbd5e1;
 	--select-border-radius: 4px;
-	--select-focus-border-color: #aaa;
+	--select-focus-border-color: #94a3b8;
+	--select-disabled-opacity: 0.5;
 	--select-option-margin: 2.5px 5px 2.5px 0;
-	--select-option-padding: 5px;
-	--select-option-multiple-color: inherit;
-	--select-option-multiple-background: #ddd;
-	--select-option-multiple-border: 1px solid #bbb;
+	--select-option-padding: 5px 10px;
+	--select-option-multiple-color: #334155;
+	--select-option-multiple-background: #e2e8f0;
+	--select-option-multiple-border: 1px solid #cbd5e1;
 	--select-option-multiple-border-radius: 4px;
-	--select-option-multiple-clear-background: #ddd;
-	--select-option-multiple-clear-background-hover: #eee;
+	--select-option-multiple-clear-background: #e2e8f0;
+	--select-option-multiple-clear-background-hover: #f1f5f9;
 	--select-placeholder-opacity: 0.7;
-	--select-cross-background: #666;
-	--select-cross-background-hover: #000;
-	--select-arrow-background: #666;
+	--select-cross-background: #64748b;
+	--select-cross-background-hover: #334155;
+	--select-arrow-background: #64748b;
 	--select-input-padding: 10px;
 	--select-dropdown-option-padding: 10px;
-	--select-dropdown-option-color-selected: inherit;
-	--select-dropdown-option-background-selected: #eee;
-	--select-dropdown-option-color-hightlight: inherit;
-	--select-dropdown-option-background-hightlight: #ccc;
+	--select-dropdown-option-color-selected: #334155;
+	--select-dropdown-option-background-selected: #e2e8f0;
+	--select-dropdown-option-color-hightlight: #fff;
+	--select-dropdown-option-background-hightlight: #64748b;
 	--select-dropdown-option-disabled-opacity: 0.5;
 	--select-dropdown-optgroup-option-padding: 10px 10px 10px 20px;
 	--select-dropdown-optgroup-option-padding-rtl: 10px 20px 10px 10px;

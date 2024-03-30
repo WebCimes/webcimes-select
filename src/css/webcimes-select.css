@@ -29,28 +29,28 @@
 	--select-color: inherit;
 	--select-background: #fff;
 	--select-padding: 2.5px 5px;
-	--select-border: 1px solid #ddd;
+	--select-border: 1px solid #cbd5e1;
 	--select-border-radius: 4px;
-	--select-focus-border-color: #aaa;
+	--select-focus-border-color: #94a3b8;
 	--select-disabled-opacity: 0.5;
 	--select-option-margin: 2.5px 5px 2.5px 0;
-	--select-option-padding: 5px;
-	--select-option-multiple-color: inherit;
-	--select-option-multiple-background: #ddd;
-	--select-option-multiple-border: 1px solid #bbb;
+	--select-option-padding: 5px 10px;
+	--select-option-multiple-color: #334155;
+	--select-option-multiple-background: #e2e8f0;
+	--select-option-multiple-border: 1px solid #cbd5e1;
 	--select-option-multiple-border-radius: 4px;
-	--select-option-multiple-clear-background: #ddd;
-	--select-option-multiple-clear-background-hover: #eee;
+	--select-option-multiple-clear-background: #e2e8f0;
+	--select-option-multiple-clear-background-hover: #f1f5f9;
 	--select-placeholder-opacity: 0.7;
-	--select-cross-background: #666;
-	--select-cross-background-hover: #000;
-	--select-arrow-background: #666;
+	--select-cross-background: #64748b;
+	--select-cross-background-hover: #334155;
+	--select-arrow-background: #64748b;
 	--select-input-padding: 10px;
 	--select-dropdown-option-padding: 10px;
-	--select-dropdown-option-color-selected: inherit;
-	--select-dropdown-option-background-selected: #eee;
-	--select-dropdown-option-color-hightlight: inherit;
-	--select-dropdown-option-background-hightlight: #ccc;
+	--select-dropdown-option-color-selected: #334155;
+	--select-dropdown-option-background-selected: #e2e8f0;
+	--select-dropdown-option-color-hightlight: #fff;
+	--select-dropdown-option-background-hightlight: #64748b;
 	--select-dropdown-option-disabled-opacity: 0.5;
 	--select-dropdown-optgroup-option-padding: 10px 10px 10px 20px;
 	--select-dropdown-optgroup-option-padding-rtl: 10px 20px 10px 10px;
@@ -130,9 +130,9 @@
 	left: 50%;
 	margin-left: -1px;
 	top: 50%;
-	margin-top: -5px;
+	margin-top: -6px;
 	background: var(--select-cross-background);
-	height: 10px;
+	height: 12px;
 	width: 2px;
 	transform: rotate(45deg);
 	transition: background 0.3s;
@@ -143,9 +143,9 @@
 	content: "";
 	background: var(--select-cross-background);
 	height: 2px;
-	left: -4px;
-	top: 4px;
-	width: 10px;
+	left: -5px;
+	top: 5px;
+	width: 12px;
 	transition: background 0.3s;
 }
 .webcimes-select:not(.webcimes-select--disabled) .webcimes-select__clear:hover .webcimes-select__cross,
@@ -221,10 +221,10 @@
 	position: relative;
 	border-style: solid;
 	border-color: var(--select-arrow-background) transparent transparent transparent;
-	border-width: 5px;
+	border-width: 6px;
 	transition: transform 0.5s;
 	transform-origin: center 2.5px;
-	margin-top: 5px;
+	margin-top: 6px;
 	margin-left: 5px;
 }
 .webcimes-select[dir="rtl"] .webcimes-select__arrow
@@ -323,8 +323,8 @@
 {
 	display: none;
 	flex: 0 0 auto;
-	width: 20px;
-	height: 20px;
+	width: 18px;
+	height: 18px;
 	margin-left: 10px;
 }
 .webcimes-dropdown__option--selected .webcimes-dropdown__icon-selected
