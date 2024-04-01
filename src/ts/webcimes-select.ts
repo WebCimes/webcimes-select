@@ -213,6 +213,7 @@ export class WebcimesSelect
 		this.options = {...defaults, ...options};
 
 		// Bind "this" to all events
+		this.onNativeSelectClick = this.onNativeSelectClick.bind(this);
 		this.onClearOption = this.onClearOption.bind(this);
 		this.onClearAllOptions = this.onClearAllOptions.bind(this);
 		this.onKeyDown = this.onKeyDown.bind(this);
@@ -355,10 +356,8 @@ export class WebcimesSelect
 			// Set select value (or placeholder)
 			this.initOptions();
 
-			// Event open dropdown after click on label (who is relative to native select)
-			this.nativeSelect.addEventListener("click", () => {
-				this.initDropdown();
-			});
+			// Event init dropdown after click on label (who is relative to native select)
+			this.nativeSelect.addEventListener("click", this.onNativeSelectClick);
 
 			// Event clear all selected options on select
 			this.select.querySelector(".webcimes-select > .webcimes-select__clear")?.addEventListener("click", this.onClearAllOptions);
@@ -389,6 +388,7 @@ export class WebcimesSelect
 		this.destroyDropdown();
 
 		// Remove events
+		this.nativeSelect!.removeEventListener("click", this.onNativeSelectClick);
 		this.select.querySelectorAll(".webcimes-select__option .webcimes-select__clear").forEach((el) => {
 			el.removeEventListener("click", this.onClearOption);
 		});
@@ -651,6 +651,18 @@ export class WebcimesSelect
 			{
 				this.options.onRemoveAllOptions();
 			}
+		}
+	}
+	
+	/**
+	 * Event init dropdown on click on native select
+	 */
+	private onNativeSelectClick(e: Event)
+	{
+		// If dropdown is null, create dropdown
+		if(!this.dropdown)
+		{
+			this.initDropdown();
 		}
 	}
 	
@@ -1093,7 +1105,11 @@ export class WebcimesSelect
 	 */
 	private onDropdownDestroy(e: Event)
 	{
-		if((e.target as HTMLElement).closest("select") != this.nativeSelect && (e.target as HTMLElement).closest(".webcimes-select") != this.select && (e.target as HTMLElement).closest(".webcimes-dropdown") != this.dropdown)
+		if(
+			(e.target as HTMLElement).closest("select") != this.nativeSelect &&
+			(e.target as HTMLElement).closest(".webcimes-select") != this.select &&
+			(e.target as HTMLElement).closest(".webcimes-dropdown") != this.dropdown
+		)
 		{
 			this.destroyDropdown();
 		}

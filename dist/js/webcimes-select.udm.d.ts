@@ -141,6 +141,10 @@ export declare class WebcimesSelect {
      */
     removeAllOptions(): void;
     /**
+     * Event init dropdown on click on native select
+     */
+    private onNativeSelectClick;
+    /**
      * Event clear selected option on select
      */
     private onClearOption;
