@@ -355,6 +355,11 @@ export class WebcimesSelect
 			// Set select value (or placeholder)
 			this.initOptions();
 
+			// Event open dropdown after click on label (who is relative to native select)
+			this.nativeSelect.addEventListener("click", () => {
+				this.initDropdown();
+			});
+
 			// Event clear all selected options on select
 			this.select.querySelector(".webcimes-select > .webcimes-select__clear")?.addEventListener("click", this.onClearAllOptions);
 
@@ -752,6 +757,9 @@ export class WebcimesSelect
 
 			// Set highlight option on first option
 			this.setDropdownHighlightOption(0, true);
+			
+			// By default, set focus on select
+			this.select.focus();
 
 			// If allowSearch active
 			if(this.options.allowSearch)
@@ -1085,7 +1093,7 @@ export class WebcimesSelect
 	 */
 	private onDropdownDestroy(e: Event)
 	{
-		if((e.target as HTMLElement).closest(".webcimes-select") != this.select && (e.target as HTMLElement).closest(".webcimes-dropdown") != this.dropdown)
+		if((e.target as HTMLElement).closest("select") != this.nativeSelect && (e.target as HTMLElement).closest(".webcimes-select") != this.select && (e.target as HTMLElement).closest(".webcimes-dropdown") != this.dropdown)
 		{
 			this.destroyDropdown();
 		}
