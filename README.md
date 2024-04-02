@@ -185,7 +185,7 @@ To set the select to use RTL (right to left), you need to put the `dir` attribut
 ```
 
 ### Placeholder:
-By default, the placeholder will be set based on the text defined inside the option having the `value=""` attribute (this is a method to set a placeholder on a natural select). We also recommend adding the `disabled` and `selected` attributes like this:
+By default, the placeholder will be set based on the text defined inside the option having the `value=""` attribute (this is a method to set a placeholder on a native select). We also recommend adding the `disabled` and `selected` attributes like this:
 
 ```html
 <select name="mySelect" title="My title">
@@ -196,15 +196,45 @@ By default, the placeholder will be set based on the text defined inside the opt
 But if you prefer, you can also set the placeholder with the `placeholderText` option. Just note that it will replace the placeholder text in case you also set the placeholder with the previous method.
 
 ### Aria label:
-By default, the aria-label will be set based on the attribute of the natural select, like this:
+
+1. By default, the label will be set based on the label tag relative to the native select, for example:
+
+```html
+<label>
+	My label
+	<select name="mySelect">
+		...
+	</select>
+</label>
+```
+or
+```html
+<label for="mySelect">My label</label>
+<select id="mySelect">
+	...
+</select>
+```
+In the following case, `aria-label` will automatically be set to `"My label"`
+
+2. Another way will be to define an `aria-label` attribute on the native select, like this:
 
 ```html
 <select name="mySelect" title="My title" aria-label="My label">
 	...
 </select>
 ```
+Just note that it will replace the `aria-label` text in case you have use the `label` tag with the previous method (1.).
 
-But if you prefer, you can also set the aria-label with the `ariaLabel` option. Just note that it will replace the aria-label text in case you also set the aria-label with the previous method.
+3. But if you prefer, you can also set the aria-label with the `ariaLabel` option on `WebCimesSelect`, like this:
+
+```javascript
+const mySelect = new WebcimesSelect({
+	element: el, // Element (selector string or HTMLElement)
+	ariaLabel: "My label", // set aria-label for select, default null
+});
+```
+
+Just note that it will replace the `aria-label` text in case you have use one of the two previous method (1. & 2.).
 
 ### Customize text:
 You can customize the default text by setting these options:

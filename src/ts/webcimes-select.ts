@@ -308,6 +308,15 @@ export class WebcimesSelect
 				{
 					this.options.ariaLabel = this.nativeSelect.getAttribute("aria-label");
 				}
+				else
+				{
+					// Get label element relative to native select
+					let label = (this.nativeSelect.closest("label") || document.querySelector(`label[for="${this.nativeSelect.id}"]`)) as HTMLElement | null;
+					if(label)
+					{
+						this.options.ariaLabel = label.innerText.trim();
+					}
+				}
 			}
 
 			// Set id for dropdown options
@@ -330,7 +339,7 @@ export class WebcimesSelect
 			{
 				if(this.nativeSelect.querySelector("option[value='']"))
 				{
-					this.options.placeholderText = this.nativeSelect.querySelector("option[value='']")!.innerHTML;
+					this.options.placeholderText = this.nativeSelect.querySelector("option[value='']")!.textContent;
 				}
 			}
 
@@ -463,8 +472,8 @@ export class WebcimesSelect
 					let option = document.createElement("template");
 					option.innerHTML = 
 					`<div class="webcimes-select__option" data-value="${el.value}">
-						<div class="webcimes-select__option-label" title="${el.innerHTML}" aria-label="${el.innerHTML}">${el.innerHTML}</div>
-						${this.nativeSelect!.multiple && !el.disabled?`<button type="button" class="webcimes-select__clear" title="${this.options.removeOptionText} ${el.innerHTML}" aria-label="${this.options.removeOptionText} ${el.innerHTML}"><div class="webcimes-select__cross"></div></button>`:``}
+						<div class="webcimes-select__option-label" title="${el.textContent}" aria-label="${el.textContent}">${el.textContent}</div>
+						${this.nativeSelect!.multiple && !el.disabled?`<button type="button" class="webcimes-select__clear" title="${this.options.removeOptionText} ${el.textContent}" aria-label="${this.options.removeOptionText} ${el.textContent}"><div class="webcimes-select__cross"></div></button>`:``}
 					</div>\n`;
 					this.select.querySelector(".webcimes-select__options")!.appendChild(option.content);
 				});
@@ -869,8 +878,8 @@ export class WebcimesSelect
 		let optionsEl = document.createElement("template");
 		options.forEach((el, index) => {
 			let optionEl = document.createElement("template");
-			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" id="${this.getUniqueID("webcimes-dropdown__option__", optionsEl.content)}" data-value="${el.value}" title="${el.innerHTML}" role="option" aria-label="${el.innerHTML}" aria-selected="${(el.selected?`true`:`false`)}">
-				${el.innerHTML}
+			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" id="${this.getUniqueID("webcimes-dropdown__option__", optionsEl.content)}" data-value="${el.value}" title="${el.textContent}" role="option" aria-label="${el.textContent}" aria-selected="${(el.selected?`true`:`false`)}">
+				${el.textContent}
 				<svg class="webcimes-dropdown__icon-selected" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="currentColor" role="img" aria-labelledby="iconSelectedTitle"><title id="iconSelectedTitle">${this.options.optionIconSelectedText}</title><path d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 16.430123 16.430123 20 12 20 C 7.5698774 20 4 16.430123 4 12 C 4 7.5698774 7.5698774 4 12 4 z M 16.292969 8.2929688 L 10 14.585938 L 7.7070312 12.292969 L 6.2929688 13.707031 L 10 17.414062 L 17.707031 9.7070312 L 16.292969 8.2929688 z"/></svg>
 			</div>\n`;
 
@@ -982,7 +991,7 @@ export class WebcimesSelect
 		let options = Array.from(this.nativeSelect!.options).filter((el) => {
 			if(el.value !== "")
 			{
-				if(regexSearch.test(el.innerHTML) || regexSearch.test(el.value))
+				if((el.textContent && regexSearch.test(el.textContent)) || regexSearch.test(el.value))
 				{
 					return true;
 				}
@@ -994,7 +1003,7 @@ export class WebcimesSelect
 		{
 			let optionEl = document.createElement("option");
 			optionEl.classList.add("webcimes-dropdown__option--no-results");
-			optionEl.innerHTML = this.options.searchNoResultsText;
+			optionEl.textContent = this.options.searchNoResultsText;
 			options.push(optionEl);
 		}
 
