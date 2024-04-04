@@ -270,12 +270,13 @@ export class WebcimesSelect
 	}
 	
 	/**
-	 * Get a unique ID, related to the prefix
-	 * @param prefix
+	 * Get a unique ID, related to the identifier
+	 * @param selectorPrefix Prefix of the selector
+	 * @param identifier Identifier to find
+	 * @param selectorSuffix Suffix of the selector
 	 * @param element Find if the ID already exist in provided dom element
 	 */
-	
-	private getUniqueID(prefix: string, element: HTMLElement | Document | DocumentFragment | null = null)
+	private getUniqueID(selectorPrefix: string, identifier: string, selectorSuffix: string = "", element: HTMLElement | Document | DocumentFragment | null = null)
 	{
 		// If element is null, set document
 		element = element ?? document;
@@ -283,10 +284,10 @@ export class WebcimesSelect
 		// Generate a unique ID
 		do
 		{
-			prefix += Math.floor(Math.random()*10000);
-		} while (element.querySelector(`#${prefix}`));
+			identifier += Math.floor(Math.random()*10000);
+		} while (element.querySelector(selectorPrefix + identifier + selectorSuffix));
 		
-		return prefix;
+		return identifier;
 	}
 
 	/**
@@ -320,7 +321,7 @@ export class WebcimesSelect
 			}
 
 			// Set id for dropdown options
-			this.idDropdownOptions = this.getUniqueID("webcimes-dropdown-options-");
+			this.idDropdownOptions = this.getUniqueID("#", "webcimes-dropdown-options-");
 
 			// Append select after native select
 			this.nativeSelect.insertAdjacentHTML("afterend", 
@@ -878,7 +879,7 @@ export class WebcimesSelect
 		let optionsEl = document.createElement("template");
 		options.forEach((el, index) => {
 			let optionEl = document.createElement("template");
-			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" id="${this.getUniqueID("webcimes-dropdown__option__", optionsEl.content)}" data-value="${el.value}" title="${el.textContent}" role="option" aria-label="${el.textContent}" aria-selected="${(el.selected?`true`:`false`)}">
+			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" id="${this.getUniqueID("#", "webcimes-dropdown-option-", "", optionsEl.content)}" data-value="${el.value}" title="${el.textContent}" role="option" aria-label="${el.textContent}" aria-selected="${(el.selected?`true`:`false`)}">
 				${el.textContent}
 				<svg class="webcimes-dropdown__icon-selected" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="currentColor" role="img" aria-labelledby="iconSelectedTitle"><title id="iconSelectedTitle">${this.options.optionIconSelectedText}</title><path d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 16.430123 16.430123 20 12 20 C 7.5698774 20 4 16.430123 4 12 C 4 7.5698774 7.5698774 4 12 4 z M 16.292969 8.2929688 L 10 14.585938 L 7.7070312 12.292969 L 6.2929688 13.707031 L 10 17.414062 L 17.707031 9.7070312 L 16.292969 8.2929688 z"/></svg>
 			</div>\n`;

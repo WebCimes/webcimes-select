@@ -107,8 +107,10 @@ export declare class WebcimesSelect {
      */
     private getHtmlElement;
     /**
-     * Get a unique ID, related to the prefix
-     * @param prefix
+     * Get a unique ID, related to the identifier
+     * @param selectorPrefix Prefix of the selector
+     * @param identifier Identifier to find
+     * @param selectorSuffix Suffix of the selector
      * @param element Find if the ID already exist in provided dom element
      */
     private getUniqueID;
