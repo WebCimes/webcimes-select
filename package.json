@@ -1,6 +1,6 @@
 {
   "name": "webcimes-select",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Just create beautiful select boxes, it supports search, single select, multiple select, keyboard control, clear options, dropdown can also be opened over an overflow parent, optgroup support, rtl support, accessibility, and many other options. It works with vanilla javascript + html + css, no dependencies are required",
   "main": "./dist/js/webcimes-select.udm.js",
   "module": "./dist/js/webcimes-select.esm.js",

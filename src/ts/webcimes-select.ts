@@ -468,6 +468,7 @@ export class WebcimesSelect
 			// If an option is selected, show the value
 			if(selectedOptions.length)
 			{
+				this.select.classList.add("webcimes-select--selected");
 				this.select.querySelector(".webcimes-select > .webcimes-select__clear")?.classList.add("webcimes-select__clear--active");
 				selectedOptions.forEach((el) => {
 					let option = document.createElement("template");
@@ -482,6 +483,7 @@ export class WebcimesSelect
 			// Else if a placeholder string exist, show the value
 			else if(this.options.placeholderText)
 			{
+				this.select.classList.remove("webcimes-select--selected");
 				this.select.querySelector(".webcimes-select > .webcimes-select__clear")?.classList.remove("webcimes-select__clear--active");
 				let option = document.createElement("template");
 				option.innerHTML = 
@@ -493,6 +495,7 @@ export class WebcimesSelect
 			// Else if no option selected and no placeholder
 			else
 			{
+				this.select.classList.remove("webcimes-select--selected");
 				this.select.querySelector(".webcimes-select > .webcimes-select__clear")?.classList.remove("webcimes-select__clear--active");
 			}
 

@@ -446,13 +446,14 @@ You can style select with the following field applying to the class of `.webcime
 {
 	--select-color: inherit;
 	--select-background: #fff;
-	--select-padding: 2.5px 5px;
+	--select-padding: 5px 5px 5px 10px;
 	--select-border: 1px solid #cbd5e1;
 	--select-border-radius: 4px;
 	--select-focus-border-color: #94a3b8;
 	--select-disabled-opacity: 0.5;
-	--select-option-margin: 2.5px 5px 2.5px 0;
-	--select-option-padding: 5px 10px;
+	--select-option-margin: 5px 10px 5px 0;
+	--select-option-label-padding: 2.5px 0px;
+	--select-option-multiple-label-padding: 2.5px 10px;
 	--select-option-multiple-color: #334155;
 	--select-option-multiple-background: #e2e8f0;
 	--select-option-multiple-border: 1px solid #cbd5e1;
