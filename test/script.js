@@ -55,10 +55,19 @@ document.addEventListener("DOMContentLoaded", function()
     //     console.log(e.detail.selected);
     //     console.log(e.detail.selectedOptions);
     // });
+    selectCity.nativeSelect.addEventListener("input", (e) => {
+        console.log("onChange");
+        console.log(e.target.value);
+    });
 
 
     let selectCity2 = new WebcimesSelect({
         element: document.querySelector("select[name='city2']"),
+    });
+
+    selectCity2.nativeSelect.addEventListener("input", (e) => {
+        console.log("onChange");
+        console.log(e.target.value);
     });
 
 });

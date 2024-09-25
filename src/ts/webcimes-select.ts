@@ -525,7 +525,11 @@ export class WebcimesSelect
 			// If native select single, remove all options selected
 			if(!this.nativeSelect!.multiple)
 			{
-				this.removeAllOptions();
+				// Remove option selected on native select
+				this.nativeSelect!.querySelectorAll(`option:not([disabled])`).forEach((el: HTMLOptionElement) => {
+					el.removeAttribute("selected");
+					el.selected = false;
+				});
 			}
 
 			// Set option selected on native select
