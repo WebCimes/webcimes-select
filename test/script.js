@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function()
     let selectCity = new WebcimesSelect({
         element: document.querySelector("select[name='city']"),
         keepOpenDropdown: true,
-        allowSearch: false,
+        // allowSearch: false,
         language: "fr",
         onInit(){
             console.log("onInit");
@@ -22,29 +22,43 @@ document.addEventListener("DOMContentLoaded", function()
             console.log("onDestroyDropdown");
         },
         onSearchDropdown(value, options){
+            console.log("onSearchDropdown");
             console.log(value);
             console.log(options);
-            console.log("onSearchDropdown");
         },
-        onAddOption(value){
-            console.log(value);
-            console.log("onAddOption");
-        },
-        onRemoveOption(value){
-            console.log(value);
-            console.log("onRemoveOption");
-        },
-        onRemoveAllOptions(){
-            console.log("onRemoveAllOptions");
-        },
+        // onChange(value, selected, selectedOptions){
+        //     console.log("onChange");
+        //     console.log(value);
+        //     console.log(selected);
+        //     console.log(selectedOptions);
+        // },
+        // onAddOption(value){
+            //     console.log("onAddOption");
+        //     console.log(value);
+        // },
+        // onRemoveOption(value){
+            //     console.log("onRemoveOption");
+        //     console.log(value);
+        // },
+        // onRemoveAllOptions(){
+        //     console.log("onRemoveAllOptions");
+        // },
     });
     selectCity.select.addEventListener("onSearchDropdown", (e) => {
         console.log("onSearchDropdown");
         console.log(e.detail.value);
         console.log(e.detail.options);
     });
+    // selectCity.select.addEventListener("onChange", (e) => {
+    //     console.log("onChange");
+    //     console.log(e.detail.value);
+    //     console.log(e.detail.selected);
+    //     console.log(e.detail.selectedOptions);
+    // });
+
 
     let selectCity2 = new WebcimesSelect({
         element: document.querySelector("select[name='city2']"),
     });
+
 });

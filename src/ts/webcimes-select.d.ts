@@ -14,6 +14,7 @@ declare global {
         onInitDropdown: CustomEvent;
         onDestroyDropdown: CustomEvent;
         onSearchDropdown: CustomEvent;
+        onChange: CustomEvent;
         onAddOption: CustomEvent;
         onRemoveOption: CustomEvent;
         onRemoveAllOptions: CustomEvent;
@@ -71,6 +72,8 @@ interface Options {
     onDestroyDropdown(): void;
     /** callback on search dropdown */
     onSearchDropdown(value: string, options: HTMLOptionElement[]): void;
+    /** callback on change */
+    onChange(value: string, selected: boolean, selectedOptions: HTMLOptionElement[]): void;
     /** callback on add option */
     onAddOption(value: string): void;
     /** callback on remove option */
@@ -126,6 +129,10 @@ export declare class WebcimesSelect {
      * Set select disabled or not
      */
     disable(disable?: boolean): void;
+    /**
+     * Get selected options with no empty value
+     */
+    getSelectedOptions(): HTMLOptionElement[];
     /**
      * Init options or placeholder on select, according selected option on native select field
      */

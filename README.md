@@ -111,6 +111,7 @@ document.addEventListener("DOMContentLoaded", function()
             onInitDropdown(){console.log("onInitDropdown");}, // callback on init dropdown
             onDestroyDropdown(){console.log("onDestroyDropdown");}, // callback on destroy dropdown
             onSearchDropdown(value, options){console.log("onSearchDropdown"); console.log(value); console.log(options);}, // callback on search dropdown
+			onChange(value, selected, selectedOptions){console.log("onChange"); console.log(value); console.log(selected); console.log(selectedOptions);}, // callback on change select
             onAddOption(value){console.log("onAddOption"); console.log(value);}, // callback on add option
             onRemoveOption(value){console.log("onRemoveOption"); console.log(value);}, // callback on remove option
             onRemoveAllOptions(){console.log("onRemoveAllOptions");}, // callback on  all options
@@ -332,6 +333,7 @@ const mySelect = new WebcimesSelect({
 	onInitDropdown(){console.log("onInitDropdown");}, // callback on init dropdown
 	onDestroyDropdown(){console.log("onDestroyDropdown");}, // callback on destroy dropdown
 	onSearchDropdown(value, options){console.log("onSearchDropdown"); console.log(value); console.log(options);}, // callback on search dropdown
+	onChange(value, selected, selectedOptions){console.log("onChange"); console.log(value); console.log(selected); console.log(selectedOptions);}, // callback on change select
 	onAddOption(value){console.log("onAddOption"); console.log(value);}, // callback on add option
 	onRemoveOption(value){console.log("onRemoveOption"); console.log(value);}, // callback on remove option
 	onRemoveAllOptions(){console.log("onRemoveAllOptions");}, // callback on  all options
@@ -345,7 +347,7 @@ You can also use `addEventListener` for get the events from the instance like th
 const mySelect = new WebcimesSelect(...);
 
 // Create an event on the current select
-selectCity.select.addEventListener("onSearchDropdown", (e) => {
+mySelect.select.addEventListener("onSearchDropdown", (e) => {
 	console.log("onSearchDropdown");
 	console.log(e.detail.value); // Get parameter with e.detail
 	console.log(e.detail.options); // Get parameter with e.detail
@@ -369,6 +371,30 @@ You can also remove the disabled attribute like this:
 ```javascript
 mySelect.disable(false);
 ```
+
+### Get selected options
+To get the selected options, you can call the `getSelectedOptions` method, like this:
+
+```javascript
+// Get the instance
+const mySelect = new WebcimesSelect(...);
+
+// Things
+
+// Then call the get selected options method:
+mySelect.getSelectedOptions();
+```
+
+It will return an HTMLOptionElement[] array, like this:
+
+```html
+[
+	<option value="Paris" selected="">Paris</option>,
+	<option value="Marseille" selected="">Marseille</option>,
+	...
+]
+```
+
 
 ### Refresh options
 To update/refresh the select options (after changing the native select options for example), you can call the `initOptions` method, like this:

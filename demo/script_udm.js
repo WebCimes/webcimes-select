@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function()
             onInitDropdown(){console.log("onInitDropdown");}, // callback on init dropdown
             onDestroyDropdown(){console.log("onDestroyDropdown");}, // callback on destroy dropdown
             onSearchDropdown(value, options){console.log("onSearchDropdown"); console.log(value); console.log(options);}, // callback on search dropdown
+            onChange(value, selected, selectedOptions){console.log("onChange"); console.log(value); console.log(selected); console.log(selectedOptions);}, // callback on change
             onAddOption(value){console.log("onAddOption"); console.log(value);}, // callback on add option
             onRemoveOption(value){console.log("onRemoveOption"); console.log(value);}, // callback on remove option
             onRemoveAllOptions(){console.log("onRemoveAllOptions");}, // callback on  all options

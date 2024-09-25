@@ -17,6 +17,7 @@ declare global {
 		onInitDropdown: CustomEvent;
 		onDestroyDropdown: CustomEvent;
 		onSearchDropdown: CustomEvent;
+		onChange: CustomEvent;
 		onAddOption: CustomEvent;
 		onRemoveOption: CustomEvent;
 		onRemoveAllOptions: CustomEvent;
@@ -75,6 +76,8 @@ interface Options {
 	onDestroyDropdown(): void;
 	/** callback on search dropdown */
 	onSearchDropdown(value: string, options: HTMLOptionElement[]): void;
+	/** callback on change */
+	onChange(value: string, selected: boolean, selectedOptions: HTMLOptionElement[]): void;
 	/** callback on add option */
 	onAddOption(value: string): void;
 	/** callback on remove option */
@@ -194,6 +197,7 @@ export class WebcimesSelect
 			onInitDropdown: () => {},
 			onDestroyDropdown: () => {},
 			onSearchDropdown: () => {},
+			onChange: () => {},
 			onAddOption: () => {},
 			onRemoveOption: () => {},
 			onRemoveAllOptions: () => {},
@@ -443,6 +447,16 @@ export class WebcimesSelect
 	}
 
 	/**
+	 * Get selected options with no empty value
+	 */
+	public getSelectedOptions(): HTMLOptionElement[] {
+
+		return Array.from(this.nativeSelect?.selectedOptions || []).filter((el) => {
+			return el.value !== "";
+		});
+	}
+
+	/**
 	 * Init options or placeholder on select, according selected option on native select field
 	 */
 	public initOptions()
@@ -450,12 +464,7 @@ export class WebcimesSelect
 		if(this.nativeSelect)
 		{
 			// Get selected options with no empty value
-			let selectedOptions = Array.from(this.nativeSelect.selectedOptions).filter((el) => {
-				if(el.value !== "")
-				{
-					return true;
-				}
-			});
+			let selectedOptions = this.getSelectedOptions();
 
 			// Remove old event clear selected option on select
 			this.select.querySelectorAll(".webcimes-select__option .webcimes-select__clear").forEach((el) => {
@@ -527,6 +536,10 @@ export class WebcimesSelect
 				optionEl.selected = true;
 			}
 
+			// Trigger change event on native select
+			this.nativeSelect!.dispatchEvent(new Event("change", {bubbles: true}));
+			this.nativeSelect!.dispatchEvent(new Event("input", {bubbles: true}));
+
 			// Init option on select
 			this.initOptions();
 
@@ -548,7 +561,20 @@ export class WebcimesSelect
 				this.destroyDropdown();
 			}
 	
-			// Callback on set option
+			// Callback on change
+			this.select.dispatchEvent(new CustomEvent("onChange", {
+				"detail": {
+					"value": value,
+					"selected": true,
+					"selectedOptions": this.getSelectedOptions(),
+				}
+			}));
+			if(typeof this.options.onChange === 'function')
+			{
+				this.options.onChange(value, true, this.getSelectedOptions());
+			}
+
+			// Callback on add option
 			this.select.dispatchEvent(new CustomEvent("onAddOption", {
 				"detail": {
 					"value": value,
@@ -582,6 +608,10 @@ export class WebcimesSelect
 				// Set and force native select value to empty string (or placeholder option if define)
 				this.nativeSelect!.value = "";
 			}
+			
+			// Trigger change event on native select
+			this.nativeSelect!.dispatchEvent(new Event("change", {bubbles: true}));
+			this.nativeSelect!.dispatchEvent(new Event("input", {bubbles: true}));
 
 			// Init option on select
 			this.initOptions();
@@ -603,8 +633,21 @@ export class WebcimesSelect
 				// Destroy dropdown
 				this.destroyDropdown();
 			}
+
+			// Callback on change
+			this.select.dispatchEvent(new CustomEvent("onChange", {
+				"detail": {
+					"value": value,
+					"selected": false,
+					"selectedOptions": this.getSelectedOptions(),
+				}
+			}));
+			if(typeof this.options.onChange === 'function')
+			{
+				this.options.onChange(value, false, this.getSelectedOptions());
+			}
 	
-			// Callback on set option
+			// Callback on remove option
 			this.select.dispatchEvent(new CustomEvent("onRemoveOption", {
 				"detail": {
 					"value": value,
@@ -637,6 +680,10 @@ export class WebcimesSelect
 				this.nativeSelect!.value = "";
 			}
 
+			// Trigger change event on native select
+			this.nativeSelect!.dispatchEvent(new Event("change", {bubbles: true}));
+			this.nativeSelect!.dispatchEvent(new Event("input", {bubbles: true}));
+			
 			// Init option on select
 			this.initOptions();
 
@@ -657,8 +704,21 @@ export class WebcimesSelect
 				// Destroy dropdown
 				this.destroyDropdown();
 			}
+
+			// Callback on change
+			this.select.dispatchEvent(new CustomEvent("onChange", {
+				"detail": {
+					"value": "",
+					"selected": false,
+					"selectedOptions": this.getSelectedOptions(),
+				}
+			}));
+			if(typeof this.options.onChange === 'function')
+			{
+				this.options.onChange("", false, this.getSelectedOptions());
+			}
 		
-			// Callback on set option
+			// Callback on remove all option
 			this.select.dispatchEvent(new CustomEvent("onRemoveAllOptions"));
 			if(typeof this.options.onRemoveAllOptions === 'function')
 			{
