@@ -25,9 +25,20 @@ declare global {
 }
 
 /**
+ * Default texts
+ */
+export interface defaultTexts {
+	removeOptionText: string;
+	removeAllOptionsText: string;
+	searchPlaceholderText: string;
+	searchNoResultsText: string;
+	optionIconSelectedText: string;
+}
+
+/**
  * Options
  */
-interface Options {
+export interface Options {
 	/** Element (selector string or HTMLElement) */
 	element: string | HTMLElement | null;
 	/** set a specific id on the select. default "null" */
@@ -50,20 +61,12 @@ interface Options {
 	searchAutoFocus: boolean;
 	/** keep dropdown open after selecting an option, default false */
 	keepOpenDropdown: boolean;
-	/** set default language for texts, default "en" */
+	/** set default language for defaultTexts, default "en" */
 	language: string;
+    /** set default texts for select (override the language texts), default english texts */
+	defaultTexts: defaultTexts;
 	/** set placeholder text, default null */
 	placeholderText: string | null;
-    /** set remove text for title and aria-label for remove option button, default "Remove option" */
-    removeOptionText: string;
-    /** set remove text for title and aria-label for remove all options button, default "Remove all options" */
-    removeAllOptionsText: string;
-	/** set placeholder text on search field, default "Search" */
-	searchPlaceholderText: string | null;
-	/** set text for no results found on search, default "No results found" */
-	searchNoResultsText: string | null;
-	/** set icon selected text into option dropdown, default "Selected" */
-	optionIconSelectedText: string | null;
 	/** set aria-label for select, default null */
 	ariaLabel: string | null;
 	/** callback on init select */
@@ -106,63 +109,63 @@ export class WebcimesSelect
 	/** Get the unique id of dropdown options */
 	private idDropdownOptions: string;
 
-	/** Set the default texts for each language */
-	private texts: { [key: string]: { [key: string]: string } } = {
-		"en": {
-			"removeOptionText": "Remove option",
-			"removeAllOptionsText": "Remove all options",
-			"searchPlaceholderText": "Search",
-			"searchNoResultsText": "No results found",
-			"optionIconSelectedText": "Selected",
+    /** Set the default texts for each language */
+    private defaultTexts: { [key: string]: defaultTexts } = {
+		en: {
+			removeOptionText: "Remove option",
+			removeAllOptionsText: "Remove all options",
+			searchPlaceholderText: "Search",
+			searchNoResultsText: "No results found",
+			optionIconSelectedText: "Selected",
 		},
-		"fr": {
-			"removeOptionText": "Supprimer l'option",
-			"removeAllOptionsText": "Supprimer toutes les options",
-			"searchPlaceholderText": "Rechercher",
-			"searchNoResultsText": "Aucun résultat trouvé",
-			"optionIconSelectedText": "Sélectionné",
+		fr: {
+			removeOptionText: "Supprimer l'option",
+			removeAllOptionsText: "Supprimer toutes les options",
+			searchPlaceholderText: "Rechercher",
+			searchNoResultsText: "Aucun résultat trouvé",
+			optionIconSelectedText: "Sélectionné",
 		},
-		"es": {
-			"removeOptionText": "Eliminar opción",
-			"removeAllOptionsText": "Eliminar todas las opciones",
-			"searchPlaceholderText": "Buscar",
-			"searchNoResultsText": "No se encontraron resultados",
-			"optionIconSelectedText": "Seleccionado",
+		es: {
+			removeOptionText: "Eliminar opción",
+			removeAllOptionsText: "Eliminar todas las opciones",
+			searchPlaceholderText: "Buscar",
+			searchNoResultsText: "No se encontraron resultados",
+			optionIconSelectedText: "Seleccionado",
 		},
-		"de": {
-			"removeOptionText": "Option entfernen",
-			"removeAllOptionsText": "Alle Optionen entfernen",
-			"searchPlaceholderText": "Suche",
-			"searchNoResultsText": "Keine Ergebnisse gefunden",
-			"optionIconSelectedText": "Ausgewählt",
+		de: {
+			removeOptionText: "Option entfernen",
+			removeAllOptionsText: "Alle Optionen entfernen",
+			searchPlaceholderText: "Suche",
+			searchNoResultsText: "Keine Ergebnisse gefunden",
+			optionIconSelectedText: "Ausgewählt",
 		},
-		"it": {
-			"removeOptionText": "Rimuovi opzione",
-			"removeAllOptionsText": "Rimuovi tutte le opzioni",
-			"searchPlaceholderText": "Cerca",
-			"searchNoResultsText": "Nessun risultato trovato",
-			"optionIconSelectedText": "Selezionato",
+		it: {
+			removeOptionText: "Rimuovi opzione",
+			removeAllOptionsText: "Rimuovi tutte le opzioni",
+			searchPlaceholderText: "Cerca",
+			searchNoResultsText: "Nessun risultato trovato",
+			optionIconSelectedText: "Selezionato",
 		},
-		"pt": {
-			"removeOptionText": "Remover opção",
-			"removeAllOptionsText": "Remover todas as opções",
-			"searchPlaceholderText": "Pesquisar",
-			"searchNoResultsText": "Nenhum resultado encontrado",
-			"optionIconSelectedText": "Selecionado",
+		pt: {
+			removeOptionText: "Remover opção",
+			removeAllOptionsText: "Remover todas as opções",
+			searchPlaceholderText: "Pesquisar",
+			searchNoResultsText: "Nenhum resultado encontrado",
+			optionIconSelectedText: "Selecionado",
 		},
-		"nl": {
-			"removeOptionText": "Optie verwijderen",
-			"removeAllOptionsText": "Alle opties verwijderen",
-			"searchPlaceholderText": "Zoeken",
-			"searchNoResultsText": "Geen resultaten gevonden",
-			"optionIconSelectedText": "Geselecteerd",
+		nl: {
+			removeOptionText: "Optie verwijderen",
+			removeAllOptionsText: "Alle opties verwijderen",
+			searchPlaceholderText: "Zoeken",
+			searchNoResultsText: "Geen resultaten gevonden",
+			optionIconSelectedText: "Geselecteerd",
 		},
-		"ru": {
-			"removeOptionText": "Удалить опцию",
-			"removeAllOptionsText": "Удалить все опции",
-			"searchPlaceholderText": "Поиск",
-			"searchNoResultsText": "Результаты не найдены",
-			"optionIconSelectedText": "Выбрано",
+		ru: {
+			removeOptionText: "Удалить опцию",
+			removeAllOptionsText: "Удалить все опции",
+			searchPlaceholderText: "Поиск",
+			searchNoResultsText: "Результаты не найдены",
+			optionIconSelectedText: "Выбрано",
 		},
 	}
 
@@ -185,12 +188,8 @@ export class WebcimesSelect
 			searchAutoFocus: true,
 			keepOpenDropdown: false,
 			language: "en",
+			defaultTexts: this.defaultTexts["en"],
 			placeholderText: null,
-			removeOptionText: this.texts["en"]["removeOptionText"],
-			removeAllOptionsText: this.texts["en"]["removeAllOptionsText"],
-			searchPlaceholderText: this.texts["en"]["searchPlaceholderText"],
-			searchNoResultsText: this.texts["en"]["searchNoResultsText"],
-            optionIconSelectedText: this.texts["en"]["optionIconSelectedText"],
 			ariaLabel: null,
 			onInit: () => {},
 			onDestroy: () => {},
@@ -203,15 +202,15 @@ export class WebcimesSelect
 			onRemoveAllOptions: () => {},
 		}
 
-		// If options language is set, set texts according to the language
-		if(options.language && this.texts[options.language])
-		{
-			defaults.removeOptionText = this.texts[options.language]["removeOptionText"];
-			defaults.removeAllOptionsText = this.texts[options.language]["removeAllOptionsText"];
-			defaults.searchPlaceholderText = this.texts[options.language]["searchPlaceholderText"];
-			defaults.searchNoResultsText = this.texts[options.language]["searchNoResultsText"];
-			defaults.optionIconSelectedText = this.texts[options.language]["optionIconSelectedText"];
-		}
+        // If options language is set, set defaultTexts according to the language
+        if (options.language && this.defaultTexts[options.language]) {
+            defaults.defaultTexts = this.defaultTexts[options.language];
+        }
+
+        // If options defaultTexts is set, merge defaults.defaultTexts with options.defaultTexts
+        if (options.defaultTexts) {
+            options.defaultTexts = { ...defaults.defaultTexts, ...options.defaultTexts };
+        }
 
 		// Merge defaults and options
 		this.options = {...defaults, ...options};
@@ -331,7 +330,7 @@ export class WebcimesSelect
 			this.nativeSelect.insertAdjacentHTML("afterend", 
 				`<div class="webcimes-select ${(this.nativeSelect.multiple?`webcimes-select--multiple`:``)} ${this.nativeSelect.disabled?`webcimes-select--disabled`:``} ${(this.options.setClass?this.options.setClass:``)}" ${(this.options.setId?`id="${this.options.setId}"`:``)} ${(this.nativeSelect.getAttribute("dir")=="rtl"?`dir="rtl"`:``)} role="combobox" aria-controls="${this.idDropdownOptions}" aria-expanded="false" aria-haspopup="listbox" ${this.options.ariaLabel?`aria-label="${this.options.ariaLabel}"`:``} tabindex="0">
 					<div class="webcimes-select__options"></div>
-					${(this.options.allowClear?`<button type="button" class="webcimes-select__clear" title="${this.options.removeAllOptionsText}" aria-label="${this.options.removeAllOptionsText}"><div class="webcimes-select__cross"></div></button>`:'')}
+					${(this.options.allowClear?`<button type="button" class="webcimes-select__clear" title="${this.options.defaultTexts.removeAllOptionsText}" aria-label="${this.options.defaultTexts.removeAllOptionsText}"><div class="webcimes-select__cross"></div></button>`:'')}
 					<div class="webcimes-select__arrow"></div>
 				</div>`
 			);
@@ -484,7 +483,7 @@ export class WebcimesSelect
 					option.innerHTML = 
 					`<div class="webcimes-select__option" data-value="${el.value}">
 						<div class="webcimes-select__option-label" title="${el.textContent}" aria-label="${el.textContent}">${el.textContent}</div>
-						${this.nativeSelect!.multiple && !el.disabled?`<button type="button" class="webcimes-select__clear" title="${this.options.removeOptionText} ${el.textContent}" aria-label="${this.options.removeOptionText} ${el.textContent}"><div class="webcimes-select__cross"></div></button>`:``}
+						${this.nativeSelect!.multiple && !el.disabled?`<button type="button" class="webcimes-select__clear" title="${this.options.defaultTexts.removeOptionText} ${el.textContent}" aria-label="${this.options.defaultTexts.removeOptionText} ${el.textContent}"><div class="webcimes-select__cross"></div></button>`:``}
 					</div>\n`;
 					this.select.querySelector(".webcimes-select__options")!.appendChild(option.content);
 				});
@@ -824,7 +823,7 @@ export class WebcimesSelect
 			// Append dropdown before the end of body
 			document.body.insertAdjacentHTML("beforeend", 
 				`<div class="webcimes-dropdown" ${(this.nativeSelect!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)}>
-					${(this.options.allowSearch?`<input class="webcimes-dropdown__search-input" type="text" name="search" autocomplete="off" ${(this.options.searchPlaceholderText?`placeholder="${this.options.searchPlaceholderText}" title="${this.options.searchPlaceholderText}" aria-label="${this.options.searchPlaceholderText}"`:``)} role="combobox" aria-controls="${this.idDropdownOptions}" aria-expanded="true" aria-haspopup="listbox" aria-autocomplete="list">`:``)}
+					${(this.options.allowSearch?`<input class="webcimes-dropdown__search-input" type="text" name="search" autocomplete="off" ${(this.options.defaultTexts.searchPlaceholderText?`placeholder="${this.options.defaultTexts.searchPlaceholderText}" title="${this.options.defaultTexts.searchPlaceholderText}" aria-label="${this.options.defaultTexts.searchPlaceholderText}"`:``)} role="combobox" aria-controls="${this.idDropdownOptions}" aria-expanded="true" aria-haspopup="listbox" aria-autocomplete="list">`:``)}
 					<div class="webcimes-dropdown__options" id="${this.idDropdownOptions}" style="max-height:${this.options.maxHeightOptions};" role="listbox" ${this.nativeSelect?.multiple?`aria-multiselectable="true"`:``} tabindex="-1"></div>
 				</div>`
 			);
@@ -948,7 +947,7 @@ export class WebcimesSelect
 			let optionEl = document.createElement("template");
 			optionEl.innerHTML = `<div class="webcimes-dropdown__option ${(el.selected?`webcimes-dropdown__option--selected`:``)} ${(el.disabled?`webcimes-dropdown__option--disabled`:``)} ${el.classList.toString()}" id="${this.getUniqueID("#", "webcimes-dropdown-option-", "", optionsEl.content)}" data-value="${el.value}" title="${el.textContent}" role="option" aria-label="${el.textContent}" aria-selected="${(el.selected?`true`:`false`)}">
 				${el.textContent}
-				<svg class="webcimes-dropdown__icon-selected" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="currentColor" role="img" aria-labelledby="iconSelectedTitle"><title id="iconSelectedTitle">${this.options.optionIconSelectedText}</title><path d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 16.430123 16.430123 20 12 20 C 7.5698774 20 4 16.430123 4 12 C 4 7.5698774 7.5698774 4 12 4 z M 16.292969 8.2929688 L 10 14.585938 L 7.7070312 12.292969 L 6.2929688 13.707031 L 10 17.414062 L 17.707031 9.7070312 L 16.292969 8.2929688 z"/></svg>
+				<svg class="webcimes-dropdown__icon-selected" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="currentColor" role="img" aria-labelledby="iconSelectedTitle"><title id="iconSelectedTitle">${this.options.defaultTexts.optionIconSelectedText}</title><path d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 16.430123 16.430123 20 12 20 C 7.5698774 20 4 16.430123 4 12 C 4 7.5698774 7.5698774 4 12 4 z M 16.292969 8.2929688 L 10 14.585938 L 7.7070312 12.292969 L 6.2929688 13.707031 L 10 17.414062 L 17.707031 9.7070312 L 16.292969 8.2929688 z"/></svg>
 			</div>\n`;
 
 			// If option has optgroup parent
@@ -1066,12 +1065,12 @@ export class WebcimesSelect
 			}
 		});
 
-		// If no option match the search, and searchTextNoResults not null, then show no results
-		if(options.length == 0 && this.options.searchNoResultsText)
+		// If no option match the search, add a no result option if searchNoResultsText exist
+		if(options.length == 0 && this.options.defaultTexts.searchNoResultsText)
 		{
 			let optionEl = document.createElement("option");
 			optionEl.classList.add("webcimes-dropdown__option--no-results");
-			optionEl.textContent = this.options.searchNoResultsText;
+			optionEl.textContent = this.options.defaultTexts.searchNoResultsText;
 			options.push(optionEl);
 		}
 
