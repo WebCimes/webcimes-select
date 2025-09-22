@@ -21,9 +21,19 @@ declare global {
     }
 }
 /**
+ * Default texts
+ */
+export interface defaultTexts {
+    removeOptionText: string;
+    removeAllOptionsText: string;
+    searchPlaceholderText: string;
+    searchNoResultsText: string;
+    optionIconSelectedText: string;
+}
+/**
  * Options
  */
-interface Options {
+export interface Options {
     /** Element (selector string or HTMLElement) */
     element: string | HTMLElement | null;
     /** set a specific id on the select. default "null" */
@@ -46,20 +56,12 @@ interface Options {
     searchAutoFocus: boolean;
     /** keep dropdown open after selecting an option, default false */
     keepOpenDropdown: boolean;
-    /** set default language for texts, default "en" */
+    /** set default language for defaultTexts, default "en" */
     language: string;
+    /** set default texts for select (override the language texts), default english texts */
+    defaultTexts: defaultTexts;
     /** set placeholder text, default null */
     placeholderText: string | null;
-    /** set remove text for title and aria-label for remove option button, default "Remove option" */
-    removeOptionText: string;
-    /** set remove text for title and aria-label for remove all options button, default "Remove all options" */
-    removeAllOptionsText: string;
-    /** set placeholder text on search field, default "Search" */
-    searchPlaceholderText: string | null;
-    /** set text for no results found on search, default "No results found" */
-    searchNoResultsText: string | null;
-    /** set icon selected text into option dropdown, default "Selected" */
-    optionIconSelectedText: string | null;
     /** set aria-label for select, default null */
     ariaLabel: string | null;
     /** callback on init select */
@@ -96,7 +98,7 @@ export declare class WebcimesSelect {
     /** Get the unique id of dropdown options */
     private idDropdownOptions;
     /** Set the default texts for each language */
-    private texts;
+    private defaultTexts;
     /**
      * Create select
      */
@@ -214,5 +216,4 @@ export declare class WebcimesSelect {
      */
     private onDropdownDestroy;
 }
-export {};
 //# sourceMappingURL=webcimes-select.d.ts.map
