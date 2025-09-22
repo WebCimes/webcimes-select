@@ -19,12 +19,14 @@ document.addEventListener("DOMContentLoaded", function()
             searchAutoFocus: true, // autofocus on search field when open select, default true
             keepOpenDropdown: false, // keep dropdown open after selecting an option, default false
             language: "en", // set default language for texts, default "en"
+            defaultTexts: { // set default texts for select (overrides language option), default english texts
+                removeOptionText: "Remove option",
+                removeAllOptionsText: "Remove all options",
+                searchPlaceholderText: "Search",
+                searchNoResultsText: "No results found",
+                optionIconSelectedText: "Selected",
+            },
             placeholderText: null, // set placeholder text, default null
-            removeOptionText: "Remove option", // set remove text for title and aria-label for remove option button, default "Remove option"
-            removeAllOptionsText: "Remove all options", // set remove text for title and aria-label for remove all options button, default "Remove all options"
-            searchPlaceholderText: "Search", // set placeholder text on search field, default "Search"
-            searchNoResultsText: "No results found", // set text for no results found on search, default "No results found"
-            optionIconSelectedText: "Selected", // set icon selected text into option dropdown, default "Selected"
             ariaLabel: null, // set aria-label for select, default null
             onInit(){console.log("onInit");}, // callback on init select
             onDestroy(){console.log("onDestroy");}, // callback on destroy select

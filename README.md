@@ -95,16 +95,19 @@ document.addEventListener("DOMContentLoaded", function()
             height: 'auto', // height (specify unit), default "auto"
             maxHeightOptions: "200px", // max-height for options list (specify unit), default "200px"
             style: null, // add extra css style to select, default null
-            placeholderText: null, // set placeholder text, default null
             allowClear: true, // allow clear selected options, default true
             allowSearch: true, // allow search options, default true 
             searchAutoFocus: true, // autofocus on search field when open select, default true
             keepOpenDropdown: false, // keep dropdown open after selecting an option, default false
-            removeOptionText: "Remove option", // set remove text for title and aria-label for remove option button, default "Remove option"
-            removeAllOptionsText: "Remove all options", // set remove text for title and aria-label for remove all options button, default "Remove all options"
-            searchPlaceholderText: "Search", // set placeholder text on search field, default "Search"
-            searchNoResultsText: "No results found", // set text for no results found on search, default "No results found"
-            optionIconSelectedText: "Selected", // set icon selected text into option dropdown, default "Selected"
+            language: "en", // set default language for texts, default "en"
+            defaultTexts: { // set default texts for select (overrides language option), default english texts
+                removeOptionText: "Remove option",
+                removeAllOptionsText: "Remove all options",
+                searchPlaceholderText: "Search",
+                searchNoResultsText: "No results found",
+                optionIconSelectedText: "Selected",
+            },
+            placeholderText: null, // set placeholder text, default null
 			ariaLabel: null, // set aria-label for select, default null
             onInit(){console.log("onInit");}, // callback on init select
             onDestroy(){console.log("onDestroy");}, // callback on destroy select
@@ -238,30 +241,7 @@ const mySelect = new WebcimesSelect({
 
 Just note that it will replace the `aria-label` text in case you have use one of the two previous method (1. & 2.).
 
-### Customize text:
-You can customize the default text by setting these options:
-- `placeholderText` is used to set/replace basic placeholder text.
-- `removeOptionText` is the title and aria-label text that appears on remove option button.
-- `removeAllOptionsText` is the title and aria-label text that appears on remove all options button.
-- `searchPlaceholderText` matches the placeholder text inside the search field in the dropdown container.
-- `searchNoResultsText` is the text that appears if no results are found from the search field.
-- `optionIconSelectedText` is the the title and aria-label text that appears on icon option dropdown if option is selected.
-- `ariaLabel` is the accessibility text that appears on the select.
-
-```javascript
-const mySelect = new WebcimesSelect({
-	element: el, // Element (selector string or HTMLElement)
-	placeholderText: null, // set placeholder text, default null
-	removeOptionText: "Remove option", // set remove text for title and aria-label for remove option button, default "Remove option"
-	removeAllOptionsText: "Remove all options", // set remove text for title and aria-label for remove all options button, default "Remove all options"
-	searchPlaceholderText: "Search", // set placeholder text on search field, default "Search"
-	searchNoResultsText: "No results found", // set text for no results found on search, default "No results found"
-	optionIconSelectedText: "Selected", // set icon selected text into option dropdown, default "Selected"
-	ariaLabel: null, // set aria-label for select, default null
-});
-```
-
-### Customize default language for texts:
+### Customize default language and texts:
 
 You can choose a default language for all texts, actually `"en" / "fr" / "es" / "de" / "it" / "pt" / "nl" / "ru" ` is supported.
 
@@ -274,7 +254,20 @@ const mySelect = new WebcimesSelect({
 });
 ```
 
-Just note that if you customize the default text for any of these attributes "`removeOptionText, removeAllOptionsText, searchPlaceholderText, searchNoResultsText, optionIconSelectedText`", it will override the default text, even if you set the `language` attribute to a language other than the default `"en"` language.
+But you can also use defaultTexts to set custom title, description and buttons text (this will override the language text).
+
+```javascript
+const mySelect = new WebcimesSelect({
+	element: el, // Element (selector string or HTMLElement)
+	defaultTexts: { // set default texts for select (overrides language option), default english texts
+		removeOptionText: "Remove option",
+		removeAllOptionsText: "Remove all options",
+		searchPlaceholderText: "Search",
+		searchNoResultsText: "No results found",
+		optionIconSelectedText: "Selected",
+	},
+});
+```
 
 ### Add extra style to the select:
 You can define the style of the select with `css`, but you can also use the `style` property which allows to directly add an additional style to the select.
