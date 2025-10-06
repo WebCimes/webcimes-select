@@ -820,16 +820,22 @@ export class WebcimesSelect
 			this.select.classList.add("webcimes-select--open");
 			this.select.setAttribute("aria-expanded", "true");
 						
-			// Append dropdown before the end of body
+			// Append dropdown before the end of body (without inline styles for CSP compliance)
 			document.body.insertAdjacentHTML("beforeend", 
 				`<div class="webcimes-dropdown" ${(this.nativeSelect!.getAttribute("dir")=="rtl"?`dir="rtl"`:``)}>
 					${(this.options.allowSearch?`<input class="webcimes-dropdown__search-input" type="text" name="search" autocomplete="off" ${(this.options.defaultTexts.searchPlaceholderText?`placeholder="${this.options.defaultTexts.searchPlaceholderText}" title="${this.options.defaultTexts.searchPlaceholderText}" aria-label="${this.options.defaultTexts.searchPlaceholderText}"`:``)} role="combobox" aria-controls="${this.idDropdownOptions}" aria-expanded="true" aria-haspopup="listbox" aria-autocomplete="list">`:``)}
-					<div class="webcimes-dropdown__options" id="${this.idDropdownOptions}" style="max-height:${this.options.maxHeightOptions};" role="listbox" ${this.nativeSelect?.multiple?`aria-multiselectable="true"`:``} tabindex="-1"></div>
+					<div class="webcimes-dropdown__options" id="${this.idDropdownOptions}" role="listbox" ${this.nativeSelect?.multiple?`aria-multiselectable="true"`:``} tabindex="-1"></div>
 				</div>`
 			);
 
 			// Define dropdown
 			this.dropdown = document.body.lastElementChild as HTMLElement;
+
+			// Apply max-height via style property for CSP compliance
+			const dropdownOptions = this.dropdown.querySelector('.webcimes-dropdown__options') as HTMLElement;
+			if (dropdownOptions) {
+				dropdownOptions.style.maxHeight = this.options.maxHeightOptions;
+			}
 
 			// Set options on dropdown
 			let options = Array.from(this.nativeSelect!.options).filter((el) => {
