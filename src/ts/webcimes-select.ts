@@ -90,9 +90,36 @@ export interface Options {
 }
 
 /**
- * Class WebcimesSelect
+ * Public interface for WebcimesSelect
+ * This represents the actual accessible members of the instance
  */
-export class WebcimesSelect
+export interface WebcimesSelect {
+	/** Get the dom element of the native select */
+	nativeSelect: HTMLSelectElement | null;
+	/** Get the dom element of select */
+	select: HTMLElement;
+	/** Get the dom element of dropdown */
+	dropdown: HTMLElement | null;
+	/** Destroy the select */
+	destroy(): void;
+	/** Enable or disable the select */
+	disable(disable?: boolean): void;
+	/** Get selected options */
+	getSelectedOptions(): HTMLOptionElement[];
+	/** Initialize options */
+	initOptions(): void;
+	/** Add an option */
+	addOption(value: string | null): void;
+	/** Remove an option */
+	removeOption(value: string | null): void;
+	/** Remove all options */
+	removeAllOptions(): void;
+}
+
+/**
+ * WebcimesSelect implementation class
+ */
+export class WebcimesSelect implements WebcimesSelect
 {
 	/** Get the dom element of the native select */
 	public nativeSelect: HTMLSelectElement | null;

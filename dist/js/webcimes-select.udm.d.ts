@@ -84,9 +84,35 @@ export interface Options {
     onRemoveAllOptions(): void;
 }
 /**
- * Class WebcimesSelect
+ * Public interface for WebcimesSelect
+ * This represents the actual accessible members of the instance
  */
-export declare class WebcimesSelect {
+export interface WebcimesSelect {
+    /** Get the dom element of the native select */
+    nativeSelect: HTMLSelectElement | null;
+    /** Get the dom element of select */
+    select: HTMLElement;
+    /** Get the dom element of dropdown */
+    dropdown: HTMLElement | null;
+    /** Destroy the select */
+    destroy(): void;
+    /** Enable or disable the select */
+    disable(disable?: boolean): void;
+    /** Get selected options */
+    getSelectedOptions(): HTMLOptionElement[];
+    /** Initialize options */
+    initOptions(): void;
+    /** Add an option */
+    addOption(value: string | null): void;
+    /** Remove an option */
+    removeOption(value: string | null): void;
+    /** Remove all options */
+    removeAllOptions(): void;
+}
+/**
+ * WebcimesSelect implementation class
+ */
+export declare class WebcimesSelect implements WebcimesSelect {
     /** Get the dom element of the native select */
     nativeSelect: HTMLSelectElement | null;
     /** Get the dom element of select */
@@ -123,34 +149,6 @@ export declare class WebcimesSelect {
      * Initialization of select
      */
     private init;
-    /**
-     * Destroy select and revert to native select
-     */
-    destroy(): void;
-    /**
-     * Set select disabled or not
-     */
-    disable(disable?: boolean): void;
-    /**
-     * Get selected options with no empty value
-     */
-    getSelectedOptions(): HTMLOptionElement[];
-    /**
-     * Init options or placeholder on select, according selected option on native select field
-     */
-    initOptions(): void;
-    /**
-     * Add option on select
-     */
-    addOption(value: string | null): void;
-    /**
-     * Remove option on select
-     */
-    removeOption(value: string | null): void;
-    /**
-     * Remove all options on select
-     */
-    removeAllOptions(): void;
     /**
      * Event init dropdown on click on native select
      */
