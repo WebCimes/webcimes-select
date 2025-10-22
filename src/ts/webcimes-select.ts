@@ -90,10 +90,10 @@ export interface Options {
 }
 
 /**
- * Public interface for WebcimesSelect
+ * Public interface for WebcimesSelect instances
  * This represents the actual accessible members of the instance
  */
-export interface WebcimesSelect {
+export interface WebcimesSelectInstance {
 	/** Get the dom element of the native select */
 	nativeSelect: HTMLSelectElement | null;
 	/** Get the dom element of select */
@@ -119,7 +119,7 @@ export interface WebcimesSelect {
 /**
  * WebcimesSelect implementation class
  */
-export class WebcimesSelect implements WebcimesSelect
+export class WebcimesSelect implements WebcimesSelectInstance
 {
 	/** Get the dom element of the native select */
 	public nativeSelect: HTMLSelectElement | null;
