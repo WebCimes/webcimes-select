@@ -135,6 +135,12 @@ class WebcimesSelectImpl implements WebcimesSelect {
     /** Get the unique id of dropdown options */
     private idDropdownOptions: string;
 
+    /**
+     * MutationObserver to watch changes on native select (options added/removed)
+     * Prevent memory leaks by disconnecting observer on destroy
+     */
+    private mutationObserver: MutationObserver | null = null;
+
     /** Set the default texts for each language */
     private defaultTexts: { [key: string]: defaultTexts } = {
         en: {
@@ -400,6 +406,27 @@ class WebcimesSelectImpl implements WebcimesSelect {
             // Set select value (or placeholder)
             this.initOptions();
 
+            // Observe changes on native select (options added/removed)
+            try {
+                this.mutationObserver = new MutationObserver((mutations) => {
+                    // Only react to childList mutations (options added/removed)
+                    for (const m of mutations) {
+                        if (m.type === 'childList') {
+                            this.initOptions();
+                            break;
+                        }
+                    }
+                });
+
+                // Start observing immediately
+                this.mutationObserver.observe(this.nativeSelect!, {
+                    childList: true,
+                    subtree: true,
+                });
+            } catch (err) {
+                // MutationObserver may not be available in some environments; ignore silently
+            }
+
             // Event init dropdown after click on label (who is relative to native select)
             this.nativeSelect.addEventListener('click', this.onNativeSelectClick);
 
@@ -430,6 +457,12 @@ class WebcimesSelectImpl implements WebcimesSelect {
     public destroy() {
         // Destroy dropdown if exist
         this.destroyDropdown();
+
+        // Disconnect mutation observer if exist
+        if (this.mutationObserver) {
+            this.mutationObserver.disconnect();
+            this.mutationObserver = null;
+        }
 
         // Remove events
         this.nativeSelect!.removeEventListener('click', this.onNativeSelectClick);
