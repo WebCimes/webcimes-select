@@ -1,28 +1,27 @@
 // Import webcimes-select
-import {WebcimesSelect} from "../dist/js/webcimes-select.esm.js";
+import { CreateWebcimesSelect } from '../dist/js/webcimes-select.esm.js';
 
 // Wait for dom content loaded
-document.addEventListener("DOMContentLoaded", function()
-{
-    let selectCity = new WebcimesSelect({
+document.addEventListener('DOMContentLoaded', function () {
+    let selectCity = CreateWebcimesSelect({
         element: document.querySelector("select[name='city']"),
         keepOpenDropdown: true,
         // allowSearch: false,
-        language: "fr",
-        onInit(){
-            console.log("onInit");
+        language: 'fr',
+        onInit() {
+            console.log('onInit');
         },
-        onDestroy(){
-            console.log("onDestroy");
+        onDestroy() {
+            console.log('onDestroy');
         },
-        onInitDropdown(){
-            console.log("onInitDropdown");
+        onInitDropdown() {
+            console.log('onInitDropdown');
         },
-        onDestroyDropdown(){
-            console.log("onDestroyDropdown");
+        onDestroyDropdown() {
+            console.log('onDestroyDropdown');
         },
-        onSearchDropdown(value, options){
-            console.log("onSearchDropdown");
+        onSearchDropdown(value, options) {
+            console.log('onSearchDropdown');
             console.log(value);
             console.log(options);
         },
@@ -33,19 +32,19 @@ document.addEventListener("DOMContentLoaded", function()
         //     console.log(selectedOptions);
         // },
         // onAddOption(value){
-            //     console.log("onAddOption");
+        //     console.log("onAddOption");
         //     console.log(value);
         // },
         // onRemoveOption(value){
-            //     console.log("onRemoveOption");
+        //     console.log("onRemoveOption");
         //     console.log(value);
         // },
         // onRemoveAllOptions(){
         //     console.log("onRemoveAllOptions");
         // },
     });
-    selectCity.select.addEventListener("onSearchDropdown", (e) => {
-        console.log("onSearchDropdown");
+    selectCity.select.addEventListener('onSearchDropdown', (e) => {
+        console.log('onSearchDropdown');
         console.log(e.detail.value);
         console.log(e.detail.options);
     });
@@ -55,19 +54,17 @@ document.addEventListener("DOMContentLoaded", function()
     //     console.log(e.detail.selected);
     //     console.log(e.detail.selectedOptions);
     // });
-    selectCity.nativeSelect.addEventListener("input", (e) => {
-        console.log("onChange");
+    selectCity.nativeSelect.addEventListener('input', (e) => {
+        console.log('onChange');
         console.log(e.target.value);
     });
 
-
-    let selectCity2 = new WebcimesSelect({
+    let selectCity2 = CreateWebcimesSelect({
         element: document.querySelector("select[name='city2']"),
     });
 
-    selectCity2.nativeSelect.addEventListener("input", (e) => {
-        console.log("onChange");
+    selectCity2.nativeSelect.addEventListener('input', (e) => {
+        console.log('onChange');
         console.log(e.target.value);
     });
-
 });
