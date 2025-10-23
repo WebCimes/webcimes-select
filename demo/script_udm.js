@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Apply class WebcimesSelect to all select fields
     document.querySelectorAll('select').forEach((el) => {
-        const mySelect = CreateWebcimesSelect({
+        const mySelect = createWebcimesSelect({
             element: el, // Element (selector string or HTMLElement)
             setId: null, // set a specific id on the select. default "null"
             setClass: null, // set a specific class on the select, default "null"

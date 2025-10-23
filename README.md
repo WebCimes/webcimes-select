@@ -10,7 +10,7 @@ All options selected by Webcimes-Select are directly applied to the form's nativ
 
 Inspired by select2, but opposed to it, it works with vanilla javascript + html + css, no dependencies are required and the module is built in a very lightweight size.
 
-Once the `webcimes-select` javascript is defined, we can simply call the `CreateWebcimesSelect` function with the desired options.
+Once the `webcimes-select` javascript is defined, we can simply call the `createWebcimesSelect` function with the desired options.
 
 ## Installation
 
@@ -44,7 +44,7 @@ You can use an importmap to resolve the arbitrary module names to complete paths
 Then import javascript module:
 
 ```javascript
-import { CreateWebcimesSelect } from 'webcimes-select';
+import { createWebcimesSelect } from 'webcimes-select';
 ```
 
 Or you can also set the full path directly in the import:
@@ -55,7 +55,7 @@ Or you can also set the full path directly in the import:
         ...
         <script type="module">
             // Import webcimes-select
-            import { CreateWebcimesSelect } from "./node_modules/webcimes-select/dist/js/webcimes-select.esm.js";
+            import { createWebcimesSelect } from "./node_modules/webcimes-select/dist/js/webcimes-select.esm.js";
             ...
         </script>
     </head>
@@ -66,7 +66,7 @@ Or you can also set the full path directly in the import:
 Or with JS bundlers (like Webpack or Vite) you can call directly the module :
 
 ```javascript
-import { CreateWebcimesSelect } from 'webcimes-select';
+import { createWebcimesSelect } from 'webcimes-select';
 ```
 
 ### UDM
@@ -94,14 +94,14 @@ You can directly load the udm module in the script tag:
 
 ## Usage
 
-### Call `CreateWebcimesSelect` for create custom select:
+### Call `createWebcimesSelect` for create custom select:
 
 ```javascript
-// Wait for dom content loaded or call CreateWebcimesSelect before the end of body
+// Wait for dom content loaded or call createWebcimesSelect before the end of body
 document.addEventListener('DOMContentLoaded', function () {
     // Apply class WebcimesSelect to all select fields
     document.querySelectorAll('select').forEach((el) => {
-        const mySelect = CreateWebcimesSelect({
+        const mySelect = createWebcimesSelect({
             element: el, // Element (selector string or HTMLElement)
             setId: null, // set a specific id on the select. default "null"
             setClass: null, // set a specific class on the select, default "null"
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
 All parameters are optional (except `element`).
 
 ```javascript
-const mySelect = CreateWebcimesSelect({
+const mySelect = createWebcimesSelect({
     element: el, // Element (selector string or HTMLElement)
 });
 ```
@@ -182,7 +182,7 @@ You can also set the `height` or `width` by specifying the value with a number a
 The `maxHeightOptions` defaults to 200px, and corresponds to the options container inside the drop-down list, if too many options exceed the value of `maxHeightOptions`, a scrollbar will appear inside the options container.
 
 ```javascript
-const mySelect = CreateWebcimesSelect({
+const mySelect = createWebcimesSelect({
     element: el, // Element (selector string or HTMLElement)
     width: 'auto', // width (specify unit), default "auto"
     height: 'auto', // height (specify unit), default "auto"
@@ -199,7 +199,7 @@ Below are the different options for customize the select behavior.
 - `keepOpenDropdown` to keep the drop-down list open after selecting an option (more useful with a multiple select).
 
 ```javascript
-const mySelect = CreateWebcimesSelect({
+const mySelect = createWebcimesSelect({
     element: el, // Element (selector string or HTMLElement)
     allowClear: true, // allow clear selected options, default true
     allowSearch: true, // allow search options, default true
@@ -283,7 +283,7 @@ Just note that it will replace the `aria-label` text in case you have use the `l
 3. But if you prefer, you can also set the aria-label with the `ariaLabel` option on `WebCimesSelect`, like this:
 
 ```javascript
-const mySelect = CreateWebcimesSelect({
+const mySelect = createWebcimesSelect({
     element: el, // Element (selector string or HTMLElement)
     ariaLabel: 'My label', // set aria-label for select, default null
 });
@@ -298,7 +298,7 @@ You can choose a default language for all texts, actually `"en" / "fr" / "es" / 
 All default texts will be translated into the defined language.
 
 ```javascript
-const mySelect = CreateWebcimesSelect({
+const mySelect = createWebcimesSelect({
     element: el, // Element (selector string or HTMLElement)
     language: 'en', // set default language for texts, default "en"
 });
@@ -307,7 +307,7 @@ const mySelect = CreateWebcimesSelect({
 But you can also use defaultTexts to set custom title, description and buttons text (this will override the language text).
 
 ```javascript
-const mySelect = CreateWebcimesSelect({
+const mySelect = createWebcimesSelect({
     element: el, // Element (selector string or HTMLElement)
     defaultTexts: {
         // set default texts for select (overrides language option), default english texts
@@ -325,7 +325,7 @@ const mySelect = CreateWebcimesSelect({
 You can define the style of the select with `css`, but you can also use the `style` property which allows to directly add an additional style to the select.
 
 ```javascript
-const mySelect = CreateWebcimesSelect({
+const mySelect = createWebcimesSelect({
     style: 'background:red; color:cyan;',
 });
 ```
@@ -336,7 +336,7 @@ You can get the dom element of the `native select` like this:
 
 ```javascript
 // Get the instance
-const mySelect = CreateWebcimesSelect(...);
+const mySelect = createWebcimesSelect(...);
 
 // Things
 
@@ -348,7 +348,7 @@ Or you can Get the dom element of the current `select` like this:
 
 ```javascript
 // Get the instance
-const mySelect = CreateWebcimesSelect(...);
+const mySelect = createWebcimesSelect(...);
 
 // Things
 
@@ -360,7 +360,7 @@ Or you can also get the dom element of the current `dropdown` like this:
 
 ```javascript
 // Get the instance
-const mySelect = CreateWebcimesSelect(...);
+const mySelect = createWebcimesSelect(...);
 
 // Things
 
@@ -373,7 +373,7 @@ mySelect.dropdown;
 Multiple events exist, which allow to interact with the select at each step. You can use all events below:
 
 ```javascript
-const mySelect = CreateWebcimesSelect({
+const mySelect = createWebcimesSelect({
     element: el, // Element (selector string or HTMLElement)
     onInit() {
         console.log('onInit');
@@ -416,7 +416,7 @@ You can also use `addEventListener` for get the events from the instance like th
 
 ```javascript
 // Get the instance
-const mySelect = CreateWebcimesSelect(...);
+const mySelect = createWebcimesSelect(...);
 
 // Create an event on the current select
 mySelect.select.addEventListener("onSearchDropdown", (e) => {
@@ -432,7 +432,7 @@ To disable the select, you can call the `disable` method, like this:
 
 ```javascript
 // Get the instance
-const mySelect = CreateWebcimesSelect(...);
+const mySelect = createWebcimesSelect(...);
 
 // Things
 
@@ -452,7 +452,7 @@ To get the selected options, you can call the `getSelectedOptions` method, like 
 
 ```javascript
 // Get the instance
-const mySelect = CreateWebcimesSelect(...);
+const mySelect = createWebcimesSelect(...);
 
 // Things
 
@@ -476,7 +476,7 @@ To update/refresh the select options (after changing the native select options f
 
 ```javascript
 // Get the instance
-const mySelect = CreateWebcimesSelect(...);
+const mySelect = createWebcimesSelect(...);
 
 // Things
 
@@ -490,7 +490,7 @@ To add a selected option, you can call the `addSelectedOption` method, like this
 
 ```javascript
 // Get the instance
-const mySelect = CreateWebcimesSelect(...);
+const mySelect = createWebcimesSelect(...);
 
 // Things
 
@@ -504,7 +504,7 @@ To remove a selected option, you can call the `removeSelectedOption` method, lik
 
 ```javascript
 // Get the instance
-const mySelect = CreateWebcimesSelect(...);
+const mySelect = createWebcimesSelect(...);
 
 // Things
 
@@ -520,7 +520,7 @@ To remove all selected options, you can call the `removeAllOptions` method, like
 
 ```javascript
 // Get the instance
-const mySelect = CreateWebcimesSelect(...);
+const mySelect = createWebcimesSelect(...);
 
 // Things
 
@@ -536,7 +536,7 @@ To destroy the select, you can call the `destroy` method, like this:
 
 ```javascript
 // Get the instance
-const mySelect = CreateWebcimesSelect(...);
+const mySelect = createWebcimesSelect(...);
 
 // Things
 
