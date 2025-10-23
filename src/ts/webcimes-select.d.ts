@@ -112,5 +112,5 @@ export interface WebcimesSelect {
 /**
  * Factory function to create a WebcimesSelect instance with proper typing
  */
-export declare function webcimesSelect(options: Partial<Options>): WebcimesSelect;
+export declare function WebcimesSelect(options: Partial<Options>): WebcimesSelect;
 //# sourceMappingURL=webcimes-select.d.ts.map

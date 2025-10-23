@@ -1331,6 +1331,6 @@ class WebcimesSelectImpl implements WebcimesSelect {
 /**
  * Factory function to create a WebcimesSelect instance with proper typing
  */
-export function webcimesSelect(options: Partial<Options>): WebcimesSelect {
+export function WebcimesSelect(options: Partial<Options>): WebcimesSelect {
   return new WebcimesSelectImpl(options);
 }
