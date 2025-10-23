@@ -87,7 +87,7 @@ export interface Options {
  * Public interface for WebcimesSelect instances
  * This represents the actual accessible members of the instance
  */
-export interface WebcimesSelectInstance {
+export interface WebcimesSelect {
     /** Get the dom element of the native select */
     nativeSelect: HTMLSelectElement | null;
     /** Get the dom element of select */
@@ -112,7 +112,7 @@ export interface WebcimesSelectInstance {
 /**
  * WebcimesSelect implementation class
  */
-export declare class WebcimesSelect implements WebcimesSelectInstance {
+export declare class WebcimesSelect implements WebcimesSelect {
     /** Get the dom element of the native select */
     nativeSelect: HTMLSelectElement | null;
     /** Get the dom element of select */
@@ -149,34 +149,6 @@ export declare class WebcimesSelect implements WebcimesSelectInstance {
      * Initialization of select
      */
     private init;
-    /**
-     * Destroy select and revert to native select
-     */
-    destroy(): void;
-    /**
-     * Set select disabled or not
-     */
-    disable(disable?: boolean): void;
-    /**
-     * Get selected options with no empty value
-     */
-    getSelectedOptions(): HTMLOptionElement[];
-    /**
-     * Init options or placeholder on select, according selected option on native select field
-     */
-    initOptions(): void;
-    /**
-     * Add option on select
-     */
-    addOption(value: string | null): void;
-    /**
-     * Remove option on select
-     */
-    removeOption(value: string | null): void;
-    /**
-     * Remove all options on select
-     */
-    removeAllOptions(): void;
     /**
      * Event init dropdown on click on native select
      */
