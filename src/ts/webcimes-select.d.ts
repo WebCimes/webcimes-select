@@ -84,33 +84,136 @@ export interface Options {
     onRemoveAllOptions(): void;
 }
 /**
- * Public interface for WebcimesSelect instances
- * This represents the actual accessible members of the instance
+ * Class WebcimesSelect
  */
-export interface WebcimesSelect {
+export declare class WebcimesSelect {
     /** Get the dom element of the native select */
     nativeSelect: HTMLSelectElement | null;
     /** Get the dom element of select */
     select: HTMLElement;
     /** Get the dom element of dropdown */
     dropdown: HTMLElement | null;
-    /** Destroy the select */
+    /** Options of WebcimesSelect */
+    private options;
+    /** Get the unique id of dropdown options */
+    private idDropdownOptions;
+    /** Set the default texts for each language */
+    private defaultTexts;
+    /**
+     * Create select
+     */
+    constructor(options: Partial<Options>);
+    /**
+     * Convert elements entry to an array of HTMLElement
+     */
+    private getHtmlElements;
+    /**
+     * Convert element entry to an HTMLElement
+     */
+    private getHtmlElement;
+    /**
+     * Get a unique ID, related to the identifier
+     * @param selectorPrefix Prefix of the selector
+     * @param identifier Identifier to find
+     * @param selectorSuffix Suffix of the selector
+     * @param element Find if the ID already exist in provided dom element
+     */
+    private getUniqueID;
+    /**
+     * Initialization of select
+     */
+    private init;
+    /**
+     * Destroy select and revert to native select
+     */
     destroy(): void;
-    /** Enable or disable the select */
+    /**
+     * Set select disabled or not
+     */
     disable(disable?: boolean): void;
-    /** Get selected options */
+    /**
+     * Get selected options with no empty value
+     */
     getSelectedOptions(): HTMLOptionElement[];
-    /** Initialize options */
+    /**
+     * Init options or placeholder on select, according selected option on native select field
+     */
     initOptions(): void;
-    /** Add an option */
+    /**
+     * Add option on select
+     */
     addOption(value: string | null): void;
-    /** Remove an option */
+    /**
+     * Remove option on select
+     */
     removeOption(value: string | null): void;
-    /** Remove all options */
+    /**
+     * Remove all options on select
+     */
     removeAllOptions(): void;
+    /**
+     * Event init dropdown on click on native select
+     */
+    private onNativeSelectClick;
+    /**
+     * Event clear selected option on select
+     */
+    private onClearOption;
+    /**
+     * Event clear all selected options on select
+     */
+    private onClearAllOptions;
+    /**
+     * Event on keydown on select
+     */
+    private onKeyDown;
+    /**
+     * Event init dropdown on click on select
+     */
+    private onClickInitDropdown;
+    /**
+     * Init dropdown
+     */
+    private initDropdown;
+    /**
+     * Destroy dropdown
+     */
+    private destroyDropdown;
+    /**
+     * Set dropdown options
+     */
+    private setDropdownOptions;
+    /**
+     * Set dropdown position and width, relative to select
+     */
+    private setDropdownPosition;
+    /**
+     * Set highlight option
+     */
+    private setDropdownHighlightOption;
+    /**
+     * Event search options on dropdown
+     */
+    private onDropdownSearch;
+    /**
+     * Event on keydown on dropdown
+     */
+    private onDropdownKeyDown;
+    /**
+     * Event on mouseover option on dropdown
+     */
+    private onDropdownMouseOverOption;
+    /**
+     * Event on resize on Dropdown
+     */
+    private onDropdownResize;
+    /**
+     * Event on select option on Dropdown
+     */
+    private onDropdownClickOption;
+    /**
+     * Event destroy on click or keydown outside dropdown
+     */
+    private onDropdownDestroy;
 }
-/**
- * Factory function to create a WebcimesSelect instance with proper typing
- */
-export declare function CreateWebcimesSelect(options: Partial<Options>): WebcimesSelect;
 //# sourceMappingURL=webcimes-select.d.ts.map

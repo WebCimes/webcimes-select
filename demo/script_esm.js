@@ -1,11 +1,11 @@
 // Import webcimes-select
-import { CreateWebcimesSelect } from '../dist/js/webcimes-select.esm.js';
+import { WebcimesSelect } from '../dist/js/webcimes-select.esm.js';
 
 // Wait for dom content loaded
 document.addEventListener('DOMContentLoaded', function () {
     // Apply class WebcimesSelect to all select fields
     document.querySelectorAll('select').forEach((el) => {
-        const mySelect = CreateWebcimesSelect({
+        const mySelect = new WebcimesSelect({
             element: el, // Element (selector string or HTMLElement)
             setId: null, // set a specific id on the select. default "null"
             setClass: null, // set a specific class on the select, default "null"
