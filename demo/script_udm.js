@@ -1,5 +1,3 @@
-import { CreateWebcimesSelect } from '../dist/js/webcimes-select.udm';
-
 // Wait for dom content loaded
 document.addEventListener('DOMContentLoaded', function () {
     // Apply class WebcimesSelect to all select fields

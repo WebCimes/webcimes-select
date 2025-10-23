@@ -484,9 +484,9 @@ const mySelect = CreateWebcimesSelect(...);
 mySelect.initOptions();
 ```
 
-### Add selected option
+### Add a selected option
 
-To add a selected option, you can call the `addOption` method, like this:
+To add a selected option, you can call the `addSelectedOption` method, like this:
 
 ```javascript
 // Get the instance
@@ -495,12 +495,12 @@ const mySelect = CreateWebcimesSelect(...);
 // Things
 
 // Then call the add selected option method:
-mySelect.addOption("Paris");
+mySelect.addSelectedOption("Paris");
 ```
 
-### Remove selected option
+### Remove a selected option
 
-To remove a selected option, you can call the `removeOption` method, like this:
+To remove a selected option, you can call the `removeSelectedOption` method, like this:
 
 ```javascript
 // Get the instance
@@ -509,7 +509,7 @@ const mySelect = CreateWebcimesSelect(...);
 // Things
 
 // Then call the remove selected option method:
-mySelect.removeOption("Paris");
+mySelect.removeSelectedOption("Paris");
 ```
 
 Just note that if the select or an option is disabled, you cannot remove it.

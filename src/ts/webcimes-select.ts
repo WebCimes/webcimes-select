@@ -108,10 +108,10 @@ export interface WebcimesSelect {
     getSelectedOptions(): HTMLOptionElement[];
     /** Initialize options */
     initOptions(): void;
-    /** Add an option */
-    addOption(value: string | null): void;
-    /** Remove an option */
-    removeOption(value: string | null): void;
+    /** Add a selected option */
+    addSelectedOption(value: string | null): void;
+    /** Remove a selected option */
+    removeSelectedOption(value: string | null): void;
     /** Remove all options */
     removeAllOptions(): void;
 }
@@ -589,9 +589,9 @@ class WebcimesSelectImpl implements WebcimesSelect {
     }
 
     /**
-     * Add option on select
+     * Add a selected option on select
      */
-    public addOption(value: string | null) {
+    public addSelectedOption(value: string | null) {
         if (value) {
             // If native select single, remove all options selected
             if (!this.nativeSelect!.multiple) {
@@ -668,9 +668,9 @@ class WebcimesSelectImpl implements WebcimesSelect {
     }
 
     /**
-     * Remove option on select
+     * Remove a selected option on select
      */
-    public removeOption(value: string | null) {
+    public removeSelectedOption(value: string | null) {
         if (value && !this.nativeSelect?.disabled) {
             // Remove option selected on native select
             let optionEl = this.nativeSelect!.querySelector(
@@ -818,7 +818,7 @@ class WebcimesSelectImpl implements WebcimesSelect {
      * Event clear selected option on select
      */
     private onClearOption(e: Event) {
-        this.removeOption(
+        this.removeSelectedOption(
             (e.target as HTMLElement)
                 .closest('.webcimes-select__option')!
                 .getAttribute('data-value'),
@@ -846,7 +846,7 @@ class WebcimesSelectImpl implements WebcimesSelect {
         ) {
             if (e.key == 'Enter') {
                 e.preventDefault();
-                this.removeOption(
+                this.removeSelectedOption(
                     (e.target as HTMLElement)
                         .closest('.webcimes-select__option')!
                         .getAttribute('data-value'),
@@ -1250,9 +1250,9 @@ class WebcimesSelectImpl implements WebcimesSelect {
             if (e.key == 'Enter') {
                 e.preventDefault();
                 if (highlightedOption.classList.contains('webcimes-dropdown__option--selected')) {
-                    this.removeOption(highlightedOption.getAttribute('data-value'));
+                    this.removeSelectedOption(highlightedOption.getAttribute('data-value'));
                 } else {
-                    this.addOption(highlightedOption.getAttribute('data-value'));
+                    this.addSelectedOption(highlightedOption.getAttribute('data-value'));
                 }
             }
         }
@@ -1293,9 +1293,9 @@ class WebcimesSelectImpl implements WebcimesSelect {
         let optionEl = (e.target as HTMLElement).closest('.webcimes-dropdown__option');
         if (optionEl) {
             if (optionEl.classList.contains('webcimes-dropdown__option--selected')) {
-                this.removeOption(optionEl.getAttribute('data-value'));
+                this.removeSelectedOption(optionEl.getAttribute('data-value'));
             } else {
-                this.addOption(optionEl.getAttribute('data-value'));
+                this.addSelectedOption(optionEl.getAttribute('data-value'));
             }
         }
     }

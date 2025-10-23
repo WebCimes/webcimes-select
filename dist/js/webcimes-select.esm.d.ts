@@ -102,10 +102,10 @@ export interface WebcimesSelect {
     getSelectedOptions(): HTMLOptionElement[];
     /** Initialize options */
     initOptions(): void;
-    /** Add an option */
-    addOption(value: string | null): void;
-    /** Remove an option */
-    removeOption(value: string | null): void;
+    /** Add a selected option */
+    addSelectedOption(value: string | null): void;
+    /** Remove a selected option */
+    removeSelectedOption(value: string | null): void;
     /** Remove all options */
     removeAllOptions(): void;
 }
