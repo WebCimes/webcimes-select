@@ -1,9 +1,9 @@
 // Import webcimes-select
-import { WebcimesSelect } from '../dist/js/webcimes-select.esm.js';
+import { CreateWebcimesSelect } from '../dist/js/webcimes-select.esm.js';
 
 // Wait for dom content loaded
 document.addEventListener('DOMContentLoaded', function () {
-    let selectCity = new WebcimesSelect({
+    let selectCity = CreateWebcimesSelect({
         element: document.querySelector("select[name='city']"),
         keepOpenDropdown: true,
         // allowSearch: false,
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(e.target.value);
     });
 
-    let selectCity2 = new WebcimesSelect({
+    let selectCity2 = CreateWebcimesSelect({
         element: document.querySelector("select[name='city2']"),
     });
 
