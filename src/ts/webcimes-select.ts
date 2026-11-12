@@ -1247,7 +1247,7 @@ class WebcimesSelectImpl implements WebcimesSelect {
                     true,
                 );
             }
-            if (e.key == 'Enter') {
+            if (e.key == 'Enter' && !this.nativeSelect?.matches(':disabled')) {
                 e.preventDefault();
                 if (highlightedOption.classList.contains('webcimes-dropdown__option--selected')) {
                     this.removeSelectedOption(highlightedOption.getAttribute('data-value'));
@@ -1290,6 +1290,10 @@ class WebcimesSelectImpl implements WebcimesSelect {
      * Event on select option on Dropdown
      */
     private onDropdownClickOption(e: Event) {
+        if (this.nativeSelect?.matches(':disabled')) {
+            return;
+        }
+
         let optionEl = (e.target as HTMLElement).closest('.webcimes-dropdown__option');
         if (optionEl) {
             if (optionEl.classList.contains('webcimes-dropdown__option--selected')) {
