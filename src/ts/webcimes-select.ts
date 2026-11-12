@@ -499,6 +499,9 @@ class WebcimesSelectImpl implements WebcimesSelect {
                 this.nativeSelect.setAttribute('disabled', '');
                 this.nativeSelect.disabled = true;
                 this.select.classList.add('webcimes-select--disabled');
+
+                // Close the dropdown if it is open
+                this.destroyDropdown();
             } else {
                 this.nativeSelect.removeAttribute('disabled');
                 this.nativeSelect.disabled = false;
@@ -592,7 +595,7 @@ class WebcimesSelectImpl implements WebcimesSelect {
      * Add a selected option on select
      */
     public addSelectedOption(value: string | null) {
-        if (value) {
+        if (value && !this.nativeSelect?.matches(':disabled')) {
             // If native select single, remove all options selected
             if (!this.nativeSelect!.multiple) {
                 // Remove option selected on native select
