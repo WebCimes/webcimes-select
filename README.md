@@ -604,3 +604,5 @@ You can style select with the following field applying to the class of `.webcime
 Use Node.js 20.19+ on the 20.x line, or Node.js 22.12 or later. Run `npm install` and `make dev`, then open the URL printed by Vite.
 
 Run `make watch` to rebuild on source changes, `make build` to regenerate the distributed bundles and declarations, or `make pack` to preview the npm package. Run `make build` before testing the UMD demo locally.
+
+After publishing to npm, run `make tag` to create and push the Git tag for the version in the committed `package.json`.
