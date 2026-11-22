@@ -587,6 +587,14 @@ You can style select with the following field applying to the class of `.webcime
 }
 ```
 
+## Other WebCimes projects
+
+- [WebCimes Modal](https://github.com/WebCimes/webcimes-modal) — Modals and confirmations
+- [WebCimes Cookies](https://github.com/WebCimes/webcimes-cookies) — Cookie consent
+- [WebCimes Tooltip](https://github.com/WebCimes/webcimes-tooltip) — Tooltips and popovers
+- [Laravel MediaForge](https://github.com/WebCimes/laravel-mediaforge) — File and image processing
+- [WebCimes Dark Theme](https://github.com/WebCimes/webcimes-dark-theme) — VS Code color theme
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
