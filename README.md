@@ -1,5 +1,9 @@
 # webcimes-select
 
+<img src="./demo/webcimes-select-logo.png" width="96" height="96" alt="webcimes-select logo" />
+
+[Live demo](https://webcimes.github.io/webcimes-select/)
+
 Just create beautiful select boxes, it supports single select and multiple select.
 
 Many features exist, like search, multilingual, keyboard control, delete options, dropdown can also be opened on overflow parent, optgroup support, rtl support and many other options.
@@ -586,3 +590,9 @@ You can style select with the following field applying to the class of `.webcime
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Local development
+
+Use Node.js 20.19+ on the 20.x line, or Node.js 22.12 or later. Run `npm install` and `make dev`, then open the URL printed by Vite.
+
+Run `make watch` to rebuild on source changes, `make build` to regenerate the distributed bundles and declarations, or `make pack` to preview the npm package. Run `make build` before testing the UMD demo locally.
