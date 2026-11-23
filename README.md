@@ -605,4 +605,4 @@ Use Node.js 20.19+ on the 20.x line, or Node.js 22.12 or later. Run `npm install
 
 Run `make watch` to rebuild on source changes, `make build` to regenerate the distributed bundles and declarations, or `make pack` to preview the npm package. Run `make build` before testing the UMD demo locally.
 
-After publishing to npm, run `make tag` to create and push the Git tag for the version in the committed `package.json`.
+Run `make release` from a clean `main` after committing the new version and generated files. It previews the package, checks the npm session with `npm whoami`, and runs `npm login` if needed. It then pushes `main`, publishes to npm, and pushes the version tag. When npm prompts for two-factor authentication, approve the publication in your browser.
